@@ -1,0 +1,787 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="CPU Acceleration" href="04-CPU%20Acceleration.html" /><link rel="prev" title="Multiple Dispatch" href="02-Multiple%20Dispatch.html" />
+
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+        <title>Deep Learning - RLtools Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="_static/overrides.css?v=ca018f06" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --color-brand-primary: #639694;
+  --color-brand-content: #639694;
+  --color-admonition-background: orange;
+  --sidebar_hide_name: True;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">RLtools Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/banner.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">RLtools Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01-Containers.html">Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-Multiple%20Dispatch.html">Multiple Dispatch</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Deep Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-CPU%20Acceleration.html">CPU Acceleration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-MNIST%20Classification.html">MNIST Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-Deep%20Reinforcement%20Learning.html">Deep Reinforcement Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-The%20Loop%20Interface.html">The Loop Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-Custom%20Environment.html">Custom Environment</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="Deep-Learning">
+<h1>Deep Learning<a class="headerlink" href="#Deep-Learning" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://mybinder.org/v2/gh/rl-tools/documentation/binder?labpath=03-Deep%20Learning.ipynb"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a></p>
+<p>Because of the static multiple dispatch paradigm layed out in <a class="reference internal" href="02-Multiple%20Dispatch.html"><span class="doc">Multiple Dispatch</span></a>, we need to first include the primitive operations for the device(s) we are inteding on using such that the algorithms (and datastructures) we later include for deep learning can use them.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/operations/cpu.h&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/nn/layers/dense/operations_cpu.h&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>We set up the environment as described in <a class="reference internal" href="01-Containers.html"><span class="doc">Containers</span></a>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">rlt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">rl_tools</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">devices</span><span class="o">::</span><span class="n">DefaultCPU</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">DEVICE</span><span class="o">::</span><span class="n">index_t</span><span class="p">;</span>
+<span class="n">DEVICE</span><span class="w"> </span><span class="n">device</span><span class="p">;</span>
+<span class="n">TI</span><span class="w"> </span><span class="n">seed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">rng</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">random</span><span class="o">::</span><span class="n">default_engine</span><span class="p">(</span><span class="n">DEVICE</span><span class="o">::</span><span class="n">SPEC</span><span class="o">::</span><span class="n">RANDOM</span><span class="p">(),</span><span class="w"> </span><span class="n">seed</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>As justified by our analysis of the reinforcement learnign for continuous control landscape (in the <a class="reference external" href="https://arxiv.org/abs/2306.03530">paper</a>) in the beginning <strong>RLtools</strong> only supports fully connected neural networks. But we are planning on adding more architectures (especially recurrent neural networks) in the future.</p>
+<p>We can instantiate a simple layer by first defining its hyperparameters (which are compile-time <code class="docutils literal notranslate"><span class="pre">constexpr</span></code> and types):</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">INPUT_DIM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">OUTPUT_DIM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">ACTIVATION_FUNCTION</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">activation_functions</span><span class="o">::</span><span class="n">RELU</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">PARAMETER_TYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">parameters</span><span class="o">::</span><span class="n">Plain</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p>We will explain the role of the <code class="docutils literal notranslate"><span class="pre">PARAMETER_TYPE</span></code> later on.</p>
+<p>These hyperparameters and other options are combined into a specification type such that it is easier to pass it around and such that we don’t need to write out all hyperparameters and options as template parameters when a function takes the datastructure as an argument:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">LAYER_SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">layers</span><span class="o">::</span><span class="n">dense</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT_DIM</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT_DIM</span><span class="p">,</span><span class="w"> </span><span class="n">ACTIVATION_FUNCTION</span><span class="p">,</span><span class="w"> </span><span class="n">PARAMETER_TYPE</span><span class="o">&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p>Using this specification we can declare an actual layer:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">layers</span><span class="o">::</span><span class="n">dense</span><span class="o">::</span><span class="n">Layer</span><span class="o">&lt;</span><span class="n">LAYER_SPEC</span><span class="o">&gt;</span><span class="w"> </span><span class="n">layer</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p>A fully connected neural network consists of layers each implementing:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[y = f(Wx + b)\]</div>
+</div>
+<p>where <span class="math notranslate nohighlight">\(x\)</span> is the input (external or from the previous layer), <span class="math notranslate nohighlight">\(W\)</span> and <span class="math notranslate nohighlight">\(b\)</span> are the weight matrix and biases respectively and <span class="math notranslate nohighlight">\(f\)</span> is an element-wise non-linear function. Hence the data structure of a layer should contain at least <span class="math notranslate nohighlight">\(W\)</span> and <span class="math notranslate nohighlight">\(b\)</span>. Because these parameters are containers they need to be allocated:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">layer</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Now that the memory is allocated we need to initialize it (because it may contain arbitrary values). We use the standard <a class="reference external" href="https://pytorch.org/docs/stable/nn.init.html?highlight=kaiming#torch.nn.init.kaiming_normal_">Kaiming</a> initialization scheme:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">init_kaiming</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">layer</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>We can print <span class="math notranslate nohighlight">\(W\)</span> and <span class="math notranslate nohighlight">\(b\)</span>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">layer</span><span class="p">.</span><span class="n">weights</span><span class="p">.</span><span class="n">parameters</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+   -0.211912     0.010027     0.373245    -0.388598    -0.055528
+   -0.127251    -0.126478     0.330389     0.238816    -0.412481
+   -0.385369    -0.351579    -0.394084    -0.141052    -0.433443
+   -0.327643     0.299608    -0.113104    -0.288047     0.322775
+   -0.399042    -0.282702    -0.171875     0.296949    -0.087313
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">layer</span><span class="p">.</span><span class="n">biases</span><span class="p">.</span><span class="n">parameters</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+   -0.447200    -0.363058     0.144835     0.238661     0.172029
+</pre></div></div>
+</div>
+<p>Now that the layer is initialized we can run inference using a random input. We first declare and allocate input and output matrices and then randomly initialize the input:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">BATCH_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">MatrixDynamic</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">matrix</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">BATCH_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT_DIM</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">input</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">MatrixDynamic</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">matrix</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">BATCH_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT_DIM</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">output</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">randn</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+    0.100807    -0.911862     2.108090     0.094763     0.537630
+</pre></div></div>
+</div>
+<p>Now we can evaluate output of the layer:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">evaluate</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">layer</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+    0.242450     0.236803     0.000000     0.000000     0.008457
+</pre></div></div>
+</div>
+<p>Now we are revisiting the <code class="docutils literal notranslate"><span class="pre">PARAMETER_TYPE</span></code> template argument. For inference storing <span class="math notranslate nohighlight">\(W\)</span> and <span class="math notranslate nohighlight">\(b\)</span> is sufficient but for training we at least need to also store the gradient of the loss <span class="math notranslate nohighlight">\(L\)</span> wrt. <span class="math notranslate nohighlight">\(W\)</span> and <span class="math notranslate nohighlight">\(b\)</span>: <span class="math notranslate nohighlight">\(\frac{\mathrm{d}L}{\mathrm{d}W}\)</span> and <span class="math notranslate nohighlight">\(\frac{\mathrm{d}L}{\mathrm{d}b}\)</span>. Because depending on the optimizer type we might need to store more information per parameter (like the first and second-order moment in the case of
+<a class="reference external" href="https://en.wikipedia.org/wiki/Stochastic_gradient_descent#Adam">Adam</a>), we abstract the storage for the weights and biases using a <code class="docutils literal notranslate"><span class="pre">PARAMETER_TYPE</span></code> that can e.b. be <code class="docutils literal notranslate"><span class="pre">Plain</span></code>, <code class="docutils literal notranslate"><span class="pre">Gradient</span></code>, <code class="docutils literal notranslate"><span class="pre">Adam</span></code> or any other type extended by the user. For this illustration we are using <code class="docutils literal notranslate"><span class="pre">Gradient</span></code>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">PARAMETER_TYPE_2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">parameters</span><span class="o">::</span><span class="n">Gradient</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">LAYER_2_SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">layers</span><span class="o">::</span><span class="n">dense</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT_DIM</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT_DIM</span><span class="p">,</span><span class="w"> </span><span class="n">ACTIVATION_FUNCTION</span><span class="p">,</span><span class="w"> </span><span class="n">PARAMETER_TYPE_2</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">layers</span><span class="o">::</span><span class="n">dense</span><span class="o">::</span><span class="n">LayerBackwardGradient</span><span class="o">&lt;</span><span class="n">LAYER_2_SPEC</span><span class="o">&gt;</span><span class="w"> </span><span class="n">layer_2</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">layer_2</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">layer</span><span class="p">,</span><span class="w"> </span><span class="n">layer_2</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">zero_gradient</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">layer_2</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Note that we now use the <code class="docutils literal notranslate"><span class="pre">rlt::nn::layers::dense::LayerBackwardGradient</span></code> datastructure which is supported by the functions implementing the backpropagation algorithm. Additionally, similar to PyTorch we are setting the gradient to zero because it is accumulated with subsequent backward passes.</p>
+<p>Now we can backpropagate the derivative of the loss wrt. the <code class="docutils literal notranslate"><span class="pre">output</span></code> to calculate the derivative of the loss wrt. the <code class="docutils literal notranslate"><span class="pre">input</span></code>. Hence the derivative of the loss wrt. the <code class="docutils literal notranslate"><span class="pre">output</span></code>: <code class="docutils literal notranslate"><span class="pre">d_output</span></code> is actually an input to the <code class="docutils literal notranslate"><span class="pre">rlt::backward</span></code> operator. The operator also accumulates the derivative of the loss wrt. the weights and biases in the layer. We first allocate containers for <code class="docutils literal notranslate"><span class="pre">d_input</span></code> and <code class="docutils literal notranslate"><span class="pre">d_output</span></code> and randomly set <code class="docutils literal notranslate"><span class="pre">d_output</span></code> (a hypothetical gradient of the input of some upstream
+layers)</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">MatrixDynamic</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">matrix</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">BATCH_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT_DIM</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">d_output</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">MatrixDynamic</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">matrix</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">BATCH_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT_DIM</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">d_input</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">d_input</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">d_output</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">randn</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">d_output</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Now we execute the backpropagation and display the gradient of the loss wrt. the input:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">forward</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">layer_2</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Output (should be identical to layer_1): &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">layer_2</span><span class="p">.</span><span class="n">output</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">backward</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">layer_2</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">d_output</span><span class="p">,</span><span class="w"> </span><span class="n">d_input</span><span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Derivative with respect to the input: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">d_input</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Output (should be identical to layer_1):
+    0.242450     0.236803     0.000000     0.000000     0.008457
+Derivative with respect to the input:
+   -0.214641    -0.065061    -0.232326    -0.153192     0.257247
+</pre></div></div>
+</div>
+<p>This also accumulates the gradient in the weights and biases:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">layer_2</span><span class="p">.</span><span class="n">weights</span><span class="p">.</span><span class="n">gradient</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+    0.036480    -0.329980     0.762866     0.034292     0.194555
+   -0.080598     0.729055    -1.685465    -0.075765    -0.429848
+    0.000000     0.000000     0.000000     0.000000     0.000000
+    0.000000     0.000000     0.000000     0.000000     0.000000
+    0.060552    -0.547734     1.266280     0.056922     0.322942
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">layer_2</span><span class="p">.</span><span class="n">biases</span><span class="p">.</span><span class="n">gradient</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+    0.361875    -0.799522     0.000000     0.000000     0.600676
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="c1">// rlt::free(device, layer);</span>
+<span class="c1">// rlt::free(device, layer_2);</span>
+<span class="c1">// rlt::free(device, input);</span>
+<span class="c1">// rlt::free(device, output);</span>
+<span class="c1">// rlt::free(device, d_input);</span>
+<span class="c1">// rlt::free(device, d_output);</span>
+</pre></div>
+</div>
+</div>
+<p>Until now we showed the behavior of a single, fully-connected layer. <strong>RLtools</strong> contains an <a class="reference external" href="https://en.wikipedia.org/wiki/Multilayer_perceptron">Multilayer Perceptron (MLP)</a> that conveniently integrates an arbitrary number of layers into a single data structure with algorithms to perform forward passes and backpropagation across the whole model. The MLP is locate under the namespace <code class="docutils literal notranslate"><span class="pre">rl_tools::nn_models</span></code> hence we include its CPU operations:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/nn_models/mlp/operations_cpu.h&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>Next we define the hyperparameters:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">INPUT_DIM_MLP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">OUTPUT_DIM_MLP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">NUM_LAYERS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">HIDDEN_DIM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">ACTIVATION_FUNCTION_MLP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">activation_functions</span><span class="o">::</span><span class="n">RELU</span><span class="p">;</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="k">auto</span><span class="w"> </span><span class="n">OUTPUT_ACTIVATION_FUNCTION_MLP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">activation_functions</span><span class="o">::</span><span class="n">IDENTITY</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p>Note that the MLP supports architectures with an arbitrary depth but each layer has to have the same dimensionality. This is because the layers are stored in an array and hence all need to have the same type. If we would allow for different hidden dimensions, we would have to give up on having arbitrary depths.</p>
+<p>We aggregate the hyperparameters into a specification again (first just for the structure, later for the full network, incorporating the structure):</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">STRUCTURE_SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn_models</span><span class="o">::</span><span class="n">mlp</span><span class="o">::</span><span class="n">StructureSpecification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">DEVICE</span><span class="o">::</span><span class="n">index_t</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT_DIM_MLP</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT_DIM_MLP</span><span class="p">,</span><span class="w"> </span><span class="n">NUM_LAYERS</span><span class="p">,</span><span class="w"> </span><span class="n">HIDDEN_DIM</span><span class="p">,</span><span class="w"> </span><span class="n">ACTIVATION_FUNCTION_MLP</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT_ACTIVATION_FUNCTION_MLP</span><span class="p">,</span><span class="w"> </span><span class="n">BATCH_SIZE</span><span class="o">&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p>We use the default Adam parameters (taken from TensorFlow) and set up the optimizer type using these parameters. Moreover, we create a full network specification for a network that can be trained with Adam which takes the structure specification as an input. Finally we define the full network type:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">OPTIMIZER_SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">optimizers</span><span class="o">::</span><span class="n">adam</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">OPTIMIZER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">optimizers</span><span class="o">::</span><span class="n">Adam</span><span class="o">&lt;</span><span class="n">OPTIMIZER_SPEC</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">MODEL_SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn_models</span><span class="o">::</span><span class="n">mlp</span><span class="o">::</span><span class="n">AdamSpecification</span><span class="o">&lt;</span><span class="n">STRUCTURE_SPEC</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">MODEL_TYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn_models</span><span class="o">::</span><span class="n">mlp</span><span class="o">::</span><span class="n">NeuralNetworkAdam</span><span class="o">&lt;</span><span class="n">MODEL_SPEC</span><span class="o">&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p>Using these type definitions we can now declare the optimizer and the model. All the optimizer state is contained in the <code class="docutils literal notranslate"><span class="pre">PARAMETER_TYPE</span></code> of the model (and an additional <code class="docutils literal notranslate"><span class="pre">age</span></code> integer in the model in the case of Adam). In comparison to PyTorch which stores the optimizer state in the optimizer, we prefer to store the first and second-order moment next to the parameters like it is the case for the gradient anyways (in PyTorch as well). Hence the optimizer is stateless in this case (does not
+need to be for user-defined optimizers) and we only need to allocate the model.</p>
+<p>The backpropagation algorithm needs to store the intermediate gradients. To save memory we do not add a <code class="docutils literal notranslate"><span class="pre">d_input</span></code> or <code class="docutils literal notranslate"><span class="pre">d_output</span></code> to each layer but rather use a double buffer with the maximum size of the hidden representation needed.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">OPTIMIZER</span><span class="w"> </span><span class="n">optimizer</span><span class="p">;</span>
+<span class="n">MODEL_TYPE</span><span class="w"> </span><span class="n">model</span><span class="p">;</span>
+<span class="k">typename</span><span class="w"> </span><span class="nc">MODEL_TYPE</span><span class="o">::</span><span class="n">Buffer</span><span class="o">&lt;</span><span class="n">BATCH_SIZE</span><span class="o">&gt;</span><span class="w"> </span><span class="n">buffer</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p>We allocate the model and set initialize its weights randomly like in the case for the single layer. We are again zeroing the gradient of all parameters of all layers as well as resetting the optimizer state of all parameters of all layers (e.g. in the case of Adam the first and second order moments are set to zero). Finally we also allocate the buffers</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">init_weights</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span><span class="w"> </span><span class="c1">// recursively initializes all layers using kaiming initialization</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">zero_gradient</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">);</span><span class="w"> </span><span class="c1">// recursively zeros all gradients in the layers</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">reset_optimizer_state</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">optimizer</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>In this example we showcase an MLP with a five dimensional input and a one dimensional output (remember the <code class="docutils literal notranslate"><span class="pre">OUTPUT_ACTIVATION_FUNCTION_MLP</span></code> is <code class="docutils literal notranslate"><span class="pre">IDENTITY</span></code> so it can also output negative values). For these new shapes we declare and allocate the input and output containers:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">MatrixDynamic</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">matrix</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">BATCH_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT_DIM_MLP</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">input_mlp</span><span class="p">,</span><span class="w"> </span><span class="n">d_input_mlp</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">MatrixDynamic</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">matrix</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">BATCH_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT_DIM_MLP</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">d_output_mlp</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">input_mlp</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">d_input_mlp</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">d_output_mlp</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Now, like in the case of the single layer, we can run a forward pass using the input. Because the model is a Adam model (which is a subclass of <code class="docutils literal notranslate"><span class="pre">rlt::nn_models::mlp::NeuralNetworkBackwardGradient</span></code>), it stores the intermediate (and final) outputs.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">randn</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">input_mlp</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">forward</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">input_mlp</span><span class="p">);</span>
+<span class="n">T</span><span class="w"> </span><span class="n">output_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">output_layer</span><span class="p">.</span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="n">output_value</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.506566f
+</pre></div></div>
+</div>
+<p>Now imagine we want the output of the model (for this input) to be <span class="math notranslate nohighlight">\(1\)</span>. We calculate the error and feed it back through the model using backpropagation. <code class="docutils literal notranslate"><span class="pre">d_output_mlp</span></code> should be the derivative of the loss function, hence it gives the direction of the output that would increase the loss. Our error is the opposite, if we would move the output into the direction of the error we would come closer to our target value and hence decrease the loss. Because of this, we feed back <code class="docutils literal notranslate"><span class="pre">-error</span></code>. This
+procedure also corresponds to using a squared loss because <code class="docutils literal notranslate"><span class="pre">error</span></code> is (up to a constant) the derivative of the squared loss.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">T</span><span class="w"> </span><span class="n">target_output_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="n">T</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">target_output_value</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">output_value</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">set</span><span class="p">(</span><span class="n">d_output_mlp</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">error</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">backward</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">input_mlp</span><span class="p">,</span><span class="w"> </span><span class="n">d_output_mlp</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>The backward pass populates the gradient in all parameters of the model. Using this gradient we can apply the <code class="docutils literal notranslate"><span class="pre">rlt::step</span></code> operator which updates the first and second order moments of the gradient of all parameters and afterwards applies the Adam update rule to update the parameters:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">step</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">optimizer</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Now the next forward pass should be closer to the target value:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">forward</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">input_mlp</span><span class="p">);</span>
+<span class="n">get</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">output_layer</span><span class="p">.</span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.518496f
+</pre></div></div>
+</div>
+<p>Next we will train the network to actually perform a function (not only trying to output a constant value as before). With the following training loop we train it to behave like the <code class="docutils literal notranslate"><span class="pre">rlt::max</span></code> operator which outputs the max of the five inputs. We run the forward and backward pass for <span class="math notranslate nohighlight">\(32\)</span> iterations while accumulating the gradient which effectively leads to a batch size of <span class="math notranslate nohighlight">\(32\)</span></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="n">TI</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10000</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">    </span><span class="n">rlt</span><span class="o">::</span><span class="n">zero_gradient</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">);</span>
+<span class="w">    </span><span class="n">T</span><span class="w"> </span><span class="n">mse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="n">TI</span><span class="w"> </span><span class="n">batch_i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">batch_i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">32</span><span class="p">;</span><span class="w"> </span><span class="n">batch_i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">        </span><span class="n">rlt</span><span class="o">::</span><span class="n">randn</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">input_mlp</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span>
+<span class="w">        </span><span class="n">rlt</span><span class="o">::</span><span class="n">forward</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">input_mlp</span><span class="p">);</span>
+<span class="w">        </span><span class="n">T</span><span class="w"> </span><span class="n">output_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">output_layer</span><span class="p">.</span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">        </span><span class="n">T</span><span class="w"> </span><span class="n">target_output_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">input_mlp</span><span class="p">);</span>
+<span class="w">        </span><span class="n">T</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">target_output_value</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">output_value</span><span class="p">;</span>
+<span class="w">        </span><span class="n">rlt</span><span class="o">::</span><span class="n">set</span><span class="p">(</span><span class="n">d_output_mlp</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">error</span><span class="p">);</span>
+<span class="w">        </span><span class="n">rlt</span><span class="o">::</span><span class="n">backward</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">input_mlp</span><span class="p">,</span><span class="w"> </span><span class="n">d_output_mlp</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="p">);</span>
+<span class="w">        </span><span class="n">mse</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">error</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">rlt</span><span class="o">::</span><span class="n">step</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">optimizer</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Squared error: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">mse</span><span class="o">/</span><span class="mi">32</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Squared error: 0.643161
+Squared error: 0.055282
+Squared error: 0.025098
+Squared error: 0.016178
+Squared error: 0.016653
+Squared error: 0.017667
+Squared error: 0.011234
+Squared error: 0.009903
+Squared error: 0.008082
+Squared error: 0.013133
+</pre></div></div>
+</div>
+<p>Now we can test the model using some arbitrary input (which should be in the distribution of input values) and the model should output a value close to the maximum of the five input values:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">set</span><span class="p">(</span><span class="n">input_mlp</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="o">+</span><span class="mf">0.0</span><span class="p">);</span>
+<span class="n">set</span><span class="p">(</span><span class="n">input_mlp</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.1</span><span class="p">);</span>
+<span class="n">set</span><span class="p">(</span><span class="n">input_mlp</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="o">+</span><span class="mf">0.5</span><span class="p">);</span>
+<span class="n">set</span><span class="p">(</span><span class="n">input_mlp</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mf">-0.4</span><span class="p">);</span>
+<span class="n">set</span><span class="p">(</span><span class="n">input_mlp</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="o">+</span><span class="mf">0.1</span><span class="p">);</span>
+
+<span class="n">rlt</span><span class="o">::</span><span class="n">forward</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">input_mlp</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">get</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">output_layer</span><span class="p">.</span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.465758f
+</pre></div></div>
+</div>
+<p>We can also automatically test it with <span class="math notranslate nohighlight">\(10\)</span> random inputs:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">for</span><span class="p">(</span><span class="n">TI</span><span class="w"> </span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">    </span><span class="n">rlt</span><span class="o">::</span><span class="n">randn</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">input_mlp</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span>
+<span class="w">    </span><span class="n">rlt</span><span class="o">::</span><span class="n">forward</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">input_mlp</span><span class="p">);</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;max: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">input_mlp</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; output: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">get</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">output_layer</span><span class="p">.</span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+max: 0.539628 output: 0.555250
+max: 1.348390 output: 1.313734
+max: 1.660528 output: 1.620565
+max: 1.779285 output: 1.736159
+max: 1.311534 output: 1.281000
+max: 0.965693 output: 0.928818
+max: 2.799156 output: 2.870090
+max: 1.195009 output: 1.314342
+max: 0.797983 output: 0.711656
+max: 0.419951 output: 0.450600
+</pre></div></div>
+</div>
+<p>If the values are not close the model might need some more training iterations.</p>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="04-CPU%20Acceleration.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">CPU Acceleration</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="02-Multiple%20Dispatch.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Multiple Dispatch</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=32e29ea5"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

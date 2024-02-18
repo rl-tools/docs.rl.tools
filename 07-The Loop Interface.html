@@ -1,0 +1,504 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Custom Environment" href="08-Custom%20Environment.html" /><link rel="prev" title="Deep Reinforcement Learning" href="06-Deep%20Reinforcement%20Learning.html" />
+
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+        <title>The Loop Interface - RLtools Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="_static/overrides.css?v=ca018f06" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --color-brand-primary: #639694;
+  --color-brand-content: #639694;
+  --color-admonition-background: orange;
+  --sidebar_hide_name: True;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">RLtools Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/banner.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">RLtools Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01-Containers.html">Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-Multiple%20Dispatch.html">Multiple Dispatch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-Deep%20Learning.html">Deep Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-CPU%20Acceleration.html">CPU Acceleration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-MNIST%20Classification.html">MNIST Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-Deep%20Reinforcement%20Learning.html">Deep Reinforcement Learning</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">The Loop Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-Custom%20Environment.html">Custom Environment</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="The-Loop-Interface">
+<h1>The Loop Interface<a class="headerlink" href="#The-Loop-Interface" title="Link to this heading">#</a></h1>
+<p>The Loop Interface is an attempt at abstracting the RL training loop and providing common defaults for each RL algorithm. The goal is to strike a balance of it working out of the box (batteries included) without a lot of configuration and boilerplate code but still being flexible enough to support many modifications to the training procedure. The latter is mainly attained by not handing over the control flow to a <code class="docutils literal notranslate"><span class="pre">train()</span></code> method where the user has to learn about and implement hooks/callbacks
+to modify the training, but rather expose a <code class="docutils literal notranslate"><span class="pre">step(...)</span></code> operation that progresses the RL algorithm by one step (not necessarily only one step of the environment). In this way the user can implement schedules (e.g. for the learning rate) or curricula as well as evaluation of intermediate policies and checkpointing straightforwardly without learning a new API.</p>
+<p>The Loop Interface consists of three main components:</p>
+<ol class="arabic simple">
+<li><p><strong>Configuration</strong>: Compile-time configuration that defines the network structures and algorithm parameters. Takes an environment type as a template parameter input.</p></li>
+<li><p><strong>State</strong>: The configuration gives rise to a state object that stores the whole state of the training procedure.</p></li>
+<li><p><strong>Step</strong> operation: A step operation that advances the state by one step according to the algorithm</p></li>
+</ol>
+<p>By wrapping the configuration, e.g. with the <code class="docutils literal notranslate"><span class="pre">rl_tools::rl::loop::steps::evaluation</span></code> module (as shown later in this example). The state gets extended automatically and the <code class="docutils literal notranslate"><span class="pre">step(...)</span></code> operations get called recursively to advance the partial states of all modules.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#define RL_TOOLS_BACKEND_ENABLE_OPENBLAS</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/operations/cpu_mux.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/nn/operations_cpu_mux.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/environments/pendulum/operations_generic.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/nn_models/operations_cpu.h&gt;</span>
+<span class="k">namespace</span><span class="w"> </span><span class="nn">rlt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">rl_tools</span><span class="p">;</span>
+<span class="cp">#pragma cling load(&quot;openblas&quot;)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">devices</span><span class="o">::</span><span class="n">DEVICE_FACTORY</span><span class="o">&lt;&gt;</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">RNG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">decltype</span><span class="p">(</span><span class="n">rlt</span><span class="o">::</span><span class="n">random</span><span class="o">::</span><span class="n">default_engine</span><span class="p">(</span><span class="k">typename</span><span class="w"> </span><span class="nc">DEVICE</span><span class="o">::</span><span class="n">SPEC</span><span class="o">::</span><span class="n">RANDOM</span><span class="p">{}));</span>
+<span class="k">using</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">DEVICE</span><span class="o">::</span><span class="n">index_t</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p>For each RL algorithm in RLtools we provide a loop interface consisting of a configuration, a corresponding state data structure, and step operation. To use the loop interface we include the core loop of e.g. <a class="reference external" href="https://arxiv.org/abs/1707.06347">PPO</a>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/algorithms/ppo/loop/core/config.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/algorithms/ppo/loop/core/operations_generic.h&gt;</span>
+</pre></div>
+</div>
+</div>
+<p>Next we can define the <a class="reference external" href="https://en.wikipedia.org/wiki/Markov_decision_process">MDP</a> in form of an environment (see <a class="reference internal" href="08-Custom%20Environment.html"><span class="doc">Custom Environment</span></a> for details):</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">PENDULUM_SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">environments</span><span class="o">::</span><span class="n">pendulum</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">environments</span><span class="o">::</span><span class="n">pendulum</span><span class="o">::</span><span class="n">DefaultParameters</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">environments</span><span class="o">::</span><span class="n">Pendulum</span><span class="o">&lt;</span><span class="n">PENDULUM_SPEC</span><span class="o">&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p>Based on this environment we can create the default PPO loop config (with default shapes for the actor and critic networks as well as other parameters):</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">LOOP_CORE_PARAMETERS</span><span class="o">:</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">algorithms</span><span class="o">::</span><span class="n">ppo</span><span class="o">::</span><span class="n">loop</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">Parameters</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="o">&gt;</span><span class="p">{</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">EPISODE_STEP_LIMIT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">;</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">TOTAL_STEP_LIMIT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">300000</span><span class="p">;</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">STEP_LIMIT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TOTAL_STEP_LIMIT</span><span class="o">/</span><span class="p">(</span><span class="n">ON_POLICY_RUNNER_STEPS_PER_ENV</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">N_ENVIRONMENTS</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="c1">// number of PPO steps</span>
+<span class="p">};</span>
+<span class="k">using</span><span class="w"> </span><span class="n">LOOP_CORE_CONFIG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">algorithms</span><span class="o">::</span><span class="n">ppo</span><span class="o">::</span><span class="n">loop</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">Config</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">RNG</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="p">,</span><span class="w"> </span><span class="n">LOOP_CORE_PARAMETERS</span><span class="o">&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p>This config, which can be customized creating a subclass and overwriting the desired fields, gives rise to a loop state:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">LOOP_CORE_STATE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">LOOP_CORE_CONFIG</span><span class="o">::</span><span class="k">template</span><span class="w"> </span><span class="n">State</span><span class="o">&lt;</span><span class="n">LOOP_CORE_CONFIG</span><span class="o">&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p>Next we can create an instance of this state and allocate as well as initialize it:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">DEVICE</span><span class="w"> </span><span class="n">device</span><span class="p">;</span>
+<span class="n">LOOP_CORE_STATE</span><span class="w"> </span><span class="n">lsc</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">lsc</span><span class="p">);</span>
+<span class="n">TI</span><span class="w"> </span><span class="n">seed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1337</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">lsc</span><span class="p">,</span><span class="w"> </span><span class="n">seed</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Now we can execute PPO steps. A PPO step consists of collecting <code class="docutils literal notranslate"><span class="pre">LOOP_CONFIG::CORE_PARAMETERS::N_ENVIRONMENTS</span> <span class="pre">*</span> <span class="pre">LOOP_CONFIG::CORE_PARAMETERS::ON_POLICY_RUNNER_STEPS_PER_ENV</span></code> steps using the <code class="docutils literal notranslate"><span class="pre">OffPolicyRunner</span></code> and then training the actor and critic for <code class="docutils literal notranslate"><span class="pre">LOOP_CONFIG::CORE_PARAMETERS::PPO_PARAMETERS::N_EPOCHS</span></code>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span><span class="w"> </span><span class="n">finished</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">step</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">lsc</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>Since we don’t want to re-implement e.g. the evaluation for each algorithm, we can wrap the PPO core config in an evaluation loop config wich adds its own configuration, state datastructure and step operation:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/environments/pendulum/ui_xeus.h&gt;</span><span class="c1"> // For the interactive UI used later on</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/loop/steps/evaluation/config.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/loop/steps/evaluation/operations_generic.h&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">NEXT</span><span class="o">&gt;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">LOOP_EVAL_PARAMETERS</span><span class="o">:</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">loop</span><span class="o">::</span><span class="n">steps</span><span class="o">::</span><span class="n">evaluation</span><span class="o">::</span><span class="n">Parameters</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">NEXT</span><span class="o">&gt;</span><span class="p">{</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">EVALUATION_INTERVAL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">NUM_EVALUATION_EPISODES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">N_EVALUATIONS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NEXT</span><span class="o">::</span><span class="n">CORE_PARAMETERS</span><span class="o">::</span><span class="n">STEP_LIMIT</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">EVALUATION_INTERVAL</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="k">using</span><span class="w"> </span><span class="n">LOOP_CONFIG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">loop</span><span class="o">::</span><span class="n">steps</span><span class="o">::</span><span class="n">evaluation</span><span class="o">::</span><span class="n">Config</span><span class="o">&lt;</span><span class="n">LOOP_CORE_CONFIG</span><span class="p">,</span><span class="w"> </span><span class="n">LOOP_EVAL_PARAMETERS</span><span class="o">&lt;</span><span class="n">LOOP_CORE_CONFIG</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">LOOP_STATE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">LOOP_CONFIG</span><span class="o">::</span><span class="k">template</span><span class="w"> </span><span class="n">State</span><span class="o">&lt;</span><span class="n">LOOP_CONFIG</span><span class="o">&gt;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">LOOP_STATE</span><span class="w"> </span><span class="n">ls</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">ls</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">ls</span><span class="p">,</span><span class="w"> </span><span class="n">seed</span><span class="p">);</span>
+<span class="n">ls</span><span class="p">.</span><span class="n">actor_optimizer</span><span class="p">.</span><span class="n">parameters</span><span class="p">.</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-3</span><span class="p">;</span><span class="w"> </span><span class="c1">// increasing the learning rate leads to faster training of the Pendulum-v1 environment</span>
+<span class="n">ls</span><span class="p">.</span><span class="n">critic_optimizer</span><span class="p">.</span><span class="n">parameters</span><span class="p">.</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-3</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">rlt</span><span class="o">::</span><span class="n">step</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">ls</span><span class="p">)){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">ls</span><span class="p">.</span><span class="n">step</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">5</span><span class="p">){</span>
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Stepping yourself &gt; hooks/callbacks&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Step: 0/74 Mean return: -1682.39
+Step: 4/74 Mean return: -1419.55
+Stepping yourself &gt; hooks/callbacks
+Step: 8/74 Mean return: -1223.19
+Step: 12/74 Mean return: -1339.5
+Step: 16/74 Mean return: -1312.17
+Step: 20/74 Mean return: -1491.38
+Step: 24/74 Mean return: -1627.73
+Step: 28/74 Mean return: -1354.34
+Step: 32/74 Mean return: -1331.68
+Step: 36/74 Mean return: -1023.95
+Step: 40/74 Mean return: -899.378
+Step: 44/74 Mean return: -633.975
+Step: 48/74 Mean return: -400.041
+Step: 52/74 Mean return: -194.353
+Step: 56/74 Mean return: -196.653
+Step: 60/74 Mean return: -208.196
+Step: 64/74 Mean return: -252.802
+Step: 68/74 Mean return: -254.644
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">UI_SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">environments</span><span class="o">::</span><span class="n">pendulum</span><span class="o">::</span><span class="n">ui</span><span class="o">::</span><span class="n">xeus</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="o">&gt;</span><span class="p">;</span><span class="w"> </span><span class="c1">// float type, index type, size, playback speed (in %)</span>
+<span class="k">using</span><span class="w"> </span><span class="n">UI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">environments</span><span class="o">::</span><span class="n">pendulum</span><span class="o">::</span><span class="n">ui</span><span class="o">::</span><span class="n">xeus</span><span class="o">::</span><span class="n">UI</span><span class="o">&lt;</span><span class="n">UI_SPEC</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="n">UI</span><span class="w"> </span><span class="n">ui</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">MatrixDynamic</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">matrix</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="o">::</span><span class="n">OBSERVATION_DIM</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">observations_mean</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">MatrixDynamic</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">matrix</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="o">::</span><span class="n">OBSERVATION_DIM</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">observations_std</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">observations_mean</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">observations_std</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">set_all</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">observations_mean</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">set_all</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">observations_std</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="n">ui</span><span class="p">.</span><span class="n">canvas</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "93936dd249584b479daf8222f0b2b83c", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">evaluate</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">ls</span><span class="p">.</span><span class="n">env_eval</span><span class="p">,</span><span class="w"> </span><span class="n">ui</span><span class="p">,</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">get_actor</span><span class="p">(</span><span class="n">ls</span><span class="p">),</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">utils</span><span class="o">::</span><span class="n">evaluation</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">200</span><span class="o">&gt;</span><span class="p">(),</span><span class="w"> </span><span class="n">observations_mean</span><span class="p">,</span><span class="w"> </span><span class="n">observations_std</span><span class="p">,</span><span class="w"> </span><span class="n">ls</span><span class="p">.</span><span class="n">actor_deterministic_evaluation_buffers</span><span class="p">,</span><span class="w"> </span><span class="n">ls</span><span class="p">.</span><span class="n">rng_eval</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>You can execute the previous cell again to run another rollout using the UI.</p>
+<section id="Moving-Beyond-the-Loop-Interface">
+<h2>Moving Beyond the Loop Interface<a class="headerlink" href="#Moving-Beyond-the-Loop-Interface" title="Link to this heading">#</a></h2>
+<p>If you want more fine-grained control than the loop interface permits (e.g. for researching modifications to the algorithms), you can have a look at the definition of the config, the state, and particularly the <code class="docutils literal notranslate"><span class="pre">step(...)</span></code> implementation (e.g. in <code class="docutils literal notranslate"><span class="pre">rl_tools/rl/algorithms/ppo/loop/core/operations_generic.h</span></code> in the case of PPO). You can instantiate the data structures in a similar way and then call the PPO operations like <code class="docutils literal notranslate"><span class="pre">collect(..)</span></code>, <code class="docutils literal notranslate"><span class="pre">estimate_generalized_advantages(...)</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">train(...)</span></code> yourself.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="08-Custom%20Environment.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Custom Environment</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="06-Deep%20Reinforcement%20Learning.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Deep Reinforcement Learning</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">The Loop Interface</a><ul>
+<li><a class="reference internal" href="#Moving-Beyond-the-Loop-Interface">Moving Beyond the Loop Interface</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=32e29ea5"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>
