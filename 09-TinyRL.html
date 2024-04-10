@@ -2,11 +2,14 @@
 <html class="no-js" lang="en" data-content_root="./">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#" /><link rel="search" title="Search" href="search.html" />
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="Custom Environment" href="08-Custom%20Environment.html" />
 
-    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 --><title>Index - RLtools Documentation</title>
-<link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+        <title>TinyRL: A Python Interface for RLtools - RLtools Documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
     <link rel="stylesheet" type="text/css" href="_static/overrides.css?v=ca018f06" />
     
@@ -137,7 +140,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -161,7 +164,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="01-Containers.html">Containers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02-Multiple%20Dispatch.html">Multiple Dispatch</a></li>
@@ -171,7 +174,7 @@
 <li class="toctree-l1"><a class="reference internal" href="06-Deep%20Reinforcement%20Learning.html">Deep Reinforcement Learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07-The%20Loop%20Interface.html">The Loop Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="08-Custom%20Environment.html">Custom Environment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="09-TinyRL.html">TinyRL: A Python Interface for RLtools</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">TinyRL: A Python Interface for RLtools</a></li>
 </ul>
 
 </div>
@@ -191,7 +194,8 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
               <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
@@ -199,16 +203,133 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          
-<section class="genindex-section">
-  <h1 id="index">Index</h1>
-  <div class="genindex-jumpbox"></div>
+          <section id="TinyRL:-A-Python-Interface-for-RLtools">
+<h1>TinyRL: A Python Interface for RLtools<a class="headerlink" href="#TinyRL:-A-Python-Interface-for-RLtools" title="Link to this heading">#</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/rl-tools/documentation/blob/master/docs/09-TinyRL.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>For ease of use we provide a Python wrapper for RLtools that can simply be installed by <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">tinyrl</span></code>. It uses <code class="docutils literal notranslate"><span class="pre">pybind11</span></code> which is its only necessary dependency. Since one of the main premises of RLtools is that the size of all data structures and loops is known at compile-time, we can not compile the RLtools interface ahead of time. This issue arises for example with the observation and action dimensionality, which are dependent on the environment and, by the nature of Python, are
+only known at run-time. Hence we TinyRL compiles the RLtools interface just-in-time, when an RL algorithm is instantiated for a concrete environment.</p>
+<p>TinyRL also supports accelerated backends (e.g. Apple Accelerate and Intel MKL). Apple Accelerate is detected automatically and does not require additional actions, while Intel MKL can be installed using the <code class="docutils literal notranslate"><span class="pre">tinyrl[mkl]</span></code> option as can be seen in the following:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>!pip install tinyrl[mkl] gymnasium &gt; /dev/null # ignoring the output to keep this notebook concise
+</pre></div>
+</div>
+</div>
+<p>TinyRL is compatible with Gym/Gymnasium environments that have continuous actions. In the following we show the training of the pendulum swing-up using SAC as an example:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from tinyrl import SAC
+import gymnasium as gym
+
+seed=0x1337
+environment_name = &quot;Pendulum-v1&quot;
+</pre></div>
+</div>
+</div>
+<section id="Training">
+<h2>Training<a class="headerlink" href="#Training" title="Link to this heading">#</a></h2>
+<p>Since the RL algorithms in RLtools might create multiple instances of the environment (e.g. for vectorized simulation) we create a factory method that creates an instance of the desired environment and hand it over to the <code class="docutils literal notranslate"><span class="pre">SAC</span></code> function that has been imported from tinyrl. The <code class="docutils literal notranslate"><span class="pre">SAC</span></code> function compiles the RLtools interface and takes a <a class="reference external" href="https://github.com/rl-tools/tinyrl/blob/fdc2b19e896543a437fd859fb7eceed2550b975a/tinyrl/src/sac.py#L14">plethora of options</a>. It returns the compiled module
+which contains a wrapper for <a class="reference external" href="https://github.com/rl-tools/rl-tools/blob/master/include/rl_tools/rl/algorithms/sac/loop/core/state.h">the SAC training loop state data structure</a>. Once the training state is instantiated, the training can be progressed step-by-step like described in <a class="reference internal" href="07-The%20Loop%20Interface.html"><span class="doc">The Loop Interface</span></a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def env_factory():
+    env = gym.make(environment_name)
+    env.reset(seed=seed)
+    return env
+sac = SAC(env_factory)
+state = sac.State(seed)
+finished = False
+while not finished:
+    finished = state.step()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+MKL is installed. Version: 2024.1.0 (include: 2024.1.0)
+MKL include path: /opt/conda/lib/python3.12/site-packages/../../../include
+Using cached TinyRL interface.
+Step: 0/10000 Mean return: -1312.71
+Step: 1000/10000 Mean return: -1594.03
+Step: 2000/10000 Mean return: -1271.26
+Step: 3000/10000 Mean return: -958.029
+Step: 4000/10000 Mean return: -1021.33
+Step: 5000/10000 Mean return: -875.209
+Step: 6000/10000 Mean return: -875.252
+Step: 7000/10000 Mean return: -907.503
+Step: 8000/10000 Mean return: -666.743
+Step: 9000/10000 Mean return: -339.823
+Time: 3.787s
+</pre></div></div>
+</div>
+</section>
+<section id="Inference">
+<h2>Inference<a class="headerlink" href="#Inference" title="Link to this heading">#</a></h2>
+<p>To show the behavior of the policy we install some utilities for rendering:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>!pip install gymnasium[classic-control] imageio &gt; /dev/null
+</pre></div>
+</div>
+</div>
+<p>Now we can instantiate an environment as usual:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import imageio, io
+from IPython.display import Image, display
+
+env = gym.make(&#39;Pendulum-v1&#39;, render_mode=&#39;rgb_array&#39;)
+env.reset(seed=seed) and None
+</pre></div>
+</div>
+</div>
+<p>You can evaluate the policy using <code class="docutils literal notranslate"><span class="pre">action</span> <span class="pre">=</span> <span class="pre">state.action(observation)</span></code> (also during the training to, e.g., assess the performance at different stages). In the following, we execute the rollout of one episode and generate an animation (you can execute the cell again to sample a new roll-out):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>frames = []
+observation, _ = env.reset()
+finished = False
+while not finished:
+  frames.append(env.render())
+  action = state.action(observation)
+  observation, reward, terminated, truncated, _ = env.step(action)
+  finished = terminated or truncated
+gif_io = io.BytesIO()
+imageio.mimsave(gif_io, frames, format=&quot;GIF&quot;, fps=1/env.env.env.env.dt)
+gif_io.seek(0)
+display(Image(data=gif_io.read(), format=&#39;png&#39;))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/09-TinyRL_12_0.png" src="_images/09-TinyRL_12_0.png" />
+</div>
+</div>
+</section>
 </section>
 
         </article>
@@ -217,7 +338,17 @@
         
         <div class="related-pages">
           
-          
+          <a class="prev-page" href="08-Custom%20Environment.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Custom Environment</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -236,8 +367,28 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">TinyRL: A Python Interface for RLtools</a><ul>
+<li><a class="reference internal" href="#Training">Training</a></li>
+<li><a class="reference internal" href="#Inference">Inference</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
@@ -247,5 +398,7 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=32e29ea5"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>
