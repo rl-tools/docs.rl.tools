@@ -263,9 +263,7 @@ which contains a wrapper for <a class="reference external" href="https://github.
 <div class="highlight"><pre>
 MKL is installed. Version: 2024.1.0 (include: 2024.1.0)
 MKL include path: /opt/conda/lib/python3.12/site-packages/../../../include
-New SAC config detected, forcing recompilation...
-Compiling the TinyRL interface...
-Finished compiling the TinyRL interface.
+Using cached TinyRL interface.
 Step: 0/10000 Mean return: -1312.71
 Step: 1000/10000 Mean return: -1594.03
 Step: 2000/10000 Mean return: -1271.26
@@ -276,7 +274,7 @@ Step: 6000/10000 Mean return: -875.252
 Step: 7000/10000 Mean return: -907.503
 Step: 8000/10000 Mean return: -666.743
 Step: 9000/10000 Mean return: -339.823
-Time: 3.746s
+Time: 3.834s
 </pre></div></div>
 </div>
 </section>
@@ -309,18 +307,41 @@ Time: 3.746s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">frames</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">observation</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-<span class="n">finished</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="k">while</span> <span class="ow">not</span> <span class="n">finished</span><span class="p">:</span>
-  <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">render</span><span class="p">())</span>
-  <span class="n">action</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">observation</span><span class="p">)</span>
-  <span class="n">observation</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
-  <span class="n">finished</span> <span class="o">=</span> <span class="n">terminated</span> <span class="ow">or</span> <span class="n">truncated</span>
-<span class="n">gif_io</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
-<span class="n">imageio</span><span class="o">.</span><span class="n">mimsave</span><span class="p">(</span><span class="n">gif_io</span><span class="p">,</span> <span class="n">frames</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;GIF&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">dt</span><span class="p">,</span> <span class="n">loop</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">gif_io</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">gif_io</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([-2.81004615, -0.16906879])
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">policy</span><span class="p">):</span>
+    <span class="n">frames</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+    <span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="c1"># to start all the way down for a better animation</span>
+    <span class="n">observation</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">finished</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">finished</span><span class="p">:</span>
+      <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">env</span><span class="o">.</span><span class="n">render</span><span class="p">())</span>
+      <span class="n">action</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">observation</span><span class="p">)</span>
+      <span class="n">observation</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">terminated</span><span class="p">,</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+      <span class="n">finished</span> <span class="o">=</span> <span class="n">terminated</span> <span class="ow">or</span> <span class="n">truncated</span>
+    <span class="n">gif_io</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+    <span class="n">imageio</span><span class="o">.</span><span class="n">mimsave</span><span class="p">(</span><span class="n">gif_io</span><span class="p">,</span> <span class="n">frames</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;GIF&quot;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">dt</span><span class="p">,</span> <span class="n">loop</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">gif_io</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">gif_io</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;png&#39;</span><span class="p">))</span>
+
+<span class="n">evaluate</span><span class="p">(</span><span class="k">lambda</span> <span class="n">observation</span><span class="p">:</span> <span class="n">state</span><span class="o">.</span><span class="n">action</span><span class="p">(</span><span class="n">observation</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -328,9 +349,53 @@ Time: 3.746s
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/09-TinyRL_12_0.png" src="_images/09-TinyRL_12_0.png" />
+<img alt="_images/09-TinyRL_13_0.png" src="_images/09-TinyRL_13_0.png" />
 </div>
 </div>
+</section>
+<section id="Exporting-the-Trained-Policy">
+<h2>Exporting the Trained Policy<a class="headerlink" href="#Exporting-the-Trained-Policy" title="Link to this heading">#</a></h2>
+<p>The trained policy can be exported as a <code class="docutils literal notranslate"><span class="pre">.h</span></code> file so that it can e.g. be compiled into the firmware of a microcontroller</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;checkpoint.h&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">export_policy</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<p>You can view the <a class="reference external" href="./checkpoint.h">checkpoint</a> to get a feeling on how this works. In short, the floating point values of the weights and biases of all layers are converted to unsigned 8-bit integers so that the exact bit-values (according to the <a class="reference external" href="https://en.wikipedia.org/wiki/IEEE_754">IEEE 754</a> are stored and there is no loss of precision between exporting and importing. This exported header file can be easily integrated into C/C++ projects of any kind (e.g. <a class="reference external" href="https://github.com/arplaboratory/learning_to_fly_controller/blob/af669f62e16f0ee4ef9d7a7fa4925c44ef71560a/rl_tools_adapter.cpp#L9">ones targeting
+Microcontrollers</a> or WebAssembly).</p>
+<p>In TinyRL we can easily import back a checkpoint and make it accessible to Python as well:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tinyrl</span> <span class="kn">import</span> <span class="n">load_checkpoint_from_path</span>
+<span class="n">policy</span> <span class="o">=</span> <span class="n">load_checkpoint_from_path</span><span class="p">(</span><span class="s2">&quot;checkpoint.h&quot;</span><span class="p">)</span>
+<span class="n">evaluate</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+MKL is installed. Version: 2024.1.0 (include: 2024.1.0)
+MKL include path: /opt/conda/lib/python3.12/site-packages/../../../include
+Using cached TinyRL interface.
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/09-TinyRL_17_1.png" src="_images/09-TinyRL_17_1.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">load_checkpoint_from_path</span></code> compiles the stored <code class="docutils literal notranslate"><span class="pre">checkpoint.h</span></code> into a Python module to make it accessible.</p>
 </section>
 </section>
 
@@ -384,6 +449,7 @@ Time: 3.746s
 <li><a class="reference internal" href="#">TinyRL: A Python Interface for RLtools</a><ul>
 <li><a class="reference internal" href="#Training">Training</a></li>
 <li><a class="reference internal" href="#Inference">Inference</a></li>
+<li><a class="reference internal" href="#Exporting-the-Trained-Policy">Exporting the Trained Policy</a></li>
 </ul>
 </li>
 </ul>
