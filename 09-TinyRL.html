@@ -232,7 +232,7 @@ only known at run-time. Hence we TinyRL compiles the RLtools interface just-in-t
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tinyrl</span> <span class="kn">import</span> <span class="n">SAC</span>
 <span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
 
-<span class="n">seed</span><span class="o">=</span><span class="mh">0x1337</span>
+<span class="n">seed</span><span class="o">=</span><span class="mh">0xf00d</span>
 <span class="n">environment_name</span> <span class="o">=</span> <span class="s2">&quot;Pendulum-v1&quot;</span>
 </pre></div>
 </div>
@@ -262,20 +262,18 @@ which contains a wrapper for <a class="reference external" href="https://github.
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-MKL is installed. Version: 2024.1.0 (include: 2024.1.0)
-MKL include path: /opt/conda/lib/python3.12/site-packages/../../../include
 Using cached TinyRL interface.
-Step: 0/10000 Mean return: -1312.71
-Step: 1000/10000 Mean return: -1594.03
-Step: 2000/10000 Mean return: -1271.26
-Step: 3000/10000 Mean return: -958.029
-Step: 4000/10000 Mean return: -1021.33
-Step: 5000/10000 Mean return: -875.209
-Step: 6000/10000 Mean return: -875.252
-Step: 7000/10000 Mean return: -907.503
-Step: 8000/10000 Mean return: -666.743
-Step: 9000/10000 Mean return: -339.823
-Time: 3.834s
+Step: 0/10000 Mean return: -1130.39
+Step: 1000/10000 Mean return: -1594.74
+Step: 2000/10000 Mean return: -1182.45
+Step: 3000/10000 Mean return: -1126.76
+Step: 4000/10000 Mean return: -483.957
+Step: 5000/10000 Mean return: -401.367
+Step: 6000/10000 Mean return: -216.037
+Step: 7000/10000 Mean return: -567.792
+Step: 8000/10000 Mean return: -204.206
+Step: 9000/10000 Mean return: -260.68
+Time: 1.981s
 </pre></div></div>
 </div>
 </section>
@@ -286,7 +284,7 @@ Time: 3.834s
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">gymnasium</span><span class="p">[</span><span class="n">classic</span><span class="o">-</span><span class="n">control</span><span class="p">]</span> <span class="n">imageio</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">gymnasium</span>\<span class="p">[</span><span class="n">classic</span><span class="o">-</span><span class="n">control</span>\<span class="p">]</span> <span class="n">imageio</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
 </pre></div>
 </div>
 </div>
@@ -304,23 +302,6 @@ Time: 3.834s
 </div>
 </div>
 <p>You can evaluate the policy using <code class="docutils literal notranslate"><span class="pre">action</span> <span class="pre">=</span> <span class="pre">state.action(observation)</span></code> (also during the training to, e.g., assess the performance at different stages). In the following, we execute the rollout of one episode and generate an animation (you can execute the cell again to sample a new roll-out):</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">state</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-array([-2.81004615, -0.16906879])
-</pre></div></div>
-</div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
@@ -350,7 +331,7 @@ array([-2.81004615, -0.16906879])
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/09-TinyRL_13_0.png" src="_images/09-TinyRL_13_0.png" />
+<img alt="_images/09-TinyRL_12_0.png" src="_images/09-TinyRL_12_0.png" />
 </div>
 </div>
 </section>
@@ -384,8 +365,6 @@ Microcontrollers</a> or WebAssembly).</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-MKL is installed. Version: 2024.1.0 (include: 2024.1.0)
-MKL include path: /opt/conda/lib/python3.12/site-packages/../../../include
 Using cached TinyRL interface.
 </pre></div></div>
 </div>
@@ -393,7 +372,7 @@ Using cached TinyRL interface.
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/09-TinyRL_17_1.png" src="_images/09-TinyRL_17_1.png" />
+<img alt="_images/09-TinyRL_16_1.png" src="_images/09-TinyRL_16_1.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">load_checkpoint_from_path</span></code> compiles the stored <code class="docutils literal notranslate"><span class="pre">checkpoint.h</span></code> into a Python module to make it accessible.</p>
