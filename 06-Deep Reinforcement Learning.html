@@ -175,6 +175,7 @@
 <li class="toctree-l1"><a class="reference internal" href="07-The%20Loop%20Interface.html">The Loop Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="08-Custom%20Environment.html">Custom Environment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="09-TinyRL.html">TinyRL: A Python Interface for RLtools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-Experiment%20Tracking.html">Experiment Tracking</a></li>
 </ul>
 
 </div>
@@ -233,7 +234,7 @@ make the accelerated routines available to the higher-level functions, <code cla
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/algorithms/td3/operations_generic.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/components/off_policy_runner/operations_generic.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/environments/pendulum/ui_xeus.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/utils/evaluation.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/utils/evaluation/operations_generic.h&gt;</span>
 <span class="k">namespace</span><span class="w"> </span><span class="nn">rlt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">rl_tools</span><span class="p">;</span>
 <span class="cp">#pragma cling load(&quot;openblas&quot;)</span>
 </pre></div>

@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="TinyRL: A Python Interface for RLtools" href="09-TinyRL.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
-        <title>&lt;no title&gt; - RLtools Documentation</title>
+        <title>Experiment Tracking - RLtools Documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
@@ -139,7 +139,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -163,7 +163,7 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="01-Containers.html">Containers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02-Multiple%20Dispatch.html">Multiple Dispatch</a></li>
@@ -174,7 +174,7 @@
 <li class="toctree-l1"><a class="reference internal" href="07-The%20Loop%20Interface.html">The Loop Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="08-Custom%20Environment.html">Custom Environment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="09-TinyRL.html">TinyRL: A Python Interface for RLtools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="10-Experiment%20Tracking.html">Experiment Tracking</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Experiment Tracking</a></li>
 </ul>
 
 </div>
@@ -203,20 +203,109 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          
+          <section id="experiment-tracking">
+<h1>Experiment Tracking<a class="headerlink" href="#experiment-tracking" title="Link to this heading">#</a></h1>
+<p>The experiments follow the hierarchical, filesystem-based experiment tracking interface as specified in the following.</p>
+<section id="run-identifier">
+<h2>Run Identifier<a class="headerlink" href="#run-identifier" title="Link to this heading">#</a></h2>
+<p>Each run is characterized by the following path/identifier structure:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{TIME}/{COMMIT}_{NAME}_{POPULATION}/{CONFIG}/{SEED}
+</pre></div>
+</div>
+<p>e.g.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>2024-05-26_06-26-52/4f717cb_zoo_algorithm_environment/sac_pendulum-v1/0000
+</pre></div>
+</div>
+<p>This makes it very easy to sort, filter and analyze the experiments with just unix tools like <code class="docutils literal notranslate"><span class="pre">find</span></code>, <code class="docutils literal notranslate"><span class="pre">sort</span></code>, <code class="docutils literal notranslate"><span class="pre">grep</span></code> and <code class="docutils literal notranslate"><span class="pre">jq</span></code>.</p>
+<ul class="simple">
+<li><p><strong>{TIME}</strong>: e.g. <code class="docutils literal notranslate"><span class="pre">2024-05-26_06-26-52</span></code></p>
+<ul>
+<li><p><strong>TIME</strong>: The time when the experiment was executed. The time is the most significant component to facilitate lexicographical sorting (e.g. <code class="docutils literal notranslate"><span class="pre">find</span> <span class="pre">.</span> <span class="pre">|</span> <span class="pre">sort</span></code>)</p></li>
+</ul>
+</li>
+<li><p><strong>{COMMIT}_{NAME}_{POPULATION}</strong>: e.g. <code class="docutils literal notranslate"><span class="pre">4f717cb_zoo_algorithm_environment</span></code></p>
+<ul>
+<li><p><strong>COMMIT</strong> (e.g. <code class="docutils literal notranslate"><span class="pre">4f717cb</span></code>: The first 7 hexadecimal places of the commit hash</p></li>
+<li><p><strong>NAME</strong> (e.g. <code class="docutils literal notranslate"><span class="pre">zoo</span></code>): Name of the experiment. The <code class="docutils literal notranslate"><span class="pre">return.json</span></code> should be in a consistent per <strong>NAME</strong></p></li>
+<li><p><strong>POPULATION</strong> (e.g. <code class="docutils literal notranslate"><span class="pre">algorithm_environment</span></code>): The variables that are varied/tested in this experiment (separated by underscores)</p></li>
+</ul>
+</li>
+<li><p><strong>{CONFIG}</strong>: e.g. <code class="docutils literal notranslate"><span class="pre">sac_pendulum-v1</span></code></p>
+<ul>
+<li><p><strong>CONFIG</strong>: The values of the previously mentioned <strong>POPULATION</strong> variables for a particular experiment configuration, separated by underscores. In combination with the previous population setup, this yields e.g. <code class="docutils literal notranslate"><span class="pre">{&quot;algorithm&quot;:</span> <span class="pre">&quot;sac&quot;,</span> <span class="pre">&quot;environment&quot;:</span> <span class="pre">&quot;pendulum-v1&quot;}</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>{SEED}</strong>: e.g. <code class="docutils literal notranslate"><span class="pre">1337</span></code></p>
+<ul>
+<li><p><strong>SEED</strong>: The seed for a particular run of the previously described configuration</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="run-contents">
+<h2>Run Contents<a class="headerlink" href="#run-contents" title="Link to this heading">#</a></h2>
+<section id="per-run">
+<h3>Per Run<a class="headerlink" href="#per-run" title="Link to this heading">#</a></h3>
+<p>Each run can contain different files that apply to the whole run, e.g.:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>2024-05-26_06-26-52/4f717cb_zoo_algorithm_environment/sac_pendulum-v1/0000/return.json
+2024-05-26_06-26-52/4f717cb_zoo_algorithm_environment/sac_pendulum-v1/0000/logs.tfevents
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>return.json</strong>: The return value of the experiment. The structure and semantics of this file depend on the <strong>{NAME}</strong>. The existence of this file signals that the experiment is finished.</p></li>
+<li><p><strong>config.json</strong> (<cite>optional</cite>): Additional configuration</p></li>
+<li><p><strong>logs.tfevents</strong> (<cite>optional</cite>): Tensorboard logs</p></li>
+<li><p><strong>ui.js</strong>/<strong>ui.esm.js</strong> (<cite>optional</cite>): Render function for the UI (see <a class="reference external" href="https://studio.rl.tools">https://studio.rl.tools</a> for more info). This allows collected trajectories to be rendered</p></li>
+</ul>
+</section>
+<section id="per-step">
+<h3>Per Step<a class="headerlink" href="#per-step" title="Link to this heading">#</a></h3>
+<p>Additionally each run can store files at different stages of the run (corresponding to “steps” of the <a class="reference external" href="https://docs.rl.tools/07-The%20Loop%20Interface.html">Loop Interface</a>) e.g.:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>2024-05-26_06-26-52/4f717cb_zoo_algorithm_environment/sac_pendulum-v1/0000/steps/000000000012000/checkpoint.h5
+2024-05-26_06-26-52/4f717cb_zoo_algorithm_environment/sac_pendulum-v1/0000/steps/000000000012000/trajectories.json
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>steps</strong>: Directory to separate the step contents from the full-run contents</p>
+<ul>
+<li><p><strong>{STEP}</strong>: e.g. <code class="docutils literal notranslate"><span class="pre">000000000012000</span></code></p>
+<ul>
+<li><p><strong>checkpoint.h</strong> (<cite>optional</cite>): Checkpoint exported as a C++ header file such that it can be compiled into e.g. the firmware of a microcontroller.</p></li>
+<li><p><strong>checkpoint.h5</strong> (<cite>optional</cite>): Checkpoint exported as an HDF5 file.</p></li>
+<li><p><strong>trajectories.json</strong>/<strong>trajectories.json.gz</strong> (<cite>optional</cite>): Trajectories from the evaluation loop step. These trajectories contain state, action, reward and termination signal as JSON objects and hence are compatible with the render function from <code class="docutils literal notranslate"><span class="pre">ui.js</span></code></p></li>
+<li><p><strong>evaluation_results.json</strong> (<cite>optional</cite>): Statistics (episode length and return) of the evaluation step</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
         </article>
       </div>
       <footer>
         
         <div class="related-pages">
           
-          
+          <a class="prev-page" href="09-TinyRL.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">TinyRL: A Python Interface for RLtools</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -235,8 +324,32 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Experiment Tracking</a><ul>
+<li><a class="reference internal" href="#run-identifier">Run Identifier</a></li>
+<li><a class="reference internal" href="#run-contents">Run Contents</a><ul>
+<li><a class="reference internal" href="#per-run">Per Run</a></li>
+<li><a class="reference internal" href="#per-step">Per Step</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
