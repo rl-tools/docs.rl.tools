@@ -211,7 +211,8 @@
         <article role="main">
           <section id="experiment-tracking-interface-specification">
 <h1>Experiment Tracking Interface Specification<a class="headerlink" href="#experiment-tracking-interface-specification" title="Link to this heading">#</a></h1>
-<p>The experiments follow the hierarchical, filesystem-based experiment tracking interface as specified in the following.</p>
+<p>The experiments follow the hierarchical, filesystem-based experiment tracking interface. We follow the <cite>UNIX</cite> philosophy and expose it through the filesystem.
+This makes it very easy to sort, filter and analyze the experiments with just unix tools like <code class="docutils literal notranslate"><span class="pre">find</span></code>, <code class="docutils literal notranslate"><span class="pre">sort</span></code>, <code class="docutils literal notranslate"><span class="pre">grep</span></code> and <code class="docutils literal notranslate"><span class="pre">jq</span></code>. Additionally it also allows easy monitoring through a static website like <a class="reference external" href="https://zoo.rl.tools">https://zoo.rl.tools</a> where experiment results are automatically made accessible by our continuous integration.</p>
 <section id="run-identifier">
 <h2>Run Identifier<a class="headerlink" href="#run-identifier" title="Link to this heading">#</a></h2>
 <p>Each run is characterized by the following path/identifier structure:</p>
@@ -222,7 +223,6 @@
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>2024-05-26_06-26-52/4f717cb_zoo_algorithm_environment/sac_pendulum-v1/0000
 </pre></div>
 </div>
-<p>This makes it very easy to sort, filter and analyze the experiments with just unix tools like <code class="docutils literal notranslate"><span class="pre">find</span></code>, <code class="docutils literal notranslate"><span class="pre">sort</span></code>, <code class="docutils literal notranslate"><span class="pre">grep</span></code> and <code class="docutils literal notranslate"><span class="pre">jq</span></code>.</p>
 <ul class="simple">
 <li><p><strong>{TIME}</strong>: e.g. <code class="docutils literal notranslate"><span class="pre">2024-05-26_06-26-52</span></code></p>
 <ul>
