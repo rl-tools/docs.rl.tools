@@ -211,6 +211,10 @@
         <article role="main">
           <section id="experiment-tracking-interface-specification">
 <h1>Experiment Tracking Interface Specification<a class="headerlink" href="#experiment-tracking-interface-specification" title="Link to this heading">#</a></h1>
+<blockquote class="epigraph">
+<div><p>“Strava but for training runs.”</p>
+<p class="attribution">—An RLtools contributer</p>
+</div></blockquote>
 <p>The experiments follow the hierarchical, filesystem-based experiment tracking interface. We follow the <cite>UNIX</cite> philosophy and expose it through the filesystem.
 This makes it very easy to sort, filter and analyze the experiments with just unix tools like <code class="docutils literal notranslate"><span class="pre">find</span></code>, <code class="docutils literal notranslate"><span class="pre">sort</span></code>, <code class="docutils literal notranslate"><span class="pre">grep</span></code> and <code class="docutils literal notranslate"><span class="pre">jq</span></code>. Additionally it also allows easy monitoring through a static website like <a class="reference external" href="https://zoo.rl.tools">https://zoo.rl.tools</a> where experiment results are automatically made accessible by our continuous integration.</p>
 <section id="run-identifier">
