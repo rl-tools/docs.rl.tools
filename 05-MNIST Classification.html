@@ -174,7 +174,7 @@
 <li class="toctree-l1"><a class="reference internal" href="06-Deep%20Reinforcement%20Learning.html">Deep Reinforcement Learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07-The%20Loop%20Interface.html">The Loop Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="08-Custom%20Environment.html">Custom Environment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="09-TinyRL.html">TinyRL: A Python Interface for RLtools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-Python%20Interface.html">Python Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="10-Experiment%20Tracking.html">Experiment Tracking</a></li>
 </ul>
 
@@ -225,8 +225,10 @@ models, etc. to disk in the form of <code class="docutils literal notranslate"><
 </div>
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#define RL_TOOLS_BACKEND_ENABLE_OPENBLAS</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/operations/cpu_mux.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/nn/optimizers/adam/instance/operations_generic.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/nn/operations_cpu_mux.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/nn_models/operations_cpu.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/nn_models/mlp/operations_generic.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/nn/optimizers/adam/operations_generic.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/containers/persist.h&gt;</span>
 <span class="k">namespace</span><span class="w"> </span><span class="nn">rlt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">rl_tools</span><span class="p">;</span>
 </pre></div>
@@ -301,12 +303,12 @@ Friends dont let friends use minibatches larger than 32.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">STRUCTURE_SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn_models</span><span class="o">::</span><span class="n">mlp</span><span class="o">::</span><span class="n">StructureSpecification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">DEVICE</span><span class="o">::</span><span class="n">index_t</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT_DIM</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT_DIM</span><span class="p">,</span><span class="w"> </span><span class="n">NUM_LAYERS</span><span class="p">,</span><span class="w"> </span><span class="n">HIDDEN_DIM</span><span class="p">,</span><span class="w"> </span><span class="n">ACTIVATION_FUNCTION</span><span class="p">,</span><span class="w"> </span><span class="n">ACTIVATION_FUNCTION_OUTPUT</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
-
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">MODEL_SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn_models</span><span class="o">::</span><span class="n">mlp</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">DEVICE</span><span class="o">::</span><span class="n">index_t</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT_DIM</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT_DIM</span><span class="p">,</span><span class="w"> </span><span class="n">NUM_LAYERS</span><span class="p">,</span><span class="w"> </span><span class="n">HIDDEN_DIM</span><span class="p">,</span><span class="w"> </span><span class="n">ACTIVATION_FUNCTION</span><span class="p">,</span><span class="w"> </span><span class="n">ACTIVATION_FUNCTION_OUTPUT</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="k">using</span><span class="w"> </span><span class="n">OPTIMIZER_SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">optimizers</span><span class="o">::</span><span class="n">adam</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="k">using</span><span class="w"> </span><span class="n">OPTIMIZER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">optimizers</span><span class="o">::</span><span class="n">Adam</span><span class="o">&lt;</span><span class="n">OPTIMIZER_SPEC</span><span class="o">&gt;</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="n">NETWORK_SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn_models</span><span class="o">::</span><span class="n">mlp</span><span class="o">::</span><span class="n">AdamSpecification</span><span class="o">&lt;</span><span class="n">STRUCTURE_SPEC</span><span class="o">&gt;</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="n">MODEL_TYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn_models</span><span class="o">::</span><span class="n">mlp</span><span class="o">::</span><span class="n">NeuralNetworkAdam</span><span class="o">&lt;</span><span class="n">NETWORK_SPEC</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">PARAMETER_TYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">parameters</span><span class="o">::</span><span class="n">Adam</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">CAPABILITY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">layer_capability</span><span class="o">::</span><span class="n">Gradient</span><span class="o">&lt;</span><span class="n">PARAMETER_TYPE</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">MODEL_TYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn_models</span><span class="o">::</span><span class="n">mlp</span><span class="o">::</span><span class="n">NeuralNetwork</span><span class="o">&lt;</span><span class="n">CAPABILITY</span><span class="p">,</span><span class="w"> </span><span class="n">MODEL_SPEC</span><span class="o">&gt;</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
@@ -366,7 +368,7 @@ Friends dont let friends use minibatches larger than 32.</p>
 <p>The following cell contains the full training loop for a single epoch (which is usually enough to classify the handwritten MNIST digits with a high accuracy). First, the gradient is set to zero, then for each sample we take a view (zero-copy) into the dataset to get the input and (one-hot encoded) output. We run the forward pass and use a categorical cross entropy loss to judge the similarity of the output distribution (logits that correspond to a softmax over the digits 0-9) and the empirical
 distribution (one-hot) taken from the ground-truth label. For the training we are only interested in the <code class="docutils literal notranslate"><span class="pre">::gradient</span></code> of this loss but for monitoring the training process we additionally calculate the actual loss value as well. Using the gradient of the loss function (pushing up the logit of the correct digit and pushing down the logits of the wrong digits) we invoke the backpropagation algorithm to calculate and accumulate the gradient of the loss of this example wrt to all parameters in the
 model.</p>
-<p>Once we finished the loss calculation and gradient accumulation for all samples in the batch we can invoke the optimizer using the <code class="docutils literal notranslate"><span class="pre">rlt::step</span></code> operator. In this update step the previously selected optimizer Adam calculates its required statistics (first and second order moment of the gradient of each parameter in the model) and updates the parameters based on it. We iterate through all (full) batches available in the dataset (making up one epoch):</p>
+<p>Once we finished the loss calculation and gradient accumulation for all samples in the batch we can invoke the optimizer using the <code class="docutils literal notranslate"><span class="pre">rl_tools::step</span></code> operator. In this update step the previously selected optimizer Adam calculates its required statistics (first and second order moment of the gradient of each parameter in the model) and updates the parameters based on it. We iterate through all (full) batches available in the dataset (making up one epoch):</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
@@ -378,7 +380,7 @@ model.</p>
 <span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">row</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">x_train</span><span class="p">,</span><span class="w"> </span><span class="n">batch_i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">BATCH_SIZE</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sample_i</span><span class="p">);</span>
 <span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">row</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">y_train</span><span class="p">,</span><span class="w"> </span><span class="n">batch_i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">BATCH_SIZE</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sample_i</span><span class="p">);</span>
 <span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">prediction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">row</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">output_layer</span><span class="p">.</span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
-<span class="w">        </span><span class="n">rlt</span><span class="o">::</span><span class="n">forward</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">);</span>
+<span class="w">        </span><span class="n">rlt</span><span class="o">::</span><span class="n">forward</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span>
 <span class="w">        </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">loss_functions</span><span class="o">::</span><span class="n">categorical_cross_entropy</span><span class="o">::</span><span class="n">gradient</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">prediction</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="n">d_loss_d_output_matrix</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">((</span><span class="n">T</span><span class="p">)</span><span class="n">BATCH_SIZE</span><span class="p">));</span>
 <span class="w">        </span><span class="n">loss</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">loss_functions</span><span class="o">::</span><span class="n">categorical_cross_entropy</span><span class="o">::</span><span class="n">evaluate</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">prediction</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">((</span><span class="n">T</span><span class="p">)</span><span class="n">BATCH_SIZE</span><span class="p">));</span>
 <span class="w">        </span><span class="n">rlt</span><span class="o">::</span><span class="n">backward</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">d_loss_d_output_matrix</span><span class="p">,</span><span class="w"> </span><span class="n">buffers</span><span class="p">);</span>
@@ -397,25 +399,25 @@ model.</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-batch: 0/1875 loss: 0.280092
-batch: 100/1875 loss: 0.0254528
-batch: 200/1875 loss: 0.0289113
-batch: 300/1875 loss: 0.00838864
-batch: 400/1875 loss: 0.00909101
-batch: 500/1875 loss: 0.0176317
-batch: 600/1875 loss: 0.0102458
-batch: 700/1875 loss: 0.00427032
-batch: 800/1875 loss: 0.00866193
-batch: 900/1875 loss: 0.00429899
-batch: 1000/1875 loss: 0.0209082
-batch: 1100/1875 loss: 0.00755304
-batch: 1200/1875 loss: 0.00581567
-batch: 1300/1875 loss: 0.00471603
-batch: 1400/1875 loss: 0.00802572
-batch: 1500/1875 loss: 0.00992347
-batch: 1600/1875 loss: 0.0063443
-batch: 1700/1875 loss: 0.00276589
-batch: 1800/1875 loss: 0.00870133
+batch: 0/1875 loss: 0.316716
+batch: 100/1875 loss: 0.0226892
+batch: 200/1875 loss: 0.0284308
+batch: 300/1875 loss: 0.00860887
+batch: 400/1875 loss: 0.0215149
+batch: 500/1875 loss: 0.00877255
+batch: 600/1875 loss: 0.00976548
+batch: 700/1875 loss: 0.00650769
+batch: 800/1875 loss: 0.00908768
+batch: 900/1875 loss: 0.00605045
+batch: 1000/1875 loss: 0.0196443
+batch: 1100/1875 loss: 0.0117334
+batch: 1200/1875 loss: 0.00749121
+batch: 1300/1875 loss: 0.01171
+batch: 1400/1875 loss: 0.00825716
+batch: 1500/1875 loss: 0.0160518
+batch: 1600/1875 loss: 0.010309
+batch: 1700/1875 loss: 0.00154934
+batch: 1800/1875 loss: 0.00728102
 </pre></div></div>
 </div>
 <p>In the following we validate the trained model on a held-out validation dataset and print some examples of classified handwritten digits. Finally we print the classification accuracy on the valiation set which should be above <span class="math notranslate nohighlight">\(90\%\)</span> in our experience which is quite surprising given that we only use a simple, full-connected neural network as the model:</p>
@@ -428,7 +430,7 @@ batch: 1800/1875 loss: 0.00870133
 <span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">sample_i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">sample_i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">DATASET_SIZE_VAL</span><span class="p">;</span><span class="w"> </span><span class="n">sample_i</span><span class="o">++</span><span class="p">){</span>
 <span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">row</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">x_val</span><span class="p">,</span><span class="w"> </span><span class="n">sample_i</span><span class="p">);</span>
 <span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">row</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">y_val</span><span class="p">,</span><span class="w"> </span><span class="n">sample_i</span><span class="p">);</span>
-<span class="w">    </span><span class="n">rlt</span><span class="o">::</span><span class="n">forward</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">);</span>
+<span class="w">    </span><span class="n">rlt</span><span class="o">::</span><span class="n">forward</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span>
 <span class="w">    </span><span class="n">val_loss</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">loss_functions</span><span class="o">::</span><span class="n">categorical_cross_entropy</span><span class="o">::</span><span class="n">evaluate</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">output_layer</span><span class="p">.</span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">BATCH_SIZE</span><span class="p">);</span>
 <span class="w">    </span><span class="n">TI</span><span class="w"> </span><span class="n">predicted_label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">argmax_row</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">output_layer</span><span class="p">.</span><span class="n">output</span><span class="p">);</span>
 <span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">sample_i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span>
@@ -733,7 +735,7 @@ batch: 1800/1875 loss: 0.00870133
              7 7 7 7 7
              7 7 7 7 7
 
-Validation accuracy: 93%
+Validation accuracy: 91.4%
 </pre></div></div>
 </div>
 </section>
