@@ -213,14 +213,14 @@
           <section id="Python-Interface">
 <h1>Python Interface<a class="headerlink" href="#Python-Interface" title="Link to this heading">#</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/github/rl-tools/documentation/blob/master/docs/09-Python%20Interface.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
-<p>For ease of use we provide a Python bindings for RLtools that can simply be installed by <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pyrltools</span></code>. It uses <code class="docutils literal notranslate"><span class="pre">pybind11</span></code> which is its only necessary dependency. Since one of the main premises of RLtools is that the size of all data structures and loops is known at compile-time, we can not compile the RLtools interface ahead of time. This issue arises for example with the observation and action dimensionality, which are dependent on the environment and, by the nature of Python,
-are only known at run-time. Hence we compile the RLtools interface just-in-time, when an RL algorithm is instantiated for a concrete environment.</p>
-<p>The RLtools Python interface also supports accelerated backends (e.g. Apple Accelerate and Intel MKL). Apple Accelerate is detected automatically and does not require additional actions, while Intel MKL can be installed using the <code class="docutils literal notranslate"><span class="pre">pyrltools[mkl]</span></code> option as can be seen in the following:</p>
+<p>For ease of use we provide a Python bindings for RLtools that can simply be installed by <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">rltools</span></code>. It uses <code class="docutils literal notranslate"><span class="pre">pybind11</span></code> which is its only necessary dependency. Since one of the main premises of RLtools is that the size of all data structures and loops is known at compile-time, we can not compile the RLtools interface ahead of time. This issue arises for example with the observation and action dimensionality, which are dependent on the environment and, by the nature of Python, are
+only known at run-time. Hence we compile the RLtools interface just-in-time, when an RL algorithm is instantiated for a concrete environment.</p>
+<p>The RLtools Python interface also supports accelerated backends (e.g. Apple Accelerate and Intel MKL). Apple Accelerate is detected automatically and does not require additional actions, while Intel MKL can be installed using the <code class="docutils literal notranslate"><span class="pre">rltools[mkl]</span></code> option as can be seen in the following:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">pyrltools</span><span class="p">[</span><span class="n">mkl</span><span class="p">]</span> <span class="n">gymnasium</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="c1"># ignoring the output to keep this notebook concise</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">rltools</span><span class="p">[</span><span class="n">mkl</span><span class="p">]</span> <span class="n">gymnasium</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="c1"># ignoring the output to keep this notebook concise</span>
 </pre></div>
 </div>
 </div>
@@ -230,7 +230,7 @@ are only known at run-time. Hence we compile the RLtools interface just-in-time,
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyrltools</span> <span class="kn">import</span> <span class="n">SAC</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rltools</span> <span class="kn">import</span> <span class="n">SAC</span>
 <span class="kn">import</span> <span class="nn">gymnasium</span> <span class="k">as</span> <span class="nn">gym</span>
 <span class="kn">from</span> <span class="nn">gymnasium.experimental.wrappers</span> <span class="kn">import</span> <span class="n">RescaleActionV0</span>
 
@@ -265,21 +265,19 @@ which contains a wrapper for <a class="reference external" href="https://github.
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-New SAC config detected, forcing recompilation...
 MKL found. Version: 2024.1.0 (include: 2024.1.0, path /opt/conda/lib/python3.12/site-packages/../../../include)
-Compiling the RLtools interface...
-Finished compiling the RLtools interface.
+Using cached RLtools interface.
 Step: 0/10000 Mean return: -1187.51
-Step: 1000/10000 Mean return: -1613.72
-Step: 2000/10000 Mean return: -927.099
-Step: 3000/10000 Mean return: -133.619
-Step: 4000/10000 Mean return: -135.898
-Step: 5000/10000 Mean return: -131.639
-Step: 6000/10000 Mean return: -129.432
-Step: 7000/10000 Mean return: -129.197
-Step: 8000/10000 Mean return: -127.877
-Step: 9000/10000 Mean return: -126.764
-Time: 4.444s
+Step: 1000/10000 Mean return: -1676.31
+Step: 2000/10000 Mean return: -922.371
+Step: 3000/10000 Mean return: -130.069
+Step: 4000/10000 Mean return: -128.622
+Step: 5000/10000 Mean return: -130.173
+Step: 6000/10000 Mean return: -1262
+Step: 7000/10000 Mean return: -1062.3
+Step: 8000/10000 Mean return: -1585.89
+Step: 9000/10000 Mean return: -1560.33
+Time: 5.911s
 </pre></div></div>
 </div>
 </section>
@@ -360,7 +358,7 @@ Microcontrollers</a> or WebAssembly).</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyrltools</span> <span class="kn">import</span> <span class="n">load_checkpoint_from_path</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rltools</span> <span class="kn">import</span> <span class="n">load_checkpoint_from_path</span>
 <span class="n">policy</span> <span class="o">=</span> <span class="n">load_checkpoint_from_path</span><span class="p">(</span><span class="s2">&quot;checkpoint.h&quot;</span><span class="p">)</span>
 <span class="n">evaluate</span><span class="p">(</span><span class="n">policy</span><span class="p">)</span>
 </pre></div>
