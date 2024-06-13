@@ -381,7 +381,7 @@ model.</p>
 <span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">row</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">x_train</span><span class="p">,</span><span class="w"> </span><span class="n">batch_i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">BATCH_SIZE</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sample_i</span><span class="p">);</span>
 <span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">row</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">y_train</span><span class="p">,</span><span class="w"> </span><span class="n">batch_i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">BATCH_SIZE</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sample_i</span><span class="p">);</span>
 <span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">prediction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">row</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">output_layer</span><span class="p">.</span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
-<span class="w">        </span><span class="n">rlt</span><span class="o">::</span><span class="n">forward</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span>
+<span class="w">        </span><span class="n">rlt</span><span class="o">::</span><span class="n">forward</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">buffers</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span>
 <span class="w">        </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">loss_functions</span><span class="o">::</span><span class="n">categorical_cross_entropy</span><span class="o">::</span><span class="n">gradient</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">prediction</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="n">d_loss_d_output_matrix</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">((</span><span class="n">T</span><span class="p">)</span><span class="n">BATCH_SIZE</span><span class="p">));</span>
 <span class="w">        </span><span class="n">loss</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">loss_functions</span><span class="o">::</span><span class="n">categorical_cross_entropy</span><span class="o">::</span><span class="n">evaluate</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">prediction</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">((</span><span class="n">T</span><span class="p">)</span><span class="n">BATCH_SIZE</span><span class="p">));</span>
 <span class="w">        </span><span class="n">rlt</span><span class="o">::</span><span class="n">backward</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">d_loss_d_output_matrix</span><span class="p">,</span><span class="w"> </span><span class="n">buffers</span><span class="p">);</span>
@@ -403,22 +403,22 @@ model.</p>
 batch: 0/1875 loss: 0.316716
 batch: 100/1875 loss: 0.0226892
 batch: 200/1875 loss: 0.0284308
-batch: 300/1875 loss: 0.00860887
+batch: 300/1875 loss: 0.00860886
 batch: 400/1875 loss: 0.0215149
-batch: 500/1875 loss: 0.00877255
-batch: 600/1875 loss: 0.00976548
-batch: 700/1875 loss: 0.00650769
-batch: 800/1875 loss: 0.00908768
-batch: 900/1875 loss: 0.00605045
-batch: 1000/1875 loss: 0.0196443
-batch: 1100/1875 loss: 0.0117334
-batch: 1200/1875 loss: 0.00749121
-batch: 1300/1875 loss: 0.01171
-batch: 1400/1875 loss: 0.00825716
-batch: 1500/1875 loss: 0.0160518
-batch: 1600/1875 loss: 0.010309
-batch: 1700/1875 loss: 0.00154934
-batch: 1800/1875 loss: 0.00728102
+batch: 500/1875 loss: 0.00875759
+batch: 600/1875 loss: 0.00930665
+batch: 700/1875 loss: 0.00727097
+batch: 800/1875 loss: 0.0111424
+batch: 900/1875 loss: 0.00681733
+batch: 1000/1875 loss: 0.024979
+batch: 1100/1875 loss: 0.0107325
+batch: 1200/1875 loss: 0.00627758
+batch: 1300/1875 loss: 0.0102601
+batch: 1400/1875 loss: 0.00650165
+batch: 1500/1875 loss: 0.00979847
+batch: 1600/1875 loss: 0.0117453
+batch: 1700/1875 loss: 0.00745925
+batch: 1800/1875 loss: 0.0123312
 </pre></div></div>
 </div>
 <p>In the following we validate the trained model on a held-out validation dataset and print some examples of classified handwritten digits. Finally we print the classification accuracy on the valiation set which should be above <span class="math notranslate nohighlight">\(90\%\)</span> in our experience which is quite surprising given that we only use a simple, full-connected neural network as the model:</p>
@@ -431,7 +431,7 @@ batch: 1800/1875 loss: 0.00728102
 <span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">sample_i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">sample_i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">DATASET_SIZE_VAL</span><span class="p">;</span><span class="w"> </span><span class="n">sample_i</span><span class="o">++</span><span class="p">){</span>
 <span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">row</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">x_val</span><span class="p">,</span><span class="w"> </span><span class="n">sample_i</span><span class="p">);</span>
 <span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">row</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">y_val</span><span class="p">,</span><span class="w"> </span><span class="n">sample_i</span><span class="p">);</span>
-<span class="w">    </span><span class="n">rlt</span><span class="o">::</span><span class="n">forward</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span>
+<span class="w">    </span><span class="n">rlt</span><span class="o">::</span><span class="n">forward</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">buffers</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span>
 <span class="w">    </span><span class="n">val_loss</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">loss_functions</span><span class="o">::</span><span class="n">categorical_cross_entropy</span><span class="o">::</span><span class="n">evaluate</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">output_layer</span><span class="p">.</span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">BATCH_SIZE</span><span class="p">);</span>
 <span class="w">    </span><span class="n">TI</span><span class="w"> </span><span class="n">predicted_label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">argmax_row</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">output_layer</span><span class="p">.</span><span class="n">output</span><span class="p">);</span>
 <span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">sample_i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">1000</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span>
@@ -632,26 +632,26 @@ batch: 1800/1875 loss: 0.00728102
 
 
 
-                   9 9 9 9 9 9 9 9 9 9
-                 9 9 9 9 9 9 9 9 9 9 9
-                 9 9 9 9 9 9 9 9 9 9 9 9
-                 9 9 9 9 9 9 9 9 9 9 9 9
-                 9 9 9         9 9 9 9 9
-                 9 9 9 9 9 9   9 9 9 9 9
-                 9 9 9 9 9 9 9 9 9 9 9 9
-                 9 9 9 9 9 9 9 9 9 9 9
-                     9 9 9 9 9 9 9 9 9
-                                 9 9 9
-                                 9 9 9
-                                 9 9 9
-                                 9 9 9
-                                 9 9 9
-                                 9 9 9
-                                 9 9 9 9
-                                 9 9 9 9
-                                 9 9 9 9
-                                 9 9 9 9
-                                   9 9 9
+                   7 7 7 7 7 7 7 7 7 7
+                 7 7 7 7 7 7 7 7 7 7 7
+                 7 7 7 7 7 7 7 7 7 7 7 7
+                 7 7 7 7 7 7 7 7 7 7 7 7
+                 7 7 7         7 7 7 7 7
+                 7 7 7 7 7 7   7 7 7 7 7
+                 7 7 7 7 7 7 7 7 7 7 7 7
+                 7 7 7 7 7 7 7 7 7 7 7
+                     7 7 7 7 7 7 7 7 7
+                                 7 7 7
+                                 7 7 7
+                                 7 7 7
+                                 7 7 7
+                                 7 7 7
+                                 7 7 7
+                                 7 7 7 7
+                                 7 7 7 7
+                                 7 7 7 7
+                                 7 7 7 7
+                                   7 7 7
 
 
 
@@ -736,7 +736,7 @@ batch: 1800/1875 loss: 0.00728102
              7 7 7 7 7
              7 7 7 7 7
 
-Validation accuracy: 91.4%
+Validation accuracy: 90.67%
 </pre></div></div>
 </div>
 </section>
