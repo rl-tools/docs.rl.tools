@@ -175,6 +175,7 @@
 <li class="toctree-l1"><a class="reference internal" href="07-The%20Loop%20Interface.html">The Loop Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="08-Custom%20Environment.html">Custom Environment</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Python Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#Embedding-Exported-Checkpoints">Embedding Exported Checkpoints</a></li>
 <li class="toctree-l1"><a class="reference internal" href="10-Experiment%20Tracking.html">Experiment Tracking</a></li>
 </ul>
 
@@ -384,6 +385,59 @@ Finished compiling the RLtools interface.
 <p><code class="docutils literal notranslate"><span class="pre">load_checkpoint_from_path</span></code> compiles the stored <code class="docutils literal notranslate"><span class="pre">checkpoint.h</span></code> into a Python module to make it accessible.</p>
 </section>
 </section>
+<section id="Embedding-Exported-Checkpoints">
+<h1>Embedding Exported Checkpoints<a class="headerlink" href="#Embedding-Exported-Checkpoints" title="Link to this heading">#</a></h1>
+<p>The following example shows how the exported <code class="docutils literal notranslate"><span class="pre">checkpoint.h</span></code> can be embedded into C/C++ code for inference:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define RL_TOOLS_DEVICES_DISABLE_REDEFINITION_DETECTION </span><span class="c1">// To enable multiple different devices to be imported in the same file. We use the ARM device for inference (which is generic and also works on the CPU) and a CPU device for `rlt::print`</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/operations/arm.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/operations/cpu.h&gt;</span><span class="c1"> // just for `rlt::print`</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/nn/layers/dense/operations_arm/opt.h&gt;</span><span class="c1"> // optimized inference operations for dense layers (for ARM)</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/nn/layers/standardize/operations_generic.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/nn/layers/sample_and_squash/operations_generic.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/nn_models/mlp/operations_generic.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/nn_models/mlp_unconditional_stddev/operations_generic.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/nn_models/sequential/operations_generic.h&gt;</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;../../pendulum_ppo_checkpoint.h&quot;</span><span class="c1"> // The example training scripts just dump the model file into the working directory, hence the `../../`. Modify this to wherever you have your checkpoint.</span>
+
+<span class="k">namespace</span><span class="w"> </span><span class="nn">rlt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">rl_tools</span><span class="p">;</span><span class="w"> </span><span class="c1">// For brevity</span>
+
+<span class="k">using</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">devices</span><span class="o">::</span><span class="n">DefaultARM</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">DEVICE_PRINT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">devices</span><span class="o">::</span><span class="n">DefaultCPU</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DEVICE</span><span class="o">::</span><span class="n">index_t</span><span class="p">;</span><span class="w"> </span><span class="c1">// Index type</span>
+<span class="k">using</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">policy</span><span class="o">::</span><span class="n">MODEL</span><span class="o">::</span><span class="n">T</span><span class="p">;</span><span class="w"> </span><span class="c1">// Floating point type (use the one defined in the exported model)</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">INPUT_DIM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">policy</span><span class="o">::</span><span class="n">MODEL</span><span class="o">::</span><span class="n">INPUT_DIM</span><span class="p">;</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">OUTPUT_DIM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">policy</span><span class="o">::</span><span class="n">MODEL</span><span class="o">::</span><span class="n">OUTPUT_DIM</span><span class="p">;</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">BATCH_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">15</span><span class="p">;</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">SEED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1337</span><span class="p">;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span>
+<span class="w">    </span><span class="c1">// Buffer for holding intermediate values during the forward pass (depends on the structure of the model, hence)</span>
+<span class="w">    </span><span class="k">decltype</span><span class="p">(</span><span class="n">policy</span><span class="o">::</span><span class="k">module</span><span class="p">)</span><span class="o">::</span><span class="n">Buffer</span><span class="o">&lt;</span><span class="n">BATCH_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">MatrixStaticTag</span><span class="o">&gt;</span><span class="w"> </span><span class="n">buffer</span><span class="p">;</span><span class="w"> </span><span class="c1">// Passing `rlt::MatrixStaticTag` to signal that the buffer should be allocated on the stack</span>
+<span class="w">    </span><span class="n">rlt</span><span class="o">::</span><span class="n">MatrixStatic</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">matrix</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">BATCH_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">policy</span><span class="o">::</span><span class="n">MODEL</span><span class="o">::</span><span class="n">INPUT_DIM</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">input</span><span class="p">;</span><span class="w"> </span><span class="c1">// Statically allocated (stack)</span>
+<span class="w">    </span><span class="n">rlt</span><span class="o">::</span><span class="n">MatrixStatic</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">matrix</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">BATCH_SIZE</span><span class="p">,</span><span class="w"> </span><span class="n">policy</span><span class="o">::</span><span class="n">MODEL</span><span class="o">::</span><span class="n">OUTPUT_DIM</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">output</span><span class="p">;</span><span class="w"> </span><span class="c1">// Statically allocated (stack)</span>
+
+<span class="w">    </span><span class="n">DEVICE</span><span class="w"> </span><span class="n">device</span><span class="p">;</span>
+<span class="w">    </span><span class="n">DEVICE_PRINT</span><span class="w"> </span><span class="n">device_print</span><span class="p">;</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">rng</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">random</span><span class="o">::</span><span class="n">default_engine</span><span class="p">(</span><span class="n">device</span><span class="p">.</span><span class="n">random</span><span class="p">,</span><span class="w"> </span><span class="n">SEED</span><span class="p">);</span><span class="w"> </span><span class="c1">// to fill the input with random values. Some models or layers also require sampling, hence it is passed in `rlt::evaluate` as well</span>
+
+<span class="w">    </span><span class="n">rlt</span><span class="o">::</span><span class="n">randn</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span>
+<span class="w">    </span><span class="n">rlt</span><span class="o">::</span><span class="n">evaluate</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">policy</span><span class="o">::</span><span class="k">module</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="n">buffer</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span><span class="w"> </span><span class="c1">// Uses the `policy::module` (defined in the exported checkpoint) to evaluate the input and fill the output. The buffer and rng are used depending on the model architecture of `policy::module`</span>
+<span class="w">    </span><span class="n">rlt</span><span class="o">::</span><span class="n">log</span><span class="p">(</span><span class="n">device_print</span><span class="p">,</span><span class="w"> </span><span class="n">device_print</span><span class="p">.</span><span class="n">logger</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Result: &quot;</span><span class="p">);</span><span class="w"> </span><span class="c1">// Print the result (BATCH_SIZE x OUTPUT_DIM matrix)</span>
+<span class="w">    </span><span class="n">rlt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="n">device_print</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You should modify the <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&quot;../../pendulum_ppo_checkpoint.h&quot;</span></code> to match the location of your exported checkpoint.</p>
+<p>To compile you can simply use e.g.:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>clang++<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>test.cpp<span class="w"> </span>-I../../rltools/external/rl_tools/include<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./a.out
+</pre></div>
+</div>
+<p>You can modify the <code class="docutils literal notranslate"><span class="pre">-I...</span></code> to match the <code class="docutils literal notranslate"><span class="pre">.../rl_tools/include</span></code> directory (wherever you cloned RLtools).</p>
+<p>Note that this example is meant to be run on a PC, by removing the <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;rl_tools/operations/cpu.h&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">DEVICE_PRINT</span></code>, and the <code class="docutils literal notranslate"><span class="pre">rlt::print</span></code> you should be able to compile it into a firmware for ARM or other microcontrollers (like ESP32). To use the <code class="docutils literal notranslate"><span class="pre">output</span></code> in your downstream application, you can access the values through e.g. <code class="docutils literal notranslate"><span class="pre">float</span> <span class="pre">v0</span> <span class="pre">=</span> <span class="pre">rlt::get(output,</span> <span class="pre">0,</span> <span class="pre">0)</span></code> (row and column respectively).</p>
+</section>
 
         </article>
       </div>
@@ -446,6 +500,7 @@ Finished compiling the RLtools interface.
 <li><a class="reference internal" href="#Exporting-the-Trained-Policy">Exporting the Trained Policy</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#Embedding-Exported-Checkpoints">Embedding Exported Checkpoints</a></li>
 </ul>
 
           </div>
