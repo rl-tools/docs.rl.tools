@@ -370,8 +370,10 @@ actor and critic network types can be any type for which a <code class="docutils
 </div>
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">OFF_POLICY_RUNNER_TYPE</span><span class="w"> </span><span class="n">off_policy_runner</span><span class="p">;</span>
 <span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">off_policy_runner</span><span class="p">);</span>
-<span class="n">ENVIRONMENT</span><span class="w"> </span><span class="n">envs</span><span class="p">[</span><span class="k">decltype</span><span class="p">(</span><span class="n">off_policy_runner</span><span class="p">)</span><span class="o">::</span><span class="n">N_ENVIRONMENTS</span><span class="p">];</span>
-<span class="n">rlt</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">off_policy_runner</span><span class="p">,</span><span class="w"> </span><span class="n">envs</span><span class="p">);</span>
+<span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">N_ENVIRONMENTS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">decltype</span><span class="p">(</span><span class="n">off_policy_runner</span><span class="p">)</span><span class="o">::</span><span class="n">N_ENVIRONMENTS</span><span class="p">;</span>
+<span class="n">ENVIRONMENT</span><span class="w"> </span><span class="n">envs</span><span class="p">[</span><span class="n">N_ENVIRONMENTS</span><span class="p">];</span>
+<span class="n">ENVIRONMENT</span><span class="o">::</span><span class="n">Parameters</span><span class="w"> </span><span class="n">env_parameters</span><span class="p">[</span><span class="n">N_ENVIRONMENTS</span><span class="p">];</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">off_policy_runner</span><span class="p">,</span><span class="w"> </span><span class="n">envs</span><span class="p">,</span><span class="w"> </span><span class="n">env_parameters</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -452,17 +454,17 @@ paper</a></p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Step: 0/9999 mean return: -1525.26 (3.7372e-05s)
-Step: 1000/9999 mean return: -1439.75 (6.11536s)
-Step: 2000/9999 mean return: -1447.95 (12.9198s)
-Step: 3000/9999 mean return: -1285.93 (19.7648s)
-Step: 4000/9999 mean return: -1348.49 (26.7455s)
-Step: 5000/9999 mean return: -1067.44 (33.5116s)
-Step: 6000/9999 mean return: -812.372 (40.3302s)
-Step: 7000/9999 mean return: -849.943 (47.9553s)
-Step: 8000/9999 mean return: -441.3 (55.2979s)
-Step: 9000/9999 mean return: -1072.78 (62.2659s)
-Step: 9999/9999 mean return: -194.029 (69.009s)
+Step: 0/9999 mean return: -1525.26 (3.8232e-05s)
+Step: 1000/9999 mean return: -1439.75 (6.54824s)
+Step: 2000/9999 mean return: -1447.95 (13.835s)
+Step: 3000/9999 mean return: -1285.93 (21.0276s)
+Step: 4000/9999 mean return: -1348.49 (28.2299s)
+Step: 5000/9999 mean return: -1067.44 (35.4444s)
+Step: 6000/9999 mean return: -812.372 (42.6375s)
+Step: 7000/9999 mean return: -849.943 (49.8586s)
+Step: 8000/9999 mean return: -441.3 (57.088s)
+Step: 9000/9999 mean return: -1072.78 (64.3024s)
+Step: 9999/9999 mean return: -194.029 (71.5737s)
 </pre></div></div>
 </div>
 <p>In the case of the pendulum a mean return of around <code class="docutils literal notranslate"><span class="pre">-200</span></code> means that the policy learned to swing it up from any initial condition and stabilize it in the upright position.</p>
@@ -493,7 +495,7 @@ Step: 9999/9999 mean return: -194.029 (69.009s)
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "3379232427ad48b88c33516d821a8d3e", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "6c4771515daa4094938a2b9c38cb5963", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <p>We can now pass this UI to the <code class="docutils literal notranslate"><span class="pre">rlt::evaluate</span></code> function which populates it with the state and renders it into the displayed canvas:</p>
 <div class="nbinput nblast docutils container">
