@@ -316,7 +316,7 @@ On another note we use the index type <code class="docutils literal notranslate"
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Time taken: 108.135332 ms
+Time taken: 84.705542 ms
 </pre></div></div>
 </div>
 <p>We can override the previous implementation for the new <code class="docutils literal notranslate"><span class="pre">Accelerator</span></code> device and provide an implementation that is tailored to the hardware. In this hypothetical case we just provide a more efficient implementation of the same incrementation operation:</p>
@@ -353,7 +353,7 @@ Time taken: 108.135332 ms
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Time taken: 0.000222 ms
+Time taken: 0.011917 ms
 </pre></div></div>
 </div>
 <p>Now that we have seen how primitives can be tailored to devices using multiple dispatch and specific implementations, we want to use them in higher-level, more abstract algorithms that are agnostic to the hardware they are running on as long as the primitive operations behave the same:</p>
@@ -388,7 +388,7 @@ Time taken: 0.000222 ms
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Time taken: 535.742464 ms
+Time taken: 422.331583 ms
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -408,7 +408,7 @@ Time taken: 535.742464 ms
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Time taken: 0.000736 ms
+Time taken: 0.020417 ms
 </pre></div></div>
 </div>
 <p>In practice we provide generic implementations in pure C++ for all deep learning and reinforcement learning operators that do not depend on specific device capabilities. These naive implementations can be quite slow (e.g. for large matrix multiplication) hence we provide specialized implementations that are dispatched to by including the appropriate operations for that device and then calling all algorithms with the specialized device type. For example the Intel MKL library provides
