@@ -230,7 +230,7 @@ models, etc. to disk in the form of <code class="docutils literal notranslate"><
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/nn/operations_cpu_mux.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/nn_models/mlp/operations_generic.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/nn/optimizers/adam/operations_generic.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/containers/persist.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/containers/matrix/persist.h&gt;</span>
 <span class="k">namespace</span><span class="w"> </span><span class="nn">rlt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">rl_tools</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -401,24 +401,24 @@ model.</p>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 batch: 0/1875 loss: 0.316716
-batch: 100/1875 loss: 0.0226892
-batch: 200/1875 loss: 0.0284308
-batch: 300/1875 loss: 0.00860886
-batch: 400/1875 loss: 0.0215149
-batch: 500/1875 loss: 0.00875759
-batch: 600/1875 loss: 0.00930665
-batch: 700/1875 loss: 0.00727097
-batch: 800/1875 loss: 0.0111424
-batch: 900/1875 loss: 0.00681733
-batch: 1000/1875 loss: 0.024979
-batch: 1100/1875 loss: 0.0107325
-batch: 1200/1875 loss: 0.00627758
-batch: 1300/1875 loss: 0.0102601
-batch: 1400/1875 loss: 0.00650165
-batch: 1500/1875 loss: 0.00979847
-batch: 1600/1875 loss: 0.0117453
-batch: 1700/1875 loss: 0.00745925
-batch: 1800/1875 loss: 0.0123312
+batch: 100/1875 loss: 0.0166465
+batch: 200/1875 loss: 0.0342549
+batch: 300/1875 loss: 0.00740141
+batch: 400/1875 loss: 0.0110341
+batch: 500/1875 loss: 0.0126302
+batch: 600/1875 loss: 0.00469487
+batch: 700/1875 loss: 0.00688184
+batch: 800/1875 loss: 0.00677759
+batch: 900/1875 loss: 0.00977279
+batch: 1000/1875 loss: 0.0164546
+batch: 1100/1875 loss: 0.0075738
+batch: 1200/1875 loss: 0.00442775
+batch: 1300/1875 loss: 0.00851526
+batch: 1400/1875 loss: 0.0135036
+batch: 1500/1875 loss: 0.00786554
+batch: 1600/1875 loss: 0.0106464
+batch: 1700/1875 loss: 0.00366622
+batch: 1800/1875 loss: 0.0113167
 </pre></div></div>
 </div>
 <p>In the following we validate the trained model on a held-out validation dataset and print some examples of classified handwritten digits. Finally we print the classification accuracy on the valiation set which should be above <span class="math notranslate nohighlight">\(90\%\)</span> in our experience which is quite surprising given that we only use a simple, full-connected neural network as the model:</p>
@@ -632,26 +632,26 @@ batch: 1800/1875 loss: 0.0123312
 
 
 
-                   7 7 7 7 7 7 7 7 7 7
-                 7 7 7 7 7 7 7 7 7 7 7
-                 7 7 7 7 7 7 7 7 7 7 7 7
-                 7 7 7 7 7 7 7 7 7 7 7 7
-                 7 7 7         7 7 7 7 7
-                 7 7 7 7 7 7   7 7 7 7 7
-                 7 7 7 7 7 7 7 7 7 7 7 7
-                 7 7 7 7 7 7 7 7 7 7 7
-                     7 7 7 7 7 7 7 7 7
-                                 7 7 7
-                                 7 7 7
-                                 7 7 7
-                                 7 7 7
-                                 7 7 7
-                                 7 7 7
-                                 7 7 7 7
-                                 7 7 7 7
-                                 7 7 7 7
-                                 7 7 7 7
-                                   7 7 7
+                   9 9 9 9 9 9 9 9 9 9
+                 9 9 9 9 9 9 9 9 9 9 9
+                 9 9 9 9 9 9 9 9 9 9 9 9
+                 9 9 9 9 9 9 9 9 9 9 9 9
+                 9 9 9         9 9 9 9 9
+                 9 9 9 9 9 9   9 9 9 9 9
+                 9 9 9 9 9 9 9 9 9 9 9 9
+                 9 9 9 9 9 9 9 9 9 9 9
+                     9 9 9 9 9 9 9 9 9
+                                 9 9 9
+                                 9 9 9
+                                 9 9 9
+                                 9 9 9
+                                 9 9 9
+                                 9 9 9
+                                 9 9 9 9
+                                 9 9 9 9
+                                 9 9 9 9
+                                 9 9 9 9
+                                   9 9 9
 
 
 
@@ -736,7 +736,7 @@ batch: 1800/1875 loss: 0.0123312
              7 7 7 7 7
              7 7 7 7 7
 
-Validation accuracy: 90.67%
+Validation accuracy: 93.41%
 </pre></div></div>
 </div>
 </section>

@@ -371,25 +371,25 @@ to modify the training, but rather expose a <code class="docutils literal notran
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Step: 0/74 Mean return: -1682.39
-Step: 4/74 Mean return: -1419.99
+Step: 0/74 Mean return: -1682.39 Mean episode length: 200
+Step: 4/74 Mean return: -1419.99 Mean episode length: 200
 Stepping yourself &gt; hooks/callbacks
-Step: 8/74 Mean return: -1183.42
-Step: 12/74 Mean return: -1380.93
-Step: 16/74 Mean return: -1277.29
-Step: 20/74 Mean return: -1395.43
-Step: 24/74 Mean return: -1492.18
-Step: 28/74 Mean return: -1057.63
-Step: 32/74 Mean return: -942.946
-Step: 36/74 Mean return: -607.803
-Step: 40/74 Mean return: -530.716
-Step: 44/74 Mean return: -206.616
-Step: 48/74 Mean return: -165.582
-Step: 52/74 Mean return: -160.067
-Step: 56/74 Mean return: -163.664
-Step: 60/74 Mean return: -174.3
-Step: 64/74 Mean return: -220.182
-Step: 68/74 Mean return: -202.481
+Step: 8/74 Mean return: -1183.42 Mean episode length: 200
+Step: 12/74 Mean return: -1380.93 Mean episode length: 200
+Step: 16/74 Mean return: -1277.29 Mean episode length: 200
+Step: 20/74 Mean return: -1395.43 Mean episode length: 200
+Step: 24/74 Mean return: -1492.18 Mean episode length: 200
+Step: 28/74 Mean return: -1057.63 Mean episode length: 200
+Step: 32/74 Mean return: -942.946 Mean episode length: 200
+Step: 36/74 Mean return: -607.803 Mean episode length: 200
+Step: 40/74 Mean return: -530.716 Mean episode length: 200
+Step: 44/74 Mean return: -206.616 Mean episode length: 200
+Step: 48/74 Mean return: -165.582 Mean episode length: 200
+Step: 52/74 Mean return: -160.067 Mean episode length: 200
+Step: 56/74 Mean return: -163.664 Mean episode length: 200
+Step: 60/74 Mean return: -174.3 Mean episode length: 200
+Step: 64/74 Mean return: -220.182 Mean episode length: 200
+Step: 68/74 Mean return: -202.481 Mean episode length: 200
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -399,8 +399,8 @@ Step: 68/74 Mean return: -202.481
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">UI_SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">environments</span><span class="o">::</span><span class="n">pendulum</span><span class="o">::</span><span class="n">ui</span><span class="o">::</span><span class="n">xeus</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="o">&gt;</span><span class="p">;</span><span class="w"> </span><span class="c1">// float type, index type, size, playback speed (in %)</span>
 <span class="k">using</span><span class="w"> </span><span class="n">UI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">environments</span><span class="o">::</span><span class="n">pendulum</span><span class="o">::</span><span class="n">ui</span><span class="o">::</span><span class="n">xeus</span><span class="o">::</span><span class="n">UI</span><span class="o">&lt;</span><span class="n">UI_SPEC</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="n">UI</span><span class="w"> </span><span class="n">ui</span><span class="p">;</span>
-<span class="n">rlt</span><span class="o">::</span><span class="n">MatrixDynamic</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">matrix</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="o">::</span><span class="n">OBSERVATION_DIM</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">observations_mean</span><span class="p">;</span>
-<span class="n">rlt</span><span class="o">::</span><span class="n">MatrixDynamic</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">matrix</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="o">::</span><span class="n">OBSERVATION_DIM</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">observations_std</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">MatrixDynamic</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">matrix</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="o">::</span><span class="n">Observation</span><span class="o">::</span><span class="n">DIM</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">observations_mean</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">MatrixDynamic</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">matrix</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="o">::</span><span class="n">Observation</span><span class="o">::</span><span class="n">DIM</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">observations_std</span><span class="p">;</span>
 <span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">observations_mean</span><span class="p">);</span>
 <span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">observations_std</span><span class="p">);</span>
 <span class="n">rlt</span><span class="o">::</span><span class="n">set_all</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">observations_mean</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
@@ -414,7 +414,7 @@ Step: 68/74 Mean return: -202.481
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "324891f40ceb4469b3a7f32a4593ec08", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "e589c87421c64569ac6a2ce2e1cd8b53", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:

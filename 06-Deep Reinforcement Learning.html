@@ -298,8 +298,8 @@ actor and critic network types can be any type for which a <code class="docutils
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">ACTOR_SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn_models</span><span class="o">::</span><span class="n">mlp</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="o">::</span><span class="n">OBSERVATION_DIM</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="o">::</span><span class="n">ACTION_DIM</span><span class="p">,</span><span class="w"> </span><span class="n">ACTOR_NUM_LAYERS</span><span class="p">,</span><span class="w"> </span><span class="n">ACTOR_HIDDEN_DIM</span><span class="p">,</span><span class="w"> </span><span class="n">ACTOR_ACTIVATION_FUNCTION</span><span class="p">,</span><span class="w"> </span><span class="n">ACTOR_ACTIVATION_FUNCTION_OUTPUT</span><span class="o">&gt;</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="n">CRITIC_SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn_models</span><span class="o">::</span><span class="n">mlp</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="o">::</span><span class="n">OBSERVATION_DIM</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="o">::</span><span class="n">ACTION_DIM</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">CRITIC_NUM_LAYERS</span><span class="p">,</span><span class="w"> </span><span class="n">CRITIC_HIDDEN_DIM</span><span class="p">,</span><span class="w"> </span><span class="n">CRITIC_ACTIVATION_FUNCTION</span><span class="p">,</span><span class="w"> </span><span class="n">CRITIC_ACTIVATION_FUNCTION_OUTPUT</span><span class="o">&gt;</span><span class="p">;</span>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">ACTOR_SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn_models</span><span class="o">::</span><span class="n">mlp</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="o">::</span><span class="n">Observation</span><span class="o">::</span><span class="n">DIM</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="o">::</span><span class="n">ACTION_DIM</span><span class="p">,</span><span class="w"> </span><span class="n">ACTOR_NUM_LAYERS</span><span class="p">,</span><span class="w"> </span><span class="n">ACTOR_HIDDEN_DIM</span><span class="p">,</span><span class="w"> </span><span class="n">ACTOR_ACTIVATION_FUNCTION</span><span class="p">,</span><span class="w"> </span><span class="n">ACTOR_ACTIVATION_FUNCTION_OUTPUT</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">CRITIC_SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn_models</span><span class="o">::</span><span class="n">mlp</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="o">::</span><span class="n">Observation</span><span class="o">::</span><span class="n">DIM</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="o">::</span><span class="n">ACTION_DIM</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">CRITIC_NUM_LAYERS</span><span class="p">,</span><span class="w"> </span><span class="n">CRITIC_HIDDEN_DIM</span><span class="p">,</span><span class="w"> </span><span class="n">CRITIC_ACTIVATION_FUNCTION</span><span class="p">,</span><span class="w"> </span><span class="n">CRITIC_ACTIVATION_FUNCTION_OUTPUT</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="k">using</span><span class="w"> </span><span class="n">OPTIMIZER_SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">optimizers</span><span class="o">::</span><span class="n">adam</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="k">using</span><span class="w"> </span><span class="n">PARAMETER_TYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">parameters</span><span class="o">::</span><span class="n">Adam</span><span class="p">;</span>
 <span class="k">using</span><span class="w"> </span><span class="n">CAPABILITY_ACTOR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rl_tools</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">layer_capability</span><span class="o">::</span><span class="n">Gradient</span><span class="o">&lt;</span><span class="n">PARAMETER_TYPE</span><span class="p">,</span><span class="w"> </span><span class="n">TD3_PARAMETERS</span><span class="o">::</span><span class="n">ACTOR_BATCH_SIZE</span><span class="o">&gt;</span><span class="p">;</span>
@@ -318,15 +318,10 @@ actor and critic network types can be any type for which a <code class="docutils
 <span class="k">using</span><span class="w"> </span><span class="n">ACTOR_CRITIC_TYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">algorithms</span><span class="o">::</span><span class="n">td3</span><span class="o">::</span><span class="n">ActorCritic</span><span class="o">&lt;</span><span class="n">TD3_SPEC</span><span class="o">&gt;</span><span class="p">;</span>
 
 <span class="k">struct</span><span class="w"> </span><span class="nc">OFF_POLICY_RUNNER_PARAMETERS</span><span class="o">:</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">off_policy_runner</span><span class="o">::</span><span class="n">ParametersDefault</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="o">&gt;</span><span class="p">{</span>
-
+<span class="w">    </span><span class="c1">// you can selectively overwrite defaults here</span>
 <span class="p">};</span>
 
-<span class="k">using</span><span class="w"> </span><span class="n">OFF_POLICY_RUNNER_SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">off_policy_runner</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span>
-<span class="w">    </span><span class="n">T</span><span class="p">,</span>
-<span class="w">    </span><span class="n">TI</span><span class="p">,</span>
-<span class="w">    </span><span class="n">ENVIRONMENT</span><span class="p">,</span>
-<span class="w">    </span><span class="n">OFF_POLICY_RUNNER_PARAMETERS</span>
-<span class="o">&gt;</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">OFF_POLICY_RUNNER_SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">off_policy_runner</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="p">,</span><span class="w"> </span><span class="n">OFF_POLICY_RUNNER_PARAMETERS</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="k">using</span><span class="w"> </span><span class="n">OFF_POLICY_RUNNER_TYPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">components</span><span class="o">::</span><span class="n">OffPolicyRunner</span><span class="o">&lt;</span><span class="n">OFF_POLICY_RUNNER_SPEC</span><span class="o">&gt;</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -371,7 +366,8 @@ actor and critic network types can be any type for which a <code class="docutils
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">OFF_POLICY_RUNNER_TYPE</span><span class="w"> </span><span class="n">off_policy_runner</span><span class="p">;</span>
 <span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">off_policy_runner</span><span class="p">);</span>
 <span class="n">ENVIRONMENT</span><span class="w"> </span><span class="n">envs</span><span class="p">[</span><span class="k">decltype</span><span class="p">(</span><span class="n">off_policy_runner</span><span class="p">)</span><span class="o">::</span><span class="n">N_ENVIRONMENTS</span><span class="p">];</span>
-<span class="n">rlt</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">off_policy_runner</span><span class="p">,</span><span class="w"> </span><span class="n">envs</span><span class="p">);</span>
+<span class="n">ENVIRONMENT</span><span class="o">::</span><span class="n">Parameters</span><span class="w"> </span><span class="n">env_parameters</span><span class="p">[</span><span class="k">decltype</span><span class="p">(</span><span class="n">off_policy_runner</span><span class="p">)</span><span class="o">::</span><span class="n">N_ENVIRONMENTS</span><span class="p">];</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">off_policy_runner</span><span class="p">,</span><span class="w"> </span><span class="n">envs</span><span class="p">,</span><span class="w"> </span><span class="n">env_parameters</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -452,17 +448,17 @@ paper</a></p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Step: 0/9999 mean return: -1525.26 (0.000108917s)
-Step: 1000/9999 mean return: -1440.28 (8.56942s)
-Step: 2000/9999 mean return: -1429.39 (18.0624s)
-Step: 3000/9999 mean return: -1303.7 (27.5511s)
-Step: 4000/9999 mean return: -1378.77 (37.0201s)
-Step: 5000/9999 mean return: -1062.43 (46.5541s)
-Step: 6000/9999 mean return: -721.401 (56.0453s)
-Step: 7000/9999 mean return: -895.56 (65.5718s)
-Step: 8000/9999 mean return: -607.286 (75.0671s)
-Step: 9000/9999 mean return: -729.458 (84.551s)
-Step: 9999/9999 mean return: -194.917 (94.0319s)
+Step: 0/9999 mean return: -1525.26 (9.5708e-05s)
+Step: 1000/9999 mean return: -1440.28 (8.54655s)
+Step: 2000/9999 mean return: -1429.39 (18.0446s)
+Step: 3000/9999 mean return: -1303.7 (27.4633s)
+Step: 4000/9999 mean return: -1378.77 (36.8551s)
+Step: 5000/9999 mean return: -1062.43 (46.28s)
+Step: 6000/9999 mean return: -721.401 (55.7657s)
+Step: 7000/9999 mean return: -895.56 (65.2577s)
+Step: 8000/9999 mean return: -607.286 (74.6738s)
+Step: 9000/9999 mean return: -729.458 (84.1083s)
+Step: 9999/9999 mean return: -194.917 (93.5328s)
 </pre></div></div>
 </div>
 <p>In the case of the pendulum a mean return of around <code class="docutils literal notranslate"><span class="pre">-200</span></code> means that the policy learned to swing it up from any initial condition and stabilize it in the upright position.</p>
@@ -493,7 +489,7 @@ Step: 9999/9999 mean return: -194.917 (94.0319s)
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "ea09522d0fbf4ff9b26a5377c9c7bf8f", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "9b3b8d29387c4154b040eb901ebccc38", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <p>We can now pass this UI to the <code class="docutils literal notranslate"><span class="pre">rlt::evaluate</span></code> function which populates it with the state and renders it into the displayed canvas:</p>
 <div class="nbinput nblast docutils container">
