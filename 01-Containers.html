@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Multiple Dispatch" href="02-Multiple%20Dispatch.html" /><link rel="prev" title="Overview" href="overview.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Multiple Dispatch" href="02-Multiple%20Dispatch.html" /><link rel="prev" title="Getting Started" href="getting_started.html" />
 
     <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
         <title>Containers - RLtools Documentation</title>
@@ -140,7 +140,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -166,6 +166,7 @@
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Containers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02-Multiple%20Dispatch.html">Multiple Dispatch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03-Deep%20Learning.html">Deep Learning</a></li>
@@ -205,7 +206,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -242,7 +243,7 @@ code through loop unrolling, inlining etc.</p>
 </div>
 </div>
 <p>In the following we instantiate a device struct. The <code class="docutils literal notranslate"><span class="pre">DEVICE</span></code> struct can be empty and hence have no overhead but facilitate <a class="reference external" href="https://www.fluentcpp.com/2018/04/27/tag-dispatching/">tag dispatch</a>. It can also be used as a carrier for additional context that would otherwise be implemented as global state (e.g. logging through a Tensorboard logger). In the first example we will create a matrix and fill it with random numbers (from an isotropic, standard normal distribution) hence we define the
-initial seed for our random number generator which is instantiated depending on the device type. This allows us to easily change the <code class="docutils literal notranslate"><span class="pre">DEVICE</span></code> definition and have all downstream entities be appropriate for the particular device. Finally, we are creating a matrix. Particularly a dynamic (heap allocated) <code class="docutils literal notranslate"><span class="pre">10x10</span></code> matrix. The static, compile-time configuration of the matrix is defined by a specification type (<code class="docutils literal notranslate"><span class="pre">rlt::matrix::Specification&lt;ELEMENT_TYPE,</span> <span class="pre">INDEX_TYPE,</span> <span class="pre">ROWS,</span> <span class="pre">COLS&gt;</span></code>) that carries the
+initial seed for our random number generator which is instantiated depending on the device type. This allows us to easily change the <code class="docutils literal notranslate"><span class="pre">DEVICE</span></code> definition and have all downstream entities be appropriate for the particular device. Finally, we are creating a matrix. Particularly a dynamic (heap allocated) <code class="docutils literal notranslate"><span class="pre">3x3</span></code> matrix. The static, compile-time configuration of the matrix is defined by a specification type (<code class="docutils literal notranslate"><span class="pre">rlt::matrix::Specification&lt;ELEMENT_TYPE,</span> <span class="pre">INDEX_TYPE,</span> <span class="pre">ROWS,</span> <span class="pre">COLS&gt;</span></code>) that carries the
 types and compile-time constants. Compiling these attributes into a separate specification instead of having numerous template parameters on the <code class="docutils literal notranslate"><span class="pre">rlt::MatrixDynamic</span></code> type brings the benefit that writing functions that take matrices as input becomes easier as we just have to add a <code class="docutils literal notranslate"><span class="pre">typename</span> <span class="pre">SPEC</span></code> parameter to the template. We can still constrain the usage of a function with only matrices having particular attributes through e.g. <code class="docutils literal notranslate"><span class="pre">static_assert</span></code> and
 <a class="reference external" href="https://en.wikipedia.org/wiki/Substitution_failure_is_not_an_error">SFINAE</a>. Moreover we can add attributes without breaking functions that are written this way.</p>
 <div class="nbinput nblast docutils container">
@@ -252,7 +253,7 @@ types and compile-time constants. Compiling these attributes into a separate spe
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">DEVICE</span><span class="w"> </span><span class="n">device</span><span class="p">;</span>
 <span class="n">TI</span><span class="w"> </span><span class="n">seed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="k">auto</span><span class="w"> </span><span class="n">rng</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">random</span><span class="o">::</span><span class="n">default_engine</span><span class="p">(</span><span class="n">DEVICE</span><span class="o">::</span><span class="n">SPEC</span><span class="o">::</span><span class="n">RANDOM</span><span class="p">(),</span><span class="w"> </span><span class="n">seed</span><span class="p">);</span>
-<span class="n">rlt</span><span class="o">::</span><span class="n">MatrixDynamic</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">matrix</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">m</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">Matrix</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">matrix</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">m</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
@@ -265,9 +266,19 @@ types and compile-time constants. Compiling these attributes into a separate spe
 </pre></div>
 </div>
 </div>
-<p>The memory space is usually not initialized hence we fill it with random numbers (from a standard normal distribution):</p>
+<p><code class="docutils literal notranslate"><span class="pre">rlt::Matrix</span></code> defaults to a dynamic, heap-allocated matrix but we can override this behavior by defining <code class="docutils literal notranslate"><span class="pre">DYNAMIC_ALLOCATION=false</span></code> in the specification and get a statically, stack-allocated matrix which does not require <code class="docutils literal notranslate"><span class="pre">rlt::malloc</span></code> and <code class="docutils literal notranslate"><span class="pre">rlt::free</span></code>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">constexpr</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">DYNAMIC_ALLOCATION</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">Matrix</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">matrix</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">DYNAMIC_ALLOCATION</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">m_static</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p>The memory space is usually not initialized hence we fill it with random numbers (from a standard normal distribution):</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">randn</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span>
@@ -276,7 +287,7 @@ types and compile-time constants. Compiling these attributes into a separate spe
 </div>
 <p>Now we can print the allocated and filled matrix:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">);</span>
@@ -295,7 +306,7 @@ types and compile-time constants. Compiling these attributes into a separate spe
 </div>
 <p>We can access elements using the <code class="docutils literal notranslate"><span class="pre">get</span></code> and <code class="docutils literal notranslate"><span class="pre">set</span></code> commands:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">get</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
@@ -303,7 +314,7 @@ types and compile-time constants. Compiling these attributes into a separate spe
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -312,7 +323,7 @@ types and compile-time constants. Compiling these attributes into a separate spe
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">set</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
@@ -332,7 +343,7 @@ types and compile-time constants. Compiling these attributes into a separate spe
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">get</span></code> returns a reference so we could technically also set or increment it through the reference:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">get</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
@@ -352,7 +363,7 @@ types and compile-time constants. Compiling these attributes into a separate spe
 </div>
 <p>Writing through the reference is not very intuitive so we prefer <code class="docutils literal notranslate"><span class="pre">set</span></code> and <code class="docutils literal notranslate"><span class="pre">increment</span></code>:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">increment</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">-10</span><span class="p">);</span>
@@ -370,6 +381,132 @@ types and compile-time constants. Compiling these attributes into a separate spe
    -0.408192     0.271856    -0.311355
 </pre></div></div>
 </div>
+<section id="Tensors">
+<h2>Tensors<a class="headerlink" href="#Tensors" title="Link to this heading">#</a></h2>
+<p>Matrices are a simple, 2D data structure but to allow for more complex algorithms we have since introduce a tensor type that can hold arbitrary shapes:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">SHAPE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">tensor</span><span class="o">::</span><span class="n">Shape</span><span class="o">&lt;</span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">SPEC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">tensor</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">SHAPE</span><span class="p">,</span><span class="w"> </span><span class="n">DYNAMIC_ALLOCATION</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">Tensor</span><span class="o">&lt;</span><span class="n">SPEC</span><span class="o">&gt;</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p>Tensors support most of the operations that matrices also support:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">randn</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+dim[0] = 0:
+  -5.703804e-01  -3.422589e-01   1.008072e-01
+  -9.118625e-01   2.108090e+00   9.476308e-02
+   5.376303e-01   3.618752e-01  -7.995225e-01
+
+dim[0] = 1:
+   8.660405e-01   1.061986e+00   6.006763e-01
+   2.661995e+00  -9.388391e-01  -1.549304e-01
+   9.058360e-02  -1.328507e+00   1.262284e+00
+
+dim[0] = 2:
+   2.677846e+00  -1.236785e+00  -9.119245e-02
+  -8.944708e-01  -2.577802e+00   2.305977e+00
+   5.642641e-01   5.340819e-01   1.266308e+00
+
+</pre></div></div>
+</div>
+<p>The signature of the <code class="docutils literal notranslate"><span class="pre">set</span></code> operations slightly differs from the ones for matrices because tensors can have arbitrary numbers of dimensions and to take advantage of the variadic arguments <code class="docutils literal notranslate"><span class="pre">Args...</span></code> the indices have to be last in the operations signature:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">get</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="n">T</span><span class="w"> </span><span class="n">new_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1337</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">set</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">new_value</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">get</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+2.108090e+00
+1.337000e+03
+</pre></div></div>
+</div>
+<p>Tensors can be sliced by using <code class="docutils literal notranslate"><span class="pre">view</span></code> and <code class="docutils literal notranslate"><span class="pre">view_range</span></code></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">mid3x3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">view</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">mid3x3</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+   8.660405e-01   1.061986e+00   6.006763e-01
+   2.661995e+00  -9.388391e-01  -1.549304e-01
+   9.058360e-02  -1.328507e+00   1.262284e+00
+
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">first_rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">view</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">tensor</span><span class="o">::</span><span class="n">ViewSpec</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">{});</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;First rows: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">first_rows</span><span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Last rows: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">last_rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">view</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">tensor</span><span class="o">::</span><span class="n">ViewSpec</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">{});</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">last_rows</span><span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;First cols: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">first_cols</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">view</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">tensor</span><span class="o">::</span><span class="n">ViewSpec</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">{});</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">print</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">first_cols</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+First rows:
+  -5.703804e-01  -3.422589e-01   1.008072e-01
+   8.660405e-01   1.061986e+00   6.006763e-01
+   2.677846e+00  -1.236785e+00  -9.119245e-02
+
+Last rows:
+   5.376303e-01   3.618752e-01  -7.995225e-01
+   9.058360e-02  -1.328507e+00   1.262284e+00
+   5.642641e-01   5.340819e-01   1.266308e+00
+
+First cols:
+  -5.703804e-01  -9.118625e-01   5.376303e-01
+   8.660405e-01   2.661995e+00   9.058360e-02
+   2.677846e+00  -8.944708e-01   5.642641e-01
+
+</pre></div></div>
+</div>
+</section>
 </section>
 
         </article>
@@ -386,14 +523,14 @@ types and compile-time constants. Compiling these attributes into a separate spe
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="overview.html">
+          <a class="prev-page" href="getting_started.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Overview</div>
+                <div class="title">Getting Started</div>
                 
               </div>
             </a>
@@ -415,8 +552,27 @@ types and compile-time constants. Compiling these attributes into a separate spe
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Containers</a><ul>
+<li><a class="reference internal" href="#Tensors">Tensors</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
