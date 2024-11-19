@@ -268,7 +268,7 @@
 </ul>
 </td>
 <td><ul class="simple">
-<li><p>No preconfigured targets like in the <span class="rlt">RLtools</span> Zoo</p></li>
+<li><p>Slightly more initial setup</p></li>
 </ul>
 </td>
 </tr>
@@ -441,7 +441,7 @@ cmake<span class="w"> </span>--build<span class="w"> </span>.
 <p class="attribution">—RLtools contributor</p>
 </div></blockquote>
 <p>The following compiles the <span class="rlt">RLtools</span> Zoo example for SAC with the Learning to Fly environment:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g++<span class="w"> </span>-Iinclude<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>src/rl/zoo/l2f/sac.cpp
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g++<span class="w"> </span>-I<span class="w"> </span>include<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>src/rl/zoo/l2f/sac.cpp
 ./a.out
 </pre></div>
 </div>
@@ -454,7 +454,7 @@ cmake<span class="w"> </span>--build<span class="w"> </span>.
 <li><p><code class="docutils literal notranslate"><span class="pre">./a.out</span></code>: Run the compiled binary</p></li>
 </ul>
 <p>This will be quite slow because no optimizations are applied by default. In the following we instruct the compiler to maximally optimize the code using the compile-time knowledge that <span class="rlt">RLtools</span> provides. In particular the sizes of all datastructures and for-loops are known at compile-time and the compiler can unroll loops and inline functions to maximize performance.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g++<span class="w"> </span>-Iinclude<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>-Ofast<span class="w"> </span>-march<span class="o">=</span>native<span class="w"> </span>src/rl/zoo/l2f/sac.cpp
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g++<span class="w"> </span>-I<span class="w"> </span>include<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>-Ofast<span class="w"> </span>-march<span class="o">=</span>native<span class="w"> </span>src/rl/zoo/l2f/sac.cpp
 ./a.out
 </pre></div>
 </div>
@@ -466,7 +466,7 @@ cmake<span class="w"> </span>--build<span class="w"> </span>.
 <p>To further speed up the computations we can use a matrix multiplication backend which we find to give another ~7-10x speedup:</p>
 <section id="id4">
 <h3>Docker &amp; Ubuntu &amp; WSL<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g++<span class="w"> </span>-Iinclude<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>-Ofast<span class="w"> </span>-march<span class="o">=</span>native<span class="w"> </span>src/rl/zoo/l2f/sac.cpp<span class="w"> </span>-lblas<span class="w"> </span>-DRL_TOOLS_BACKEND_ENABLE_OPENBLAS
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g++<span class="w"> </span>-I<span class="w"> </span>include<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>-Ofast<span class="w"> </span>-march<span class="o">=</span>native<span class="w"> </span>src/rl/zoo/l2f/sac.cpp<span class="w"> </span>-lblas<span class="w"> </span>-DRL_TOOLS_BACKEND_ENABLE_OPENBLAS
 ./a.out
 </pre></div>
 </div>
@@ -477,7 +477,7 @@ cmake<span class="w"> </span>--build<span class="w"> </span>.
 </section>
 <section id="id5">
 <h3>macOS<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g++<span class="w"> </span>-Iinclude<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>-Ofast<span class="w"> </span>-march<span class="o">=</span>native<span class="w"> </span>src/rl/zoo/l2f/sac.cpp<span class="w"> </span>-framework<span class="w"> </span>Accelerate<span class="w"> </span>-DRL_TOOLS_BACKEND_ENABLE_ACCELERATE
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g++<span class="w"> </span>-I<span class="w"> </span>include<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>-Ofast<span class="w"> </span>-march<span class="o">=</span>native<span class="w"> </span>src/rl/zoo/l2f/sac.cpp<span class="w"> </span>-framework<span class="w"> </span>Accelerate<span class="w"> </span>-DRL_TOOLS_BACKEND_ENABLE_ACCELERATE
 ./a.out
 </pre></div>
 </div>
