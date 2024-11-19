@@ -303,7 +303,7 @@ to modify the training, but rather expose a <code class="docutils literal notran
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">DEVICE</span><span class="w"> </span><span class="n">device</span><span class="p">;</span>
 <span class="n">LOOP_CORE_STATE</span><span class="w"> </span><span class="n">lsc</span><span class="p">;</span>
 <span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">lsc</span><span class="p">);</span>
-<span class="n">TI</span><span class="w"> </span><span class="n">seed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1337</span><span class="p">;</span>
+<span class="n">TI</span><span class="w"> </span><span class="n">seed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="n">rlt</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">lsc</span><span class="p">,</span><span class="w"> </span><span class="n">seed</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -372,25 +372,25 @@ to modify the training, but rather expose a <code class="docutils literal notran
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Step: 0/74 Mean return: -1682.39 Mean episode length: 200
-Step: 4/74 Mean return: -1535.66 Mean episode length: 200
+Step: 0/74 Mean return: -1300.94 Mean episode length: 200
+Step: 4/74 Mean return: -1230.49 Mean episode length: 200
 Stepping yourself &gt; hooks/callbacks
-Step: 8/74 Mean return: -1171.13 Mean episode length: 200
-Step: 12/74 Mean return: -977.286 Mean episode length: 200
-Step: 16/74 Mean return: -442.649 Mean episode length: 200
-Step: 20/74 Mean return: -258.836 Mean episode length: 200
-Step: 24/74 Mean return: -229.295 Mean episode length: 200
-Step: 28/74 Mean return: -134.907 Mean episode length: 200
-Step: 32/74 Mean return: -191.239 Mean episode length: 200
-Step: 36/74 Mean return: -151.527 Mean episode length: 200
-Step: 40/74 Mean return: -184.772 Mean episode length: 200
-Step: 44/74 Mean return: -170.571 Mean episode length: 200
-Step: 48/74 Mean return: -117.691 Mean episode length: 200
-Step: 52/74 Mean return: -147.751 Mean episode length: 200
-Step: 56/74 Mean return: -126.264 Mean episode length: 200
-Step: 60/74 Mean return: -139.371 Mean episode length: 200
-Step: 64/74 Mean return: -168.347 Mean episode length: 200
-Step: 68/74 Mean return: -151.269 Mean episode length: 200
+Step: 8/74 Mean return: -1117.24 Mean episode length: 200
+Step: 12/74 Mean return: -702.198 Mean episode length: 200
+Step: 16/74 Mean return: -545.253 Mean episode length: 200
+Step: 20/74 Mean return: -417.902 Mean episode length: 200
+Step: 24/74 Mean return: -212.429 Mean episode length: 200
+Step: 28/74 Mean return: -160.032 Mean episode length: 200
+Step: 32/74 Mean return: -156.78 Mean episode length: 200
+Step: 36/74 Mean return: -171.889 Mean episode length: 200
+Step: 40/74 Mean return: -146.42 Mean episode length: 200
+Step: 44/74 Mean return: -111.336 Mean episode length: 200
+Step: 48/74 Mean return: -196.376 Mean episode length: 200
+Step: 52/74 Mean return: -182.804 Mean episode length: 200
+Step: 56/74 Mean return: -160.231 Mean episode length: 200
+Step: 60/74 Mean return: -183.741 Mean episode length: 200
+Step: 64/74 Mean return: -413.776 Mean episode length: 200
+Step: 68/74 Mean return: -318.449 Mean episode length: 200
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -409,14 +409,14 @@ Step: 68/74 Mean return: -151.269 Mean episode length: 200
 </pre></div>
 </div>
 <div class="output_area docutils container">
-<script type="application/vnd.jupyter.widget-view+json">{"model_id": "209176351e15490da05afc7741ab07b1", "version_major": 2, "version_minor": 0}</script></div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "46211a8d0f6a4161bb8b916b885615a5", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">utils</span><span class="o">::</span><span class="n">evaluation</span><span class="o">::</span><span class="n">Result</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">utils</span><span class="o">::</span><span class="n">evaluation</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">LOOP_CORE_CONFIG</span><span class="o">::</span><span class="n">ENVIRONMENT_EVALUATION</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">LOOP_CORE_PARAMETERS</span><span class="o">::</span><span class="n">EPISODE_STEP_LIMIT</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
-<span class="n">rlt</span><span class="o">::</span><span class="n">evaluate</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">ls</span><span class="p">.</span><span class="n">env_eval</span><span class="p">,</span><span class="w"> </span><span class="n">ui</span><span class="p">,</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">get_actor</span><span class="p">(</span><span class="n">ls</span><span class="p">),</span><span class="w"> </span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="n">ls</span><span class="p">.</span><span class="n">actor_deterministic_evaluation_buffers</span><span class="p">,</span><span class="w"> </span><span class="n">ls</span><span class="p">.</span><span class="n">rng_eval</span><span class="p">,</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">Mode</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">mode</span><span class="o">::</span><span class="n">Evaluation</span><span class="o">&lt;&gt;&gt;</span><span class="p">{});</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">evaluate</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">ls</span><span class="p">.</span><span class="n">env_eval</span><span class="p">,</span><span class="w"> </span><span class="n">ls</span><span class="p">.</span><span class="n">env_eval_parameters</span><span class="p">,</span><span class="w"> </span><span class="n">ui</span><span class="p">,</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">get_actor</span><span class="p">(</span><span class="n">ls</span><span class="p">),</span><span class="w"> </span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="n">ls</span><span class="p">.</span><span class="n">actor_deterministic_evaluation_buffers</span><span class="p">,</span><span class="w"> </span><span class="n">ls</span><span class="p">.</span><span class="n">rng_eval</span><span class="p">,</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">Mode</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">mode</span><span class="o">::</span><span class="n">Evaluation</span><span class="o">&lt;&gt;&gt;</span><span class="p">{});</span>
 </pre></div>
 </div>
 </div>
