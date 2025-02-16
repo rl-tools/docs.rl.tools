@@ -5,11 +5,11 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Getting Started" href="getting_started.html" /><link rel="prev" title="RLtools Documentation!" href="index.html" />
 
-    <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
+    <!-- Generated with Sphinx 8.1.3 and Furo 2024.08.06 -->
         <title>Overview - RLtools Documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
     <link rel="stylesheet" type="text/css" href="_static/overrides.css?v=ca018f06" />
     
     
@@ -73,7 +73,7 @@
   <symbol id="svg-sun" viewBox="0 0 24 24">
     <title>Light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
       <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -88,22 +88,63 @@
   <symbol id="svg-moon" viewBox="0 0 24 24">
     <title>Dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
   </symbol>
-  <symbol id="svg-sun-half" viewBox="0 0 24 24">
-    <title>Auto light/dark mode</title>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M13 12h5" />
-      <path d="M13 15h4" />
-      <path d="M13 18h1" />
-      <path d="M13 9h4" />
-      <path d="M13 6h1" />
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
 </svg>
@@ -116,6 +157,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -134,7 +177,8 @@
       <div class="theme-toggle-container theme-toggle-header">
         <button class="theme-toggle">
           <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
           <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
@@ -196,11 +240,17 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/overview.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
 <div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
               <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
@@ -210,51 +260,51 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h1>
+<h1>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h1>
 <p>Code: <a class="reference external" href="https://github.com/rl-tools/rl-tools">https://github.com/rl-tools/rl-tools</a></p>
 <p>Paper: <a class="reference external" href="https://arxiv.org/abs/2306.03530">https://arxiv.org/abs/2306.03530</a></p>
 <p>Live Demo (Browser): <a class="reference external" href="https://rl.tools">https://rl.tools</a></p>
 <p>Interactive Tutorial: <a class="reference external" href="https://mybinder.org/v2/gh/rl-tools/documentation/binder?labpath=01-Containers.ipynb"><img alt="run-on-binder" src="https://mybinder.org/badge_logo.svg" /></a> <a class="reference external" href="https://colab.research.google.com/github/rl-tools/documentation/blob/master/docs/09-Python%20Interface.ipynb"><img alt="run-on-colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 <p>Documentation for Release Versions: <a class="reference external" href="https://rltools.readthedocs.org">https://rltools.readthedocs.org</a> (<a class="reference external" href="https://docs.rl.tools">https://docs.rl.tools</a> tracks <code class="docutils literal notranslate"><span class="pre">master</span></code>)</p>
 <section id="introduction">
-<span id="id1"></span><h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<span id="id1"></span><h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
 <p><span class="rlt">RLtools</span> stands for <span class="rlt">R</span>einforcement <span class="rlt">L</span>earning <span class="rlt">tools</span> and is a highly optimized C++ deep reinforcement learning library for continuous control.
 <span class="rlt">RLtools</span> started out as a library for training and inference for small, fully-connected neural networks that can be tightly integrated with fast simulators running on GPUs to facilitate fast Reinforcement Learning (RL) but has grown to become a full-featured library for applying RL to continuous control problems. The goal of <span class="rlt">RLtools</span> is now to become the <a class="reference external" href="https://github.com/acados/acados">acados</a> equivalent for deep reinforcement learning. Acados is a library for Model Predictive Control (MPC) and makes contains robust, established optimization algorithms and transcription methods available to a broad userbase in e.g. robotics, automotive, aerospace and other fields. Similarly, <span class="rlt">RLtools</span> provides state-of-the-art deep RL algorithms as well as highly optimized deep learning components and simulation (interfaces) ready for application to a diverse set of continuous control problems. In contrast to other RL libraries <span class="rlt">RLtools</span> aims at fast iteration in the problem space, while other RL libraries often focus on modularity and abstractions to facilitate research in the space of algorithms. We believe deep RL methods can overcome long-standing issues with classical and optimization based control methods but acknowledge that there are major issues preventing broad adoption. A major problem are the long training times, especially considering the amount of hyperparameter tuning and reward function design that is required to train good policies. Hence <span class="rlt">RLtools</span> aims at drastically reducing the training times by heavily optimizing the implementations and also taking advantage of accelerated hardware like GPUs.</p>
 <p>GPUs are based on massively parallel architectures consisting of thousands of small processing units which are usually Turing complete  but relatively limited in their general computing capabilities (e.g. usually slow for code that is branching a lot). In the future, deep learning accelerators might not even be Turing complete anymore because they become more specialized for deep learning workloads. For simulations of e.g. fluid or robot dynamics, turing completeness is essential though. Hence, <span class="rlt">RLtools</span> is designed to be tightly integrated with simulators on GPUs to run in a <a class="reference external" href="https://en.wikipedia.org/wiki/Single_instruction,_multiple_data">SIMD</a> fashion. GPU kernels are written in C/C++ and compiled through e.g. Nvidia CUDA with very limited support for existing libraries (not even the <a class="reference external" href="https://en.wikipedia.org/wiki/C%2B%2B_Standard_Library">C++ Standard Library</a> is fully supported), hence <span class="rlt">RLtools</span> is designed to be a dependency-free, header-only, pure C++ library.</p>
 <p><span class="rlt">RLtools</span> makes heavy use of the <a class="reference external" href="https://en.wikipedia.org/wiki/Template_metaprogramming">template metaprogramming</a> capabilities of recent C++ standards (C++17 in particular). This allows the code to be as generic as possible through the static multiple dispatch paradigm described in the accompanying <a class="reference external" href="https://arxiv.org/abs/2306.03530">paper</a> while allowing for maximum performance (7-13 times faster than other popular RL libraries at the time of writing). The outstanding performance is achieved through template metaprogramming which allows the size of all containers and loops to be known at compile-time and hence allows the compiler to heavily optimize the code through inlining and loop unrolling. We observed the unrolling of loops with up to 100 iterations in the case of <strong>nvcc</strong> (the CUDA compiler).</p>
 </section>
 <section id="key-features">
-<span id="features"></span><h2>Key features<a class="headerlink" href="#key-features" title="Link to this heading">#</a></h2>
+<span id="features"></span><h2>Key features<a class="headerlink" href="#key-features" title="Link to this heading">¶</a></h2>
 <p>Over time, <span class="rlt">RLtools</span> has grown into a complete library for deep supervised and reinforcement learning:</p>
 <section id="deep-learning">
-<h3>Deep Learning<a class="headerlink" href="#deep-learning" title="Link to this heading">#</a></h3>
+<h3>Deep Learning<a class="headerlink" href="#deep-learning" title="Link to this heading">¶</a></h3>
 <blockquote>
 <div><p><span class="rlt">RLtools</span> provides deep learning functionality for fully-connected neural networks. In the future we plan to include further architectures like recurrent neural networks but for now our focus on fully connected architectures is supported by our analysis of the deep reinforcement learning landscape (in the <a class="reference external" href="https://arxiv.org/abs/2306.03530">paper</a>). There we find that in deep RL for continuous control relatively small, fully-connected neural networks are by far the most commonly used architecture.</p>
 </div></blockquote>
 </section>
 <section id="simulation">
-<h3>Simulation<a class="headerlink" href="#simulation" title="Link to this heading">#</a></h3>
+<h3>Simulation<a class="headerlink" href="#simulation" title="Link to this heading">¶</a></h3>
 <blockquote>
 <div><p><span class="rlt">RLtools</span> includes a fast dynamics simulator for a pendulum (equivalent to Pendulum-v1 from the <a class="reference external" href="https://gymnasium.farama.org/">gym/gymnasium</a> suite). The pendulum simulator is an example/template for the integration of other dynamics simulators. Future simulators we are planning on implementing include multirotor drones and racing cars. Furthermore we provide a high-performance, low-level <a class="reference external" href="https://mujoco.org/">MuJoCo</a> interface (about 25% faster than the state of the art <a class="reference external" href="https://github.com/sail-sg/envpool">EnvPool</a>)</p>
 </div></blockquote>
 </section>
 <section id="reinforcement-learning">
-<h3>Reinforcement Learning<a class="headerlink" href="#reinforcement-learning" title="Link to this heading">#</a></h3>
+<h3>Reinforcement Learning<a class="headerlink" href="#reinforcement-learning" title="Link to this heading">¶</a></h3>
 <blockquote>
 <div><p><span class="rlt">RLtools</span> tightly integrates the deep learning and simulation components to provide highly performant reinforcement learning routines. We implement state of the art on- and off-policy RL algorithms in the form of <a class="reference external" href="https://arxiv.org/abs/1707.06347">PPO</a> and <a class="reference external" href="https://arxiv.org/abs/1802.09477">TD3</a> and demonstrate that <span class="rlt">RLtools</span> enables faster training than other popular RL libraries in case of the pendulum and the MuJoCo Ant-v4 task (learning to walk a quadruped) (see <a class="reference external" href="https://arxiv.org/abs/2306.03530">paper</a>).</p>
 </div></blockquote>
 </section>
 <section id="deployment">
-<h3>Deployment<a class="headerlink" href="#deployment" title="Link to this heading">#</a></h3>
+<h3>Deployment<a class="headerlink" href="#deployment" title="Link to this heading">¶</a></h3>
 <blockquote>
 <div><p>The design of <span class="rlt">RLtools</span> allows easy deployment of trained policies directly onto microcontrollers. <span class="rlt">RLtools</span> also contains highly optimized inference routines for a broad class of microcontrollers. Furthermore, <span class="rlt">RLtools</span> has been used to demonstrate the first ever training of a deep RL algorithm directly on a microcontroller. The latter proof of concept could be the spark igniting the field of tinyRL where deep RL agents are directly trained on limited edge hardware.</p>
 </div></blockquote>
 </section>
 </section>
 <section id="about-this-documentation">
-<span id="id4"></span><h2>About this documentation<a class="headerlink" href="#about-this-documentation" title="Link to this heading">#</a></h2>
+<span id="id4"></span><h2>About this documentation<a class="headerlink" href="#about-this-documentation" title="Link to this heading">¶</a></h2>
 <p>This documentation is structured as a series of interactive Jupyter notebooks using the C/C++ interpreter <a class="reference external" href="https://github.com/root-project/cling">Cling</a>. The notebooks can be run on Binder using the links at the top of each one. Note that starting notebooks on Binder is convenient because all that is needed is a browser but they can take a long time or even fail to start. Alternatively you can also easily run this tutorial on you computer using Docker. Given that you have <a class="reference external" href="https://docs.docker.com/engine/install/">Docker installed</a> and running you can run our pre-built container by:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>docker run -p 8888:8888 rltools/documentation
 </pre></div>
@@ -340,9 +390,9 @@
     </aside>
   </div>
 </div><script src="_static/documentation_options.js?v=5929fcd5"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     </body>
 </html>
