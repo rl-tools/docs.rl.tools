@@ -413,7 +413,7 @@ cmake<span class="w"> </span>--build<span class="w"> </span>.
 ./tools/serve.sh
 </pre></div>
 </div>
-<p>After copying the UI files we run <code class="docutils literal notranslate"><span class="pre">tools/serve.sh</span></code> which periodically builds an index file containing a list of all experiment files such that the web UI can find them. It also starts a simple Python-based HTTP server on port <code class="docutils literal notranslate"><span class="pre">8000</span></code>. Now you should be able to navigate to <a class="reference external" href="http://localhost:8000">http://localhost:8000</a> and view the visualizations of the training runs (<a href="#id2"><span class="problematic" id="id3">**</span></a>EX**periment <a href="#id4"><span class="problematic" id="id5">**</span></a>TRACK**ing UI).</p>
+<p>After copying the UI files we run <code class="docutils literal notranslate"><span class="pre">tools/serve.sh</span></code> which periodically builds an index file containing a list of all experiment files such that the web UI can find them. It also starts a simple Python-based HTTP server on port <code class="docutils literal notranslate"><span class="pre">8000</span></code>. Now you should be able to navigate to <a class="reference external" href="http://localhost:8000">http://localhost:8000</a> and view the visualizations of the training runs (EXperiment TRACKing UI).</p>
 </section>
 <section id="ubuntu-wsl-macos">
 <span id="visualize-ubuntu-wsl-macos"></span><h4>Ubuntu &amp; WSL &amp; macOS<a class="headerlink" href="#ubuntu-wsl-macos" title="Link to this heading">#</a></h4>
@@ -426,7 +426,7 @@ cmake<span class="w"> </span>--build<span class="w"> </span>.
 </section>
 </section>
 <section id="native-no-cmake">
-<span id="id7"></span><h2>Native: No CMake<a class="headerlink" href="#native-no-cmake" title="Link to this heading">#</a></h2>
+<span id="id3"></span><h2>Native: No CMake<a class="headerlink" href="#native-no-cmake" title="Link to this heading">#</a></h2>
 <blockquote class="epigraph">
 <div><p>“Never underestimate the power of a man armed with nothing but a C++ compiler.”</p>
 <p class="attribution">—RLtools contributor</p>
@@ -455,8 +455,8 @@ cmake<span class="w"> </span>--build<span class="w"> </span>.
 <li><p><code class="docutils literal notranslate"><span class="pre">-march=native</span></code>: Take maximal advantage of the available instructions on the host machine</p></li>
 </ul>
 <p>To further speed up the computations we can use a matrix multiplication backend which we find to give another ~7-10x speedup:</p>
-<section id="id8">
-<h3>Docker &amp; Ubuntu &amp; WSL<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<section id="id4">
+<h3>Docker &amp; Ubuntu &amp; WSL<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g++<span class="w"> </span>-I<span class="w"> </span>include<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>-O3<span class="w"> </span>-ffast-math<span class="w"> </span>-march<span class="o">=</span>native<span class="w"> </span>src/rl/zoo/l2f/sac.cpp<span class="w"> </span>-lblas<span class="w"> </span>-DRL_TOOLS_BACKEND_ENABLE_OPENBLAS
 ./a.out
 </pre></div>
@@ -466,8 +466,8 @@ cmake<span class="w"> </span>--build<span class="w"> </span>.
 <li><p><code class="docutils literal notranslate"><span class="pre">-DRL_TOOLS_BACKEND_ENABLE_OPENBLAS</span></code>: Enable the OpenBLAS backend (should actually work with any CBLAS-compatible library)</p></li>
 </ul>
 </section>
-<section id="id9">
-<h3>macOS<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<section id="id5">
+<h3>macOS<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g++<span class="w"> </span>-I<span class="w"> </span>include<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>-O3<span class="w"> </span>-ffast-math<span class="w"> </span>-march<span class="o">=</span>native<span class="w"> </span>src/rl/zoo/l2f/sac.cpp<span class="w"> </span>-framework<span class="w"> </span>Accelerate<span class="w"> </span>-DRL_TOOLS_BACKEND_ENABLE_ACCELERATE
 ./a.out
 </pre></div>
@@ -559,8 +559,8 @@ cmake<span class="w"> </span>--build<span class="w"> </span>.
 </ul>
 </li>
 <li><a class="reference internal" href="#native-no-cmake">Native: No CMake</a><ul>
-<li><a class="reference internal" href="#id8">Docker &amp; Ubuntu &amp; WSL</a></li>
-<li><a class="reference internal" href="#id9">macOS</a></li>
+<li><a class="reference internal" href="#id4">Docker &amp; Ubuntu &amp; WSL</a></li>
+<li><a class="reference internal" href="#id5">macOS</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#native-as-a-submodule-library">Native: As a Submodule/Library</a></li>
