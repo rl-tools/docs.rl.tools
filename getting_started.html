@@ -291,7 +291,7 @@
 <span class="n">seed</span> <span class="o">=</span> <span class="mh">0xf00d</span>
 <span class="k">def</span> <span class="nf">env_factory</span><span class="p">():</span>
     <span class="n">env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s2">&quot;Pendulum-v1&quot;</span><span class="p">)</span>
-    <span class="n">env</span> <span class="o">=</span> <span class="n">RescaleActionV0</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">RescaleAction</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">env</span><span class="o">.</span><span class="n">reset</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">env</span>
 
@@ -335,13 +335,9 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/rl-tools/rl-tools.git
 </pre></div>
 </div>
-<dl class="simple">
-<dt><strong>Note</strong>:</dt><dd><p>We don’t encourage using the <code class="docutils literal notranslate"><span class="pre">--recursive</span></code> flag because we are maintaining <span class="rlt">RLtools</span> as a monorepo and some of the submodules contain large files (e.g. data for unit tests or redistributable binaries for releases). <span class="rlt">RLtools</span> is designed as a header-only and dependency-free library but for some convenience features like Tensorboard logging, or gzipped checkpointing, additional dependencies are required. We prefer to vendor them as versioned submodules in <code class="docutils literal notranslate"><span class="pre">./external</span></code> and they can be instantiated selectively using <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">submodule</span> <span class="pre">update</span> <span class="pre">--init</span> <span class="pre">--recursive</span> <span class="pre">--</span> <span class="pre">external/&lt;submodule&gt;</span></code>.</p>
-</dd>
-</dl>
 </section>
-<section id="step-2-run-container-docker-only">
-<span id="run-docker-container"></span><h3><strong>Step 2: Run Container (Docker only)</strong><a class="headerlink" href="#step-2-run-container-docker-only" title="Link to this heading">#</a></h3>
+<section id="step-2-run-container-optional">
+<span id="run-docker-container"></span><h3><strong>Step 2: Run Container (Optional)</strong><a class="headerlink" href="#step-2-run-container-optional" title="Link to this heading">#</a></h3>
 <p>Run a Docker container from the cloned directory:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>rl-tools
 docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--rm<span class="w"> </span>-p<span class="w"> </span><span class="m">8000</span>:8000<span class="w"> </span>--mount<span class="w"> </span><span class="nv">type</span><span class="o">=</span>bind,source<span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>,target<span class="o">=</span>/rl_tools,readonly<span class="w"> </span>ubuntu:24.04
@@ -359,7 +355,7 @@ docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </s
 <span id="install-dependencies-docker-ubuntu-wsl"></span><h4>Docker &amp; Ubuntu &amp; WSL<a class="headerlink" href="#docker-ubuntu-wsl" title="Link to this heading">#</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt<span class="w"> </span>update
 <span class="nb">export</span><span class="w"> </span><span class="nv">DEBIAN_FRONTEND</span><span class="o">=</span>noninteractive
-apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>build-essential<span class="w"> </span>cmake<span class="w"> </span>libopenblas-dev<span class="w"> </span>python3
+apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>build-essential<span class="w"> </span>cmake<span class="w"> </span>libopenblas-dev<span class="w"> </span>git<span class="w"> </span>python3
 </pre></div>
 </div>
 <ul>
@@ -370,7 +366,8 @@ apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </s
 <li><p><code class="docutils literal notranslate"><span class="pre">build-essential</span></code>: Installs the C++ compiler</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">cmake</span></code>: CMake to configure the different example targets and call the compiler</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">libopenblas-dev</span></code>: <strong>Optional</strong>. Lightweight BLAS library that provides fast matrix multiplication implementations. Required for the <code class="docutils literal notranslate"><span class="pre">-DRL_TOOLS_BACKEND_ENABLE_OPENBLAS=ON</span></code> option. About 10x faster than with the generic implementations that are used by default (when the option is absent). By using a more tailored BLAS library like Intel MKL you might be able to get another ~2x speed improvement</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">python3</span></code>: <strong>Optional</strong>. Python is used in <code class="docutils literal notranslate"><span class="pre">serve.sh</span></code> to host a simple static HTTP server that visualizes the environments during and after training.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span></code>: <strong>Optional</strong>. If git is available, CMake’s <code class="docutils literal notranslate"><span class="pre">FetchContent</span></code> module is used to automatically fetch other optional dependencies for, e.g., JSON, HDF5, Tensorboard logging, command-line argument parsing etc.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">python3</span></code>: <strong>Optional</strong>. Python is used in <code class="docutils literal notranslate"><span class="pre">tools/serve.sh</span></code> to host a simple static HTTP server that visualizes the environments during and after training.</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -387,30 +384,24 @@ brew<span class="w"> </span>install<span class="w"> </span>cmake
 </section>
 <section id="step-4-configure-and-build-the-targets">
 <span id="configure-and-build"></span><h3>Step 4: Configure and Build the Targets<a class="headerlink" href="#step-4-configure-and-build-the-targets" title="Link to this heading">#</a></h3>
-<dl class="simple">
-<dt><strong>Note</strong>:</dt><dd><p>For macOS, replace <code class="docutils literal notranslate"><span class="pre">-DRL_TOOLS_BACKEND_ENABLE_OPENBLAS=ON</span></code> with <code class="docutils literal notranslate"><span class="pre">-DRL_TOOLS_BACKEND_ENABLE_ACCELERATE=ON</span></code></p>
-</dd>
-</dl>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>build<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>build
-cmake<span class="w"> </span>..<span class="w"> </span>-DCMAKE_BUILD_TYPE<span class="o">=</span>Release<span class="w"> </span>-DRL_TOOLS_ENABLE_TARGETS<span class="o">=</span>ON<span class="w"> </span>-DRL_TOOLS_BACKEND_ENABLE_OPENBLAS<span class="o">=</span>ON
+cmake<span class="w"> </span>..
 cmake<span class="w"> </span>--build<span class="w"> </span>.
 </pre></div>
 </div>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">..</span></code>: Using CMake to configure the examples contained in the <span class="rlt">RLtools</span> project. The main suit of (tuned) environment configurations we are using is the <span class="rlt">RLtools</span> Zoo (see <a class="reference external" href="https://zoo.rl.tools">https://zoo.rl.tools</a> for trained agents and learning curves). If you are using docker, replace <code class="docutils literal notranslate"><span class="pre">..</span></code> with <code class="docutils literal notranslate"><span class="pre">/rl_tools</span></code> since the mounted source tree should be read-only.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-DCMAKE_BUILD_TYPE=Release</span></code>: Sets the build type to <code class="docutils literal notranslate"><span class="pre">Release</span></code> to optimize the build for performance (expect a large difference compared to without it).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-DRL_TOOLS_ENABLE_TARGETS=ON</span></code>: Enables the building of the example targets. These are turned off by default such that they don’t clutter projects that just include <span class="rlt">RLtools</span> as a library and do not want to build the examples.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">-DRL_TOOLS_BACKEND_ENABLE_OPENBLAS=ON</span></code>: Enables the OpenBLAS backend, allowing RL_Tools to utilize OpenBLAS for matrix multiplications (~10x faster than using the generic implementations that are automatically used in the absence of this flag).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--build</span> <span class="pre">.</span></code>: Builds the targets. You can use an additional e.g. <code class="docutils literal notranslate"><span class="pre">-j4</span></code> to speed up the build using 4 parallel threads.</p></li>
 </ul>
 </section>
 <section id="step-5-run-an-experiment">
 <span id="run-experiment"></span><h3>Step 5: Run an Experiment<a class="headerlink" href="#step-5-run-an-experiment" title="Link to this heading">#</a></h3>
 <p>Execute e.g. the <span class="rlt">RLtools</span> Zoo example using SAC to train the Learning to Fly (l2f) environment.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./src/rl/zoo/rl_zoo_l2f_sac
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>..
+./build/src/rl/zoo/rl_zoo_l2f_sac
 </pre></div>
 </div>
-<p>You can use <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--build</span> <span class="pre">.</span> <span class="pre">--target</span> <span class="pre">help</span></code> to list the available targets.</p>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">--build</span> <span class="pre">.</span> <span class="pre">--target</span> <span class="pre">help</span></code> to list the available targets. In Docker the source directory is readonly, hence just run <code class="docutils literal notranslate"><span class="pre">./src/rl/zoo/rl_zoo_l2f_sac</span></code>. The working directory matters because checkpoints and other logs are written to an <code class="docutils literal notranslate"><span class="pre">experiments</span></code> folder in the current working directory.</p>
 </section>
 <section id="step-6-visualize-the-results">
 <span id="visualize"></span><h3>Step 6: Visualize the Results<a class="headerlink" href="#step-6-visualize-the-results" title="Link to this heading">#</a></h3>
@@ -418,11 +409,11 @@ cmake<span class="w"> </span>--build<span class="w"> </span>.
 <section id="docker">
 <span id="visualize-docker"></span><h4>Docker<a class="headerlink" href="#docker" title="Link to this heading">#</a></h4>
 <p>To expose the experiment data through the forwarded port of the docker container we copy the files that constitute the web interface into the docker container such that a simple, static HTTP server can expose them together with the experiment data.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>-r<span class="w"> </span>/rl_tools/static<span class="w"> </span>.
-/rl_tools/serve.sh
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>-r<span class="w"> </span>/rl_tools/static<span class="w"> </span>/rl_tools/tools<span class="w"> </span>.
+./tools/serve.sh
 </pre></div>
 </div>
-<p>After copying the UI files we run <code class="docutils literal notranslate"><span class="pre">serve.sh</span></code> which periodically builds an index file containing a list of all experiment files such that the web UI can find them. It also starts a simple Python-based HTTP server on port <code class="docutils literal notranslate"><span class="pre">8000</span></code>. Now you should be able to navigate to <a class="reference external" href="http://localhost:8000">http://localhost:8000</a> and view the visualizations of the training runs.</p>
+<p>After copying the UI files we run <code class="docutils literal notranslate"><span class="pre">tools/serve.sh</span></code> which periodically builds an index file containing a list of all experiment files such that the web UI can find them. It also starts a simple Python-based HTTP server on port <code class="docutils literal notranslate"><span class="pre">8000</span></code>. Now you should be able to navigate to <a class="reference external" href="http://localhost:8000">http://localhost:8000</a> and view the visualizations of the training runs.</p>
 </section>
 <section id="ubuntu-wsl-macos">
 <span id="visualize-ubuntu-wsl-macos"></span><h4>Ubuntu &amp; WSL &amp; macOS<a class="headerlink" href="#ubuntu-wsl-macos" title="Link to this heading">#</a></h4>
@@ -454,19 +445,19 @@ cmake<span class="w"> </span>--build<span class="w"> </span>.
 <li><p><code class="docutils literal notranslate"><span class="pre">./a.out</span></code>: Run the compiled binary</p></li>
 </ul>
 <p>This will be quite slow because no optimizations are applied by default. In the following we instruct the compiler to maximally optimize the code using the compile-time knowledge that <span class="rlt">RLtools</span> provides. In particular the sizes of all datastructures and for-loops are known at compile-time and the compiler can unroll loops and inline functions to maximize performance.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g++<span class="w"> </span>-I<span class="w"> </span>include<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>-Ofast<span class="w"> </span>-march<span class="o">=</span>native<span class="w"> </span>src/rl/zoo/l2f/sac.cpp
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g++<span class="w"> </span>-I<span class="w"> </span>include<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>-O3<span class="w"> </span>-ffast-math<span class="w"> </span>-march<span class="o">=</span>native<span class="w"> </span>src/rl/zoo/l2f/sac.cpp
 ./a.out
 </pre></div>
 </div>
 <p>With this we observe an ~80x speedup. The added options are:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">-Ofast</span></code>: Maximally optimize the code and use fast math</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-O3</span> <span class="pre">-ffast-math</span></code>: Maximally optimize the code and use fast math</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">-march=native</span></code>: Take maximal advantage of the available instructions on the host machine</p></li>
 </ul>
 <p>To further speed up the computations we can use a matrix multiplication backend which we find to give another ~7-10x speedup:</p>
 <section id="id4">
 <h3>Docker &amp; Ubuntu &amp; WSL<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g++<span class="w"> </span>-I<span class="w"> </span>include<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>-Ofast<span class="w"> </span>-march<span class="o">=</span>native<span class="w"> </span>src/rl/zoo/l2f/sac.cpp<span class="w"> </span>-lblas<span class="w"> </span>-DRL_TOOLS_BACKEND_ENABLE_OPENBLAS
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g++<span class="w"> </span>-I<span class="w"> </span>include<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>-O3<span class="w"> </span>-ffast-math<span class="w"> </span>-march<span class="o">=</span>native<span class="w"> </span>src/rl/zoo/l2f/sac.cpp<span class="w"> </span>-lblas<span class="w"> </span>-DRL_TOOLS_BACKEND_ENABLE_OPENBLAS
 ./a.out
 </pre></div>
 </div>
@@ -477,7 +468,7 @@ cmake<span class="w"> </span>--build<span class="w"> </span>.
 </section>
 <section id="id5">
 <h3>macOS<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g++<span class="w"> </span>-I<span class="w"> </span>include<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>-Ofast<span class="w"> </span>-march<span class="o">=</span>native<span class="w"> </span>src/rl/zoo/l2f/sac.cpp<span class="w"> </span>-framework<span class="w"> </span>Accelerate<span class="w"> </span>-DRL_TOOLS_BACKEND_ENABLE_ACCELERATE
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>g++<span class="w"> </span>-I<span class="w"> </span>include<span class="w"> </span>-std<span class="o">=</span>c++17<span class="w"> </span>-O3<span class="w"> </span>-ffast-math<span class="w"> </span>-march<span class="o">=</span>native<span class="w"> </span>src/rl/zoo/l2f/sac.cpp<span class="w"> </span>-framework<span class="w"> </span>Accelerate<span class="w"> </span>-DRL_TOOLS_BACKEND_ENABLE_ACCELERATE
 ./a.out
 </pre></div>
 </div>
@@ -552,7 +543,7 @@ cmake<span class="w"> </span>--build<span class="w"> </span>.
 <li><a class="reference internal" href="#python-interface">Python Interface</a></li>
 <li><a class="reference internal" href="#native-in-source">Native: In-Source</a><ul>
 <li><a class="reference internal" href="#step-1-clone-the-repository">Step 1: Clone the Repository</a></li>
-<li><a class="reference internal" href="#step-2-run-container-docker-only"><strong>Step 2: Run Container (Docker only)</strong></a></li>
+<li><a class="reference internal" href="#step-2-run-container-optional"><strong>Step 2: Run Container (Optional)</strong></a></li>
 <li><a class="reference internal" href="#step-3-install-dependencies">Step 3: Install Dependencies</a><ul>
 <li><a class="reference internal" href="#docker-ubuntu-wsl">Docker &amp; Ubuntu &amp; WSL</a></li>
 <li><a class="reference internal" href="#macos">macOS</a></li>

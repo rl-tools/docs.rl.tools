@@ -237,6 +237,7 @@ code through loop unrolling, inlining etc.</p>
 </div>
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">rlt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">rl_tools</span><span class="p">;</span>
 <span class="k">using</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">devices</span><span class="o">::</span><span class="n">DefaultCPU</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">RNG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DEVICE</span><span class="o">::</span><span class="n">SPEC</span><span class="o">::</span><span class="n">RANDOM</span><span class="o">::</span><span class="n">ENGINE</span><span class="o">&lt;&gt;</span><span class="p">;</span>
 <span class="k">using</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
 <span class="k">using</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">DEVICE</span><span class="o">::</span><span class="n">index_t</span><span class="p">;</span>
 </pre></div>
@@ -251,8 +252,9 @@ types and compile-time constants. Compiling these attributes into a separate spe
 </pre></div>
 </div>
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">DEVICE</span><span class="w"> </span><span class="n">device</span><span class="p">;</span>
+<span class="n">RNG</span><span class="w"> </span><span class="n">rng</span><span class="p">;</span>
 <span class="n">TI</span><span class="w"> </span><span class="n">seed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<span class="k">auto</span><span class="w"> </span><span class="n">rng</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">random</span><span class="o">::</span><span class="n">default_engine</span><span class="p">(</span><span class="n">DEVICE</span><span class="o">::</span><span class="n">SPEC</span><span class="o">::</span><span class="n">RANDOM</span><span class="p">(),</span><span class="w"> </span><span class="n">seed</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">,</span><span class="w"> </span><span class="n">seed</span><span class="p">);</span>
 <span class="n">rlt</span><span class="o">::</span><span class="n">Matrix</span><span class="o">&lt;</span><span class="n">rlt</span><span class="o">::</span><span class="n">matrix</span><span class="o">::</span><span class="n">Specification</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">m</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -299,9 +301,9 @@ types and compile-time constants. Compiling these attributes into a separate spe
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-    0.849261    -0.102156    -0.256673
-    0.904277    -0.538617    -0.506808
-   -0.408192     0.271856    -0.311355
+   -1.303106     0.641980    -0.652074
+   -1.767485    -0.917929     0.650856
+   -0.909848    -0.140926     0.780644
 </pre></div></div>
 </div>
 <p>We can access elements using the <code class="docutils literal notranslate"><span class="pre">get</span></code> and <code class="docutils literal notranslate"><span class="pre">set</span></code> commands:</p>
@@ -319,7 +321,7 @@ types and compile-time constants. Compiling these attributes into a separate spe
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-0.849261f
+-1.30311f
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -336,9 +338,9 @@ types and compile-time constants. Compiling these attributes into a separate spe
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-    1.000000    -0.102156    -0.256673
-    0.904277    -0.538617    -0.506808
-   -0.408192     0.271856    -0.311355
+    1.000000     0.641980    -0.652074
+   -1.767485    -0.917929     0.650856
+   -0.909848    -0.140926     0.780644
 </pre></div></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">get</span></code> returns a reference so we could technically also set or increment it through the reference:</p>
@@ -356,9 +358,9 @@ types and compile-time constants. Compiling these attributes into a separate spe
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-   11.000000    -0.102156    -0.256673
-    0.904277    -0.538617    -0.506808
-   -0.408192     0.271856    -0.311355
+   11.000000     0.641980    -0.652074
+   -1.767485    -0.917929     0.650856
+   -0.909848    -0.140926     0.780644
 </pre></div></div>
 </div>
 <p>Writing through the reference is not very intuitive so we prefer <code class="docutils literal notranslate"><span class="pre">set</span></code> and <code class="docutils literal notranslate"><span class="pre">increment</span></code>:</p>
@@ -376,9 +378,9 @@ types and compile-time constants. Compiling these attributes into a separate spe
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-    1.000000    -0.102156    -0.256673
-    0.904277    -0.538617    -0.506808
-   -0.408192     0.271856    -0.311355
+    1.000000     0.641980    -0.652074
+   -1.767485    -0.917929     0.650856
+   -0.909848    -0.140926     0.780644
 </pre></div></div>
 </div>
 <section id="Tensors">
@@ -410,19 +412,19 @@ types and compile-time constants. Compiling these attributes into a separate spe
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 dim[0] = 0:
-  -5.703804e-01  -3.422589e-01   1.008072e-01
-  -9.118625e-01   2.108090e+00   9.476308e-02
-   5.376303e-01   3.618752e-01  -7.995225e-01
+   1.158559e+00   1.967661e+00  -4.409588e-03
+   2.605693e+00   5.856580e-01  -6.968178e-01
+   1.502693e-01  -2.589913e+00  -3.166397e-01
 
 dim[0] = 1:
-   8.660405e-01   1.061986e+00   6.006763e-01
-   2.661995e+00  -9.388391e-01  -1.549304e-01
-   9.058360e-02  -1.328507e+00   1.262284e+00
+  -1.897954e+00  -1.596284e-01  -9.774587e-01
+  -1.658815e-02   1.355126e+00  -7.086181e-01
+   2.525330e-01   3.930300e-01  -1.024379e+00
 
 dim[0] = 2:
-   2.677846e+00  -1.236785e+00  -9.119245e-02
-  -8.944708e-01  -2.577802e+00   2.305977e+00
-   5.642641e-01   5.340819e-01   1.266308e+00
+  -2.215077e+00  -1.493653e-01   1.382941e+00
+   1.456973e+00   2.115476e+00   1.509475e+00
+  -9.814447e-01  -2.304837e-01   7.954761e-01
 
 </pre></div></div>
 </div>
@@ -443,7 +445,7 @@ dim[0] = 2:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-2.108090e+00
+5.856580e-01
 1.337000e+03
 </pre></div></div>
 </div>
@@ -462,9 +464,9 @@ dim[0] = 2:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-   8.660405e-01   1.061986e+00   6.006763e-01
-   2.661995e+00  -9.388391e-01  -1.549304e-01
-   9.058360e-02  -1.328507e+00   1.262284e+00
+  -1.897954e+00  -1.596284e-01  -9.774587e-01
+  -1.658815e-02   1.355126e+00  -7.086181e-01
+   2.525330e-01   3.930300e-01  -1.024379e+00
 
 </pre></div></div>
 </div>
@@ -490,19 +492,19 @@ dim[0] = 2:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 First rows:
-  -5.703804e-01  -3.422589e-01   1.008072e-01
-   8.660405e-01   1.061986e+00   6.006763e-01
-   2.677846e+00  -1.236785e+00  -9.119245e-02
+   1.158559e+00   1.967661e+00  -4.409588e-03
+  -1.897954e+00  -1.596284e-01  -9.774587e-01
+  -2.215077e+00  -1.493653e-01   1.382941e+00
 
 Last rows:
-   5.376303e-01   3.618752e-01  -7.995225e-01
-   9.058360e-02  -1.328507e+00   1.262284e+00
-   5.642641e-01   5.340819e-01   1.266308e+00
+   1.502693e-01  -2.589913e+00  -3.166397e-01
+   2.525330e-01   3.930300e-01  -1.024379e+00
+  -9.814447e-01  -2.304837e-01   7.954761e-01
 
 First cols:
-  -5.703804e-01  -9.118625e-01   5.376303e-01
-   8.660405e-01   2.661995e+00   9.058360e-02
-   2.677846e+00  -8.944708e-01   5.642641e-01
+   1.158559e+00   2.605693e+00   1.502693e-01
+  -1.897954e+00  -1.658815e-02   2.525330e-01
+  -2.215077e+00   1.456973e+00  -9.814447e-01
 
 </pre></div></div>
 </div>

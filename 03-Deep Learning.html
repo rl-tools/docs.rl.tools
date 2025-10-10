@@ -239,11 +239,12 @@
 </div>
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span><span class="w"> </span><span class="nn">rlt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">rl_tools</span><span class="p">;</span>
 <span class="k">using</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">devices</span><span class="o">::</span><span class="n">DefaultCPU</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">RNG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DEVICE</span><span class="o">::</span><span class="n">SPEC</span><span class="o">::</span><span class="n">RANDOM</span><span class="o">::</span><span class="n">ENGINE</span><span class="o">&lt;&gt;</span><span class="p">;</span>
 <span class="k">using</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
 <span class="k">using</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">DEVICE</span><span class="o">::</span><span class="n">index_t</span><span class="p">;</span>
 <span class="n">DEVICE</span><span class="w"> </span><span class="n">device</span><span class="p">;</span>
+<span class="n">RNG</span><span class="w"> </span><span class="n">rng</span><span class="p">;</span>
 <span class="n">TI</span><span class="w"> </span><span class="n">seed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-<span class="k">auto</span><span class="w"> </span><span class="n">rng</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">random</span><span class="o">::</span><span class="n">default_engine</span><span class="p">(</span><span class="n">DEVICE</span><span class="o">::</span><span class="n">SPEC</span><span class="o">::</span><span class="n">RANDOM</span><span class="p">(),</span><span class="w"> </span><span class="n">seed</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -311,12 +312,13 @@ to save the parts required for inference or changing the batch size).</p>
 </pre></div>
 </div>
 </div>
-<p>Now that the memory is allocated we need to initialize it (because it may contain arbitrary values). We use the standard <a class="reference external" href="https://pytorch.org/docs/stable/nn.init.html?highlight=kaiming#torch.nn.init.kaiming_normal_">Kaiming</a> initialization scheme:</p>
+<p>Now that the memory is allocated we need to initialize it (because it may contain arbitrary values). By default, we use the standard <a class="reference external" href="https://pytorch.org/docs/stable/nn.init.html?highlight=kaiming#torch.nn.init.kaiming_normal_">Kaiming</a> initialization scheme:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">init_weights</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">layer</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">,</span><span class="w"> </span><span class="n">seed</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">init_weights</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">layer</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -334,11 +336,11 @@ to save the parts required for inference or changing the batch size).</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-   -0.211912     0.010027     0.373245    -0.388598    -0.055528
-   -0.127251    -0.126478     0.330389     0.238816    -0.412481
-   -0.385369    -0.351579    -0.394084    -0.141052    -0.433443
-   -0.327643     0.299608    -0.113104    -0.288047     0.322775
-   -0.399042    -0.282702    -0.171875     0.296949    -0.087313
+   -0.281671    -0.424024     0.385982     0.044419     0.400462
+   -0.013641    -0.071225    -0.160517    -0.151753    -0.309090
+    0.177868     0.106679    -0.339927    -0.179194    -0.013259
+    0.118724     0.108345     0.284631     0.026065     0.163703
+   -0.001287     0.012145     0.077634    -0.282246     0.196554
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -354,7 +356,7 @@ to save the parts required for inference or changing the batch size).</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-   -0.447200    -0.363058     0.144835     0.238661     0.172029
+   -0.057248    -0.057849    -0.264170    -0.208556    -0.326842
 </pre></div></div>
 </div>
 <p>Now that the layer is initialized we can run inference using a random input. We first declare and allocate input and output matrices and then randomly initialize the input:</p>
@@ -376,7 +378,7 @@ to save the parts required for inference or changing the batch size).</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-    0.100807    -0.911862     2.108090     0.094763     0.537630
+   -0.696818     0.150269    -2.589913    -0.316640    -1.897954
 </pre></div></div>
 </div>
 <p>Now we can evaluate output of the layer:</p>
@@ -395,7 +397,7 @@ to save the parts required for inference or changing the batch size).</p>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-    0.242450     0.236803     0.000000     0.000000     0.008457
+    0.000000     0.991368     0.590204     0.000000     0.000000
 </pre></div></div>
 </div>
 <p>Now we are revisiting the capabilities mentioned earlier. For inference storing <span class="math notranslate nohighlight">\(W\)</span> and <span class="math notranslate nohighlight">\(b\)</span> is sufficient but for training we at least need to also store the gradient of the loss <span class="math notranslate nohighlight">\(L\)</span> wrt. <span class="math notranslate nohighlight">\(W\)</span> and <span class="math notranslate nohighlight">\(b\)</span>: <span class="math notranslate nohighlight">\(\frac{\mathrm{d}L}{\mathrm{d}W}\)</span> and <span class="math notranslate nohighlight">\(\frac{\mathrm{d}L}{\mathrm{d}b}\)</span>. Because depending on the optimizer type we might need to store more information per parameter (like the first and second-order moment in the case of
@@ -449,9 +451,9 @@ upstream layers)</p>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Output (should be identical to layer_1):
-    0.242450     0.236803     0.000000     0.000000     0.008457
+    0.000000     0.991368     0.590204     0.000000     0.000000
 Derivative with respect to the input:
-   -0.214641    -0.065061    -0.232326    -0.153192     0.257247
+    0.010383     0.067850     0.162538     0.151305     0.302343
 </pre></div></div>
 </div>
 <p>This also accumulates the gradient in the weights and biases:</p>
@@ -468,11 +470,11 @@ Derivative with respect to the input:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-    0.036480    -0.329980     0.762866     0.034292     0.194555
-   -0.080598     0.729055    -1.685465    -0.075765    -0.429848
+    0.000000     0.000000     0.000000     0.000000     0.000000
+    0.681111    -0.146882     2.531533     0.309502     1.855171
+    0.011559    -0.002493     0.042962     0.005252     0.031484
     0.000000     0.000000     0.000000     0.000000     0.000000
     0.000000     0.000000     0.000000     0.000000     0.000000
-    0.060552    -0.547734     1.266280     0.056922     0.322942
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -488,7 +490,7 @@ Derivative with respect to the input:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-    0.361875    -0.799522     0.000000     0.000000     0.600676
+    0.000000    -0.977459    -0.016588     0.000000     0.000000
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -577,6 +579,7 @@ need to be for user-defined optimizers) and we only need to allocate the model.<
 </pre></div>
 </div>
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">);</span>
+<span class="n">rlt</span><span class="o">::</span><span class="n">malloc</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">optimizer</span><span class="p">);</span>
 <span class="n">rlt</span><span class="o">::</span><span class="n">init_weights</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">rng</span><span class="p">);</span><span class="w"> </span><span class="c1">// recursively initializes all layers using kaiming initialization</span>
 <span class="n">rlt</span><span class="o">::</span><span class="n">zero_gradient</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">);</span><span class="w"> </span><span class="c1">// recursively zeros all gradients in the layers</span>
 <span class="n">rlt</span><span class="o">::</span><span class="n">reset_optimizer_state</span><span class="p">(</span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="n">optimizer</span><span class="p">,</span><span class="w"> </span><span class="n">model</span><span class="p">);</span>
@@ -615,7 +618,7 @@ need to be for user-defined optimizers) and we only need to allocate the model.<
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-0.506566f
+0.164536f
 </pre></div></div>
 </div>
 <p>Now imagine we want the output of the model (for this input) to be <span class="math notranslate nohighlight">\(1\)</span>. We calculate the error and feed it back through the model using backpropagation. <code class="docutils literal notranslate"><span class="pre">d_output_mlp</span></code> should be the derivative of the loss function, hence it gives the direction of the output that would increase the loss. Our error is the opposite, if we would move the output into the direction of the error we would come closer to our target value and hence decrease the loss. Because of this, we feed back <code class="docutils literal notranslate"><span class="pre">-error</span></code>. This
@@ -656,7 +659,7 @@ procedure also corresponds to using a squared loss because <code class="docutils
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-0.518496f
+0.173487f
 </pre></div></div>
 </div>
 <p>Next we will train the network to actually perform a function (not only trying to output a constant value as before). With the following training loop we train it to behave like the <code class="docutils literal notranslate"><span class="pre">rlt::max</span></code> operator which outputs the max of the five inputs. We run the forward and backward pass for <span class="math notranslate nohighlight">\(32\)</span> iterations while accumulating the gradient which effectively leads to a batch size of <span class="math notranslate nohighlight">\(32\)</span></p>
@@ -689,16 +692,16 @@ procedure also corresponds to using a squared loss because <code class="docutils
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Squared error: 0.643161
-Squared error: 0.055282
-Squared error: 0.025145
-Squared error: 0.016128
-Squared error: 0.016535
-Squared error: 0.017536
-Squared error: 0.011195
-Squared error: 0.009795
-Squared error: 0.008141
-Squared error: 0.013169
+Squared error: 1.261306
+Squared error: 0.095473
+Squared error: 0.067435
+Squared error: 0.022948
+Squared error: 0.016156
+Squared error: 0.016400
+Squared error: 0.017012
+Squared error: 0.018638
+Squared error: 0.014972
+Squared error: 0.030667
 </pre></div></div>
 </div>
 <p>Now we can test the model using some arbitrary input (which should be in the distribution of input values) and the model should output a value close to the maximum of the five input values:</p>
@@ -723,7 +726,7 @@ Squared error: 0.013169
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-0.465697f
+0.531318f
 </pre></div></div>
 </div>
 <p>We can also automatically test it with <span class="math notranslate nohighlight">\(10\)</span> random inputs:</p>
@@ -744,16 +747,16 @@ Squared error: 0.013169
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-max: 0.539628 output: 0.555159
-max: 1.348390 output: 1.313255
-max: 1.660528 output: 1.620614
-max: 1.779285 output: 1.739960
-max: 1.311534 output: 1.279970
-max: 0.965693 output: 0.929909
-max: 2.799156 output: 2.870854
-max: 1.195009 output: 1.313729
-max: 0.797983 output: 0.711116
-max: 0.419951 output: 0.451161
+max: 1.191373 output: 1.114110
+max: 0.104221 output: 0.197573
+max: 0.806470 output: 0.812550
+max: 0.662122 output: 0.522968
+max: 1.077457 output: 0.971939
+max: 1.125902 output: 1.106198
+max: 0.814696 output: 0.766694
+max: 0.518637 output: 0.512569
+max: 1.329031 output: 1.429670
+max: 1.430187 output: 1.412748
 </pre></div></div>
 </div>
 <p>If the values are not close the model might need some more training iterations.</p>
@@ -839,7 +842,7 @@ different ways: e.g. having the critics being capable of backward-gradient but t
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 dim[0] = 0:
-  -2.716676e-01   6.897645e-02  -2.784356e-02  -1.252805e-01
+   2.216075e-01   1.333383e-01   1.274712e-02  -2.575321e-01
 
 </pre></div></div>
 </div>
@@ -885,7 +888,7 @@ dim[0] = 0:
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 dim[0] = 0:
-  -2.716676e-01   6.897645e-02  -2.784356e-02  -1.252805e-01
+   2.216075e-01   1.333383e-01   1.274712e-02  -2.575321e-01
 
 </pre></div></div>
 </div>
@@ -927,38 +930,38 @@ dim[0] = 0:
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-    0.320461     0.172568    -0.038686    -0.269831     0.269185
-    0.067568    -0.187339     0.089244    -0.029956    -0.493866
-   -0.077152     0.195330    -0.070027     0.051061     0.254358
-    0.322985    -0.273944    -0.381387    -0.221107     0.520769
-   -0.298484     0.026869     0.017577     0.050301     0.419451
-   -0.378259    -0.467855     0.218961     0.359731    -0.004112
-    0.103813    -0.196705    -0.069182    -0.002469     0.115669
-   -0.324696     0.523877     0.420453     0.019141    -0.220434
-    0.146015    -0.047098    -0.078760    -0.201766    -0.056156
-   -0.031791     0.392544    -0.073967     0.002385     0.406896
-   -0.576604     0.626401    -0.016995     0.302599    -0.052693
-    0.325223    -0.084683     0.175826     0.310664    -0.385406
-   -0.042280    -0.267090    -0.178485     0.044999    -0.004504
-   -0.284561    -0.243193     0.094030     0.169179     0.079656
-    0.173386    -0.351642     0.204653     0.047558     0.153697
-    0.154294    -0.035325    -0.305142    -0.308024    -0.828210
-   -0.600413     0.165149     0.052111     0.247424     0.352850
-    0.438994     0.303696    -0.196991    -0.032276     0.020843
-   -0.413299    -0.486740     0.398008    -0.079801    -0.224559
-    0.009283    -0.161274    -0.037893     0.253224    -0.235326
-   -0.021573     0.113396     0.017783    -0.083122     0.064917
-   -0.168050    -0.075272     0.149018     0.147866    -0.182045
-    0.703156     0.525455     0.042927     0.439643     0.074443
-    0.562241    -0.243317    -0.412354     0.271648     0.734457
-   -0.186803     0.137267    -0.138127     0.228056     0.099720
-   -0.150418    -0.587200     0.224454     0.163250    -0.756426
-    0.179686     0.405630     0.109221    -0.147826     0.124997
-    0.350725    -0.368138    -0.383135    -0.435791     0.528348
-   -0.046798     0.538072    -0.145205    -0.234868     0.320617
-    0.425575    -0.551638     0.328734    -0.025153    -0.846081
-    0.363814    -0.414661     0.238195     0.115213    -0.487551
-   -0.371508     0.177195     0.037000     0.367933     0.195225
+    0.257953     0.314552    -0.433964    -0.177880     0.359262
+   -0.187324     0.540005    -0.405738    -0.105435     0.005223
+   -1.100354     0.812718    -0.122218    -0.695884    -0.693243
+   -0.279631     0.184959    -0.046335    -0.256824     0.069136
+    0.424668    -0.247924    -0.402325     0.470506     0.445497
+    0.073845     0.257173    -0.276413    -0.418117     0.609768
+   -0.077138    -0.145775     0.574608     0.249916    -0.175546
+   -0.505004     0.426311    -0.045607    -0.612155    -0.297598
+   -0.250628     0.001032     0.089749     0.502791    -0.259028
+    0.039623    -0.304243     0.358738     0.002726     0.028491
+   -0.021576     0.038357     0.361321    -0.204293     0.341441
+   -0.536234     0.010839     0.111775    -0.395779    -0.134533
+    0.055270     0.028513     0.068843    -0.504675     0.121817
+    0.276629    -0.143951     0.407516    -0.567604     0.365112
+   -0.572607    -0.064859    -0.078383    -0.411069    -0.503144
+   -0.262249     0.001710     0.181928    -0.012536     0.187227
+    0.470755    -0.674596     0.692451     0.698694     0.463525
+    0.793571     0.159827     0.389859     0.822169    -0.297239
+    0.199279     0.314133    -0.589019    -0.188222     0.649840
+   -0.017297    -0.286261     0.407374     0.007105     0.313376
+    0.172832     0.162735     0.021157     0.228161    -0.081224
+    0.408129     0.325322     0.154821     0.223985     0.024119
+   -0.373206     0.009890     0.250110     0.083007    -0.164883
+    0.143843    -0.256574     0.083730     0.694237     0.250891
+    0.029598     0.193670    -0.135681     0.344866     0.511517
+    0.307294    -0.049818    -0.084429     0.042628    -0.387741
+   -0.163530    -0.054293     0.070724    -0.417164     0.087039
+    0.131608    -0.096381    -0.257672    -0.506925     0.119585
+   -0.619304     0.274425    -0.408675     0.195700    -0.364539
+    0.577951    -0.166629     0.236388     0.461357     0.288696
+    0.483178    -0.322789     0.219588     0.227474     0.331068
+    0.383174    -0.138118    -0.205649     0.374215     0.287233
 </pre></div></div>
 </div>
 </section>
