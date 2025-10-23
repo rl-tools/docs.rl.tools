@@ -317,7 +317,7 @@ specialization which is dispatched to by simply calling with the desired device.
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Time Cling (C/C++ interpreter): 0.143363 seconds
+Time Cling (C/C++ interpreter): 0.144366 seconds
 </pre></div></div>
 </div>
 <p>Equivalently we can run the same computation using OpenBLAS and get the result in much less time:</p>
@@ -340,7 +340,7 @@ Time Cling (C/C++ interpreter): 0.143363 seconds
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Time Cling (C/C++ interpreter): 0.0239472 seconds
+Time Cling (C/C++ interpreter): 0.0138062 seconds
 </pre></div></div>
 </div>
 <p>Now we check the resulting matrices against each other:</p>
@@ -357,7 +357,7 @@ Time Cling (C/C++ interpreter): 0.0239472 seconds
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Absolute difference between the resulting matrices: 2.93409e-09
+Absolute difference between the resulting matrices: 1.86029e-09
 </pre></div></div>
 </div>
 <p>Depending on the machine, compilers and library (versions) used, we might find that they are exactly equal but this is not necessarily the case. By changing <code class="docutils literal notranslate"><span class="pre">T</span></code> to <code class="docutils literal notranslate"><span class="pre">float</span></code> the deviations should be bigger but also for <code class="docutils literal notranslate"><span class="pre">double</span></code> this could happen because of floating point inaccuracies which entail that the same mathematical expression does not necessarily lead to the same result if you reorder the (finite precision) computations.</p>
@@ -388,18 +388,18 @@ shape (dimensions and <a class="reference external" href="https://en.wikipedia.o
 Result comparison (top-left 5x5 for brevity)
 
 C:
-  -20.264871     2.381999    -5.877549    28.988774   -11.669420
-   27.254677    -2.977693    16.377075    -2.939312    -7.270881
-  -51.735909   -15.142981   -37.009798    -4.761278    15.280407
-   27.237379    -4.176262   -16.680188    32.924923    -0.178668
-  -41.207209    27.143734    22.531079    29.545553    20.724129
+  -22.217546    10.401948   -15.984127    -6.349583   -19.336480
+    8.931596    25.400193    23.214354   -11.254316    -5.118105
+   50.287148    -2.388326   -16.353081    20.443097    -5.804735
+   36.995354     4.102962    14.184034     2.510948   -17.650657
+   13.794350    -5.897039   -16.393397     2.104473    -2.336840
 
 C_blas:
-  -20.264871     2.381999    -5.877549    28.988774   -11.669420
-   27.254677    -2.977693    16.377075    -2.939312    -7.270881
-  -51.735909   -15.142981   -37.009798    -4.761278    15.280407
-   27.237379    -4.176262   -16.680188    32.924923    -0.178668
-  -41.207209    27.143734    22.531079    29.545553    20.724129
+  -22.217546    10.401948   -15.984127    -6.349583   -19.336480
+    8.931596    25.400193    23.214354   -11.254316    -5.118105
+   50.287148    -2.388326   -16.353081    20.443097    -5.804735
+   36.995354     4.102962    14.184034     2.510948   -17.650657
+   13.794350    -5.897039   -16.393397     2.104473    -2.336840
 </pre></div></div>
 </div>
 </section>

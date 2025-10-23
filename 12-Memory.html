@@ -245,19 +245,14 @@ on previous observations, also the future behavior and action selection decision
 
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/algorithms/sac/loop/core/config.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/loop/steps/evaluation/config.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/loop/steps/timing/config.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/algorithms/sac/loop/core/operations_generic.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/loop/steps/extrack/operations_cpu.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/loop/steps/evaluation/operations_generic.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/loop/steps/checkpoint/operations_cpu.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/loop/steps/save_trajectories/operations_cpu.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;rl_tools/rl/loop/steps/timing/operations_cpu.h&gt;</span>
 
 <span class="k">namespace</span><span class="w"> </span><span class="nn">rlt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nn">rl_tools</span><span class="p">;</span>
 
 <span class="k">using</span><span class="w"> </span><span class="n">DEVICE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">devices</span><span class="o">::</span><span class="n">DEVICE_FACTORY</span><span class="o">&lt;&gt;</span><span class="p">;</span>
 <span class="k">using</span><span class="w"> </span><span class="n">RNG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DEVICE</span><span class="o">::</span><span class="n">SPEC</span><span class="o">::</span><span class="n">RANDOM</span><span class="o">::</span><span class="n">ENGINE</span><span class="o">&lt;&gt;</span><span class="p">;</span>
 <span class="k">using</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">TYPE_POLICY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">numeric_types</span><span class="o">::</span><span class="n">Policy</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">;</span>
 <span class="k">using</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">DEVICE</span><span class="o">::</span><span class="n">index_t</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -324,7 +319,7 @@ nominal/full length sequence. While training on random smaller sequence lengths 
 </div><p>This means that we can only modify the final action of a sequence to feed that into the critic and backpropagate through the critic to improve the final action. All other actions in the sequence remain the same. This also means that the past actions that the policy sees can be very off-policy and to the best of our knowledge it remains an open research question how this influences the training dynamics. The masking of previous actions (killing the gradient signal) is controlled using the
 <code class="docutils literal notranslate"><span class="pre">MASK_NON_TERMINAL</span></code> flag which should be turned on for most environments:</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">MY_MASK_NON_TERMINAL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
@@ -333,11 +328,11 @@ nominal/full length sequence. While training on random smaller sequence lengths 
 </div>
 <p>Now we just set up the loop interface as usual (described in a previous chapter):</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">LOOP_CORE_PARAMETERS</span><span class="o">:</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">algorithms</span><span class="o">::</span><span class="n">sac</span><span class="o">::</span><span class="n">loop</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">DefaultParameters</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="o">&gt;</span><span class="p">{</span>
-<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">SAC_PARAMETERS</span><span class="o">:</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">algorithms</span><span class="o">::</span><span class="n">sac</span><span class="o">::</span><span class="n">DefaultParameters</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="o">::</span><span class="n">ACTION_DIM</span><span class="o">&gt;</span><span class="p">{</span>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">LOOP_CORE_PARAMETERS</span><span class="o">:</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">algorithms</span><span class="o">::</span><span class="n">sac</span><span class="o">::</span><span class="n">loop</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">DefaultParameters</span><span class="o">&lt;</span><span class="n">TYPE_POLICY</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="o">&gt;</span><span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">SAC_PARAMETERS</span><span class="o">:</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">algorithms</span><span class="o">::</span><span class="n">sac</span><span class="o">::</span><span class="n">DefaultParameters</span><span class="o">&lt;</span><span class="n">TYPE_POLICY</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="o">::</span><span class="n">ACTION_DIM</span><span class="o">&gt;</span><span class="p">{</span>
 <span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">GAMMA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">;</span><span class="w"> </span><span class="c1">// we are just testing the memory, no planning horizon required</span>
 <span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">ACTOR_BATCH_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BATCH_SIZE</span><span class="p">;</span>
 <span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">CRITIC_BATCH_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BATCH_SIZE</span><span class="p">;</span>
@@ -369,17 +364,17 @@ nominal/full length sequence. While training on random smaller sequence lengths 
 
 <span class="w">    </span><span class="k">using</span><span class="w"> </span><span class="n">BATCH_SAMPLING_PARAMETERS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MY_BATCH_SAMPLING_PARAMETERS</span><span class="p">;</span>
 
-<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">ACTOR_OPTIMIZER_PARAMETERS</span><span class="o">:</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">optimizers</span><span class="o">::</span><span class="n">adam</span><span class="o">::</span><span class="n">DEFAULT_PARAMETERS_TENSORFLOW</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">ACTOR_OPTIMIZER_PARAMETERS</span><span class="o">:</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">optimizers</span><span class="o">::</span><span class="n">adam</span><span class="o">::</span><span class="n">DEFAULT_PARAMETERS_TENSORFLOW</span><span class="o">&lt;</span><span class="n">TYPE_POLICY</span><span class="o">&gt;</span><span class="p">{</span>
 <span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">ALPHA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-4</span><span class="p">;</span>
 <span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">ENABLE_BIAS_LR_FACTOR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
 <span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">BIAS_LR_FACTOR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="w">    </span><span class="p">};</span>
-<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">CRITIC_OPTIMIZER_PARAMETERS</span><span class="o">:</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">optimizers</span><span class="o">::</span><span class="n">adam</span><span class="o">::</span><span class="n">DEFAULT_PARAMETERS_TENSORFLOW</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">CRITIC_OPTIMIZER_PARAMETERS</span><span class="o">:</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">optimizers</span><span class="o">::</span><span class="n">adam</span><span class="o">::</span><span class="n">DEFAULT_PARAMETERS_TENSORFLOW</span><span class="o">&lt;</span><span class="n">TYPE_POLICY</span><span class="o">&gt;</span><span class="p">{</span>
 <span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">ALPHA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-3</span><span class="p">;</span>
 <span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">ENABLE_BIAS_LR_FACTOR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
 <span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">BIAS_LR_FACTOR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="w">    </span><span class="p">};</span>
-<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">ALPHA_OPTIMIZER_PARAMETERS</span><span class="o">:</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">optimizers</span><span class="o">::</span><span class="n">adam</span><span class="o">::</span><span class="n">DEFAULT_PARAMETERS_TENSORFLOW</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">{</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">ALPHA_OPTIMIZER_PARAMETERS</span><span class="o">:</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">nn</span><span class="o">::</span><span class="n">optimizers</span><span class="o">::</span><span class="n">adam</span><span class="o">::</span><span class="n">DEFAULT_PARAMETERS_TENSORFLOW</span><span class="o">&lt;</span><span class="n">TYPE_POLICY</span><span class="o">&gt;</span><span class="p">{</span>
 <span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">ALPHA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-3</span><span class="p">;</span>
 <span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">ENABLE_BIAS_LR_FACTOR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
 <span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">BIAS_LR_FACTOR</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
@@ -389,19 +384,19 @@ nominal/full length sequence. While training on random smaller sequence lengths 
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">RNG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DEVICE</span><span class="o">::</span><span class="n">SPEC</span><span class="o">::</span><span class="n">RANDOM</span><span class="o">::</span><span class="n">ENGINE</span><span class="o">&lt;&gt;</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="n">LOOP_CORE_CONFIG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">algorithms</span><span class="o">::</span><span class="n">sac</span><span class="o">::</span><span class="n">loop</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">Config</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">RNG</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="p">,</span><span class="w"> </span><span class="n">LOOP_CORE_PARAMETERS</span><span class="p">,</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">algorithms</span><span class="o">::</span><span class="n">sac</span><span class="o">::</span><span class="n">loop</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">ConfigApproximatorsGRU</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="n">LOOP_CORE_CONFIG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">algorithms</span><span class="o">::</span><span class="n">sac</span><span class="o">::</span><span class="n">loop</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">Config</span><span class="o">&lt;</span><span class="n">TYPE_POLICY</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">RNG</span><span class="p">,</span><span class="w"> </span><span class="n">ENVIRONMENT</span><span class="p">,</span><span class="w"> </span><span class="n">LOOP_CORE_PARAMETERS</span><span class="p">,</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">algorithms</span><span class="o">::</span><span class="n">sac</span><span class="o">::</span><span class="n">loop</span><span class="o">::</span><span class="n">core</span><span class="o">::</span><span class="n">ConfigApproximatorsGRU</span><span class="o">&gt;</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">LOOP_EVAL_PARAMETERS</span><span class="o">:</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">loop</span><span class="o">::</span><span class="n">steps</span><span class="o">::</span><span class="n">evaluation</span><span class="o">::</span><span class="n">Parameters</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">LOOP_CORE_CONFIG</span><span class="o">&gt;</span><span class="p">{</span>
+<div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">LOOP_EVAL_PARAMETERS</span><span class="o">:</span><span class="w"> </span><span class="n">rlt</span><span class="o">::</span><span class="n">rl</span><span class="o">::</span><span class="n">loop</span><span class="o">::</span><span class="n">steps</span><span class="o">::</span><span class="n">evaluation</span><span class="o">::</span><span class="n">Parameters</span><span class="o">&lt;</span><span class="n">TYPE_POLICY</span><span class="p">,</span><span class="w"> </span><span class="n">TI</span><span class="p">,</span><span class="w"> </span><span class="n">LOOP_CORE_CONFIG</span><span class="o">&gt;</span><span class="p">{</span>
 <span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">EVALUATION_INTERVAL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20000</span><span class="p">;</span>
 <span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">NUM_EVALUATION_EPISODES</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
 <span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="k">constexpr</span><span class="w"> </span><span class="n">TI</span><span class="w"> </span><span class="n">N_EVALUATIONS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LOOP_CORE_CONFIG</span><span class="o">::</span><span class="n">CORE_PARAMETERS</span><span class="o">::</span><span class="n">STEP_LIMIT</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">EVALUATION_INTERVAL</span><span class="p">;</span>
@@ -413,7 +408,7 @@ nominal/full length sequence. While training on random smaller sequence lengths 
 </div>
 <p>And then we execute the training as usual by calling the <code class="docutils literal notranslate"><span class="pre">rl_tools::step</span></code> operation. Note that here we do a manual evaluation every <code class="docutils literal notranslate"><span class="pre">20000</span></code> steps which creates random sequences of 0 and 1 and queries the actor on them:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">LOOP_STATE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LOOP_CONFIG</span><span class="o">::</span><span class="n">State</span><span class="o">&lt;</span><span class="n">LOOP_CONFIG</span><span class="o">&gt;</span><span class="p">;</span>
@@ -491,7 +486,6 @@ Count 4 policy prediction -1.75892 ❌
 Count 0 policy prediction -1.30785 ❌
 Count 1 policy prediction -1.50545 ❌
 Count 0 policy prediction -1.29979 ❌
-Step: 0/200000 Mean return: -6956.41 Mean episode length: 2000
 Count 4 policy prediction 3.1034 ❌
 Count 3 policy prediction 3.54099 ❌
 Count 2 policy prediction 1.15665 ❌
@@ -502,7 +496,6 @@ Count 0 policy prediction 0.512444 ❌
 Count 3 policy prediction 2.88307 ✅
 Count 1 policy prediction 1.02169 ✅
 Count 2 policy prediction 1.96214 ✅
-Step: 20000/200000 Mean return: -830.112 Mean episode length: 2000
 Count 1 policy prediction 1.37965 ✅
 Count 3 policy prediction 3.07622 ✅
 Count 0 policy prediction -0.0251625 ✅
@@ -513,94 +506,6 @@ Count 1 policy prediction 0.863554 ✅
 Count 4 policy prediction 4.38427 ✅
 Count 4 policy prediction 3.7328 ✅
 Count 1 policy prediction 1.00625 ✅
-Step: 40000/200000 Mean return: -744.884 Mean episode length: 2000
-Count 0 policy prediction -0.167644 ✅
-Count 2 policy prediction 1.35981 ❌
-Count 2 policy prediction 1.80212 ✅
-Count 3 policy prediction 3.01827 ✅
-Count 3 policy prediction 2.49608 ❌
-Count 2 policy prediction 1.56542 ✅
-Count 3 policy prediction 2.83056 ✅
-Count 1 policy prediction 1.16865 ✅
-Count 3 policy prediction 3.11814 ✅
-Count 1 policy prediction 1.00349 ✅
-Step: 60000/200000 Mean return: -615.367 Mean episode length: 2000
-Count 0 policy prediction -0.0786805 ✅
-Count 2 policy prediction 1.983 ✅
-Count 1 policy prediction 0.70446 ✅
-Count 2 policy prediction 1.31981 ❌
-Count 1 policy prediction 0.679615 ✅
-Count 1 policy prediction 0.91414 ✅
-Count 2 policy prediction 1.91551 ✅
-Count 2 policy prediction 1.34664 ❌
-Count 3 policy prediction 2.69242 ✅
-Count 0 policy prediction -0.198913 ✅
-Step: 80000/200000 Mean return: -697.942 Mean episode length: 2000
-Count 2 policy prediction 1.37885 ❌
-Count 3 policy prediction 2.76921 ✅
-Count 5 policy prediction 5.28244 ✅
-Count 3 policy prediction 2.982 ✅
-Count 3 policy prediction 2.91792 ✅
-Count 2 policy prediction 1.90487 ✅
-Count 4 policy prediction 4.2599 ✅
-Count 2 policy prediction 1.86824 ✅
-Count 5 policy prediction 4.93093 ✅
-Count 0 policy prediction -0.0245391 ✅
-Step: 100000/200000 Mean return: -561.333 Mean episode length: 2000
-Count 2 policy prediction 1.99899 ✅
-Count 3 policy prediction 2.58422 ✅
-Count 1 policy prediction 0.982524 ✅
-Count 2 policy prediction 1.98146 ✅
-Count 1 policy prediction 1.32831 ✅
-Count 1 policy prediction 1.00127 ✅
-Count 0 policy prediction -0.0674726 ✅
-Count 3 policy prediction 3.09329 ✅
-Count 3 policy prediction 3.40785 ✅
-Count 1 policy prediction 0.947206 ✅
-Step: 120000/200000 Mean return: -527.313 Mean episode length: 2000
-Count 2 policy prediction 2.27633 ✅
-Count 3 policy prediction 2.69878 ✅
-Count 1 policy prediction 0.990329 ✅
-Count 2 policy prediction 1.58188 ✅
-Count 1 policy prediction 1.29052 ✅
-Count 2 policy prediction 1.95366 ✅
-Count 3 policy prediction 2.68505 ✅
-Count 2 policy prediction 1.91899 ✅
-Count 2 policy prediction 2.00426 ✅
-Count 0 policy prediction -0.0118237 ✅
-Step: 140000/200000 Mean return: -534.1 Mean episode length: 2000
-Count 1 policy prediction 0.998638 ✅
-Count 2 policy prediction 1.86629 ✅
-Count 3 policy prediction 3.04643 ✅
-Count 1 policy prediction 0.978432 ✅
-Count 1 policy prediction 0.932458 ✅
-Count 3 policy prediction 2.94229 ✅
-Count 4 policy prediction 3.84764 ✅
-Count 1 policy prediction 1.04211 ✅
-Count 3 policy prediction 3.00718 ✅
-Count 3 policy prediction 3.25292 ✅
-Step: 160000/200000 Mean return: -483.927 Mean episode length: 2000
-Count 2 policy prediction 2.18243 ✅
-Count 2 policy prediction 2.0456 ✅
-Count 0 policy prediction 0.294444 ✅
-Count 2 policy prediction 2.09478 ✅
-Count 2 policy prediction 2.05861 ✅
-Count 2 policy prediction 2.10059 ✅
-Count 2 policy prediction 1.89847 ✅
-Count 1 policy prediction 1.06769 ✅
-Count 2 policy prediction 1.82702 ✅
-Count 3 policy prediction 3.18056 ✅
-Step: 180000/200000 Mean return: -505.124 Mean episode length: 2000
-Count 1 policy prediction 1.02354 ✅
-Count 1 policy prediction 0.928761 ✅
-Count 4 policy prediction 4.07004 ✅
-Count 3 policy prediction 2.887 ✅
-Count 0 policy prediction 0.197478 ✅
-Count 4 policy prediction 3.88777 ✅
-Count 1 policy prediction 1.02109 ✅
-Count 3 policy prediction 2.90599 ✅
-Count 4 policy prediction 4.39458 ✅
-Count 2 policy prediction 2.16046 ✅
 </pre></div></div>
 </div>
 </section>
